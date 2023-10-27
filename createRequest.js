@@ -13,7 +13,8 @@ async function createRequest (options) {
     DurationSeconds: 3600})*/
   //const provider = fromInstanceMetadata()
   //const cred = await provider()
-  const url = 'http://169.254.169.254/latest/meta-data/iam/security-credentials/SwimAppEC2Role'
+  const url = 'http://169.254.169.254/latest/meta-data/iam/security-credentials/SwimAppEC2Role';
+  console.log(url);
   let cred;
   https.get(url, (response) => {
     let data ="";
