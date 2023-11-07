@@ -5,32 +5,10 @@ const crt = require('@aws-sdk/signature-v4-crt');
 const { Hash } = require('@aws-sdk/hash-node');
 
 async function createRequest (options) {
-  // GET CREDENTIALS FROM ENV VARIABLES
-  //const provider = fromNodeProviderChain()
-  /*const provider = fromTemporaryCredentials({
-    RoleArn: 'arn:aws:iam::363528306897:role/SwimAppEC2Role',
-    RoleSessionName: 'aws-sdk-js-test',
-    DurationSeconds: 3600})*/
-  //const provider = fromInstanceMetadata()
-  //const cred = await provider()
-  const url = 'http://169.254.169.254/latest/meta-data/iam/security-credentials/SwimAppEC2Role';
-  console.log(url);
-  let cred;
-  https.get(url, (response) => {
-    let data ="";
-    response.on('data',(chunk) => {
-      data += chunk;
-    });
-    
-    response.on('end',() => {
-      console.log(data);
-      cred = JSON.parse(data);
-    });
-
-    response.on('error', (err) => {
-      console.error(`Error retrieving data:${err}`);
-    });
-  });
+  // GET AWS CREDENTIALS FROM EC2 INSTANCE METADATA
+  const provider = fromInstanceMetadata();
+  const cred = await provider();
+  console.log(cred);
 
   // SHA256 HASH CONSTRUCTOR USING SECRET ACCESS KEY
   const SHA256 = new Hash('sha256', cred.secretAccessKeyId)
