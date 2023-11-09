@@ -10,7 +10,7 @@ async function createRequest (options) {
       // GET AWS CREDENTIALS FROM EC2 INSTANCE METADATA
       const provider = fromInstanceMetadata();
       provider().then((cred) => {
-        console.log(cred);
+        //console.log(cred);
       
         // SHA256 HASH CONSTRUCTOR USING SECRET ACCESS KEY
         const SHA256 = new Hash('sha256', cred.secretAccessKeyId)
@@ -29,7 +29,7 @@ async function createRequest (options) {
       
         // SIGN HTTP REQUEST
         crtSigner.sign(options).then((signedReq) => {
-          console.log(signedReq);
+          //console.log(signedReq);
           resolve(signedReq);
         });
       });
