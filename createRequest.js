@@ -28,9 +28,9 @@ async function createRequest (options) {
         const crtSigner = new crt.CrtSignerV4(crtSignerInit)
       
         // SIGN HTTP REQUEST
-        const signedReq = await crtSigner.sign(options)
-        
-        resolve(signedReq);
+        crtSigner.sign(options).then((signedReq) => {
+          resolve(signedReq);
+        }
       }
     } catch (err) {
       reject(err);
