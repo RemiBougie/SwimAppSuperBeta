@@ -63,8 +63,9 @@ http.createServer( (req, res) => {
       res.write(JSON.stringify(signedReq));
       res.write(JSON.stringify(value));
       res.end();
-    }
-})
+    });
+  });
+});
   //});
 /*
   let body = [];
