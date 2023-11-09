@@ -35,7 +35,7 @@ async function createRequest (options) {
     } catch (err) {
       reject(err);
     };
-  }
+  });
 }
 
 module.exports = { createRequest };
