@@ -9,28 +9,29 @@ async function createRequest (options) {
     try {
       // GET AWS CREDENTIALS FROM EC2 INSTANCE METADATA
       const provider = fromInstanceMetadata();
-      const cred = await provider();
-      console.log(cred);
-    
-      // SHA256 HASH CONSTRUCTOR USING SECRET ACCESS KEY
-      const SHA256 = new Hash('sha256', cred.secretAccessKeyId)
-    
-      // CREATING SIGNER
-      const crtSignerInit = {
-        credentials: cred,
-        region: 'us-east-2',
-        service: 'execute-api',
-        applyChecksum: false,
-        sha256: SHA256,
-        signingAlgorithm: 'SigV4',
-        uriEscapePath: true
-      }
-      const crtSigner = new crt.CrtSignerV4(crtSignerInit)
-    
-      // SIGN HTTP REQUEST
-      const signedReq = await crtSigner.sign(options)
+      provider().then((cred) => {
+        console.log(cred);
       
-      resolve(signedReq);
+        // SHA256 HASH CONSTRUCTOR USING SECRET ACCESS KEY
+        const SHA256 = new Hash('sha256', cred.secretAccessKeyId)
+      
+        // CREATING SIGNER
+        const crtSignerInit = {
+          credentials: cred,
+          region: 'us-east-2',
+          service: 'execute-api',
+          applyChecksum: false,
+          sha256: SHA256,
+          signingAlgorithm: 'SigV4',
+          uriEscapePath: true
+        }
+        const crtSigner = new crt.CrtSignerV4(crtSignerInit)
+      
+        // SIGN HTTP REQUEST
+        const signedReq = await crtSigner.sign(options)
+        
+        resolve(signedReq);
+      }
     } catch (err) {
       reject(err);
     };
