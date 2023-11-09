@@ -30,8 +30,8 @@ async function createRequest (options) {
         // SIGN HTTP REQUEST
         crtSigner.sign(options).then((signedReq) => {
           resolve(signedReq);
-        }
-      }
+        });
+      });
     } catch (err) {
       reject(err);
     };
