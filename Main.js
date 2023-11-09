@@ -1,22 +1,9 @@
 const http = require('http');
 const https = require('https');
-const { createRequest } = require('./sample.js');
-//const { apiRequest } = require('./apiRequest.js');
-/*
-const options = {
-  hostname: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com',
-  path: '/dev/s3GetObj-Test',
-  method: 'GET',
-  protocol: 'https:',
-  headers: {
-    'Content-Type': 'application/json',
-    host: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com'
-  }
-};
-*/
-//const req = createRequest(options);
+const { createRequest } = require('./createRequest.js');
 
 http.createServer( (req, res) => {
+  // CREATE SIGNED REQUEST TO API GATEWAY
   const options = {
     hostname: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com',
     path: '/dev/s3GetObj-Test',
@@ -27,9 +14,9 @@ http.createServer( (req, res) => {
       host: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com'
     }
   };
-
   const signedReq = createRequest(options);
 
+  /*// SEND SIGNED REQUEST TO API GATEWAY AND RECEIVE RESPONSE
   const apiResponse = new Promise((resolve, reject) => {
     const apiRequest = http.request(signedReq, (response) => {
       response.setEncoding("utf8");
@@ -50,6 +37,7 @@ http.createServer( (req, res) => {
 
     apiRequest.end();
   }).then((value) => {
+  */
 
   let body = [];
 
@@ -67,13 +55,15 @@ http.createServer( (req, res) => {
       console.error(err);
     });
 
+    let value = 'Just a test value!';
+    
     res.writeHead(200, {'Content-Type': 'application/json'});
     res.write('Hello World! Quick change');
     res.write(JSON.stringify(signedReq));
     res.write(JSON.stringify(value));
     res.end();
 })
-  });
+  //});
 /*
   let body = [];
     request
