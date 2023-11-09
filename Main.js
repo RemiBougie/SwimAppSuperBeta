@@ -56,12 +56,14 @@ http.createServer( (req, res) => {
     });
 
     let value = 'Just a test value!';
-    
-    res.writeHead(200, {'Content-Type': 'application/json'});
-    res.write('Hello World! Quick change');
-    res.write(JSON.stringify(signedReq));
-    res.write(JSON.stringify(value));
-    res.end();
+
+    Promise.all([signedReq]).then((values) {
+      res.writeHead(200, {'Content-Type': 'application/json'});
+      res.write('Hello World! Quick change');
+      res.write(JSON.stringify(signedReq));
+      res.write(JSON.stringify(value));
+      res.end();
+    }
 })
   //});
 /*
