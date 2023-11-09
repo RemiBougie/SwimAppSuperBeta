@@ -56,8 +56,10 @@ http.createServer( (req, res) => {
     });
 
     let value = 'Just a test value!';
+    console.log(signedReq);
 
     Promise.all([signedReq]).then((values) =>{
+      console.log(values);
       res.writeHead(200, {'Content-Type': 'application/json'});
       res.write('Hello World! Quick change');
       res.write(JSON.stringify(signedReq));
