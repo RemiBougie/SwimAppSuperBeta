@@ -79,6 +79,7 @@ http.createServer( (req, res) => {
           });
       
           apiRequest.end();
+        });
       })
       // RETURN RESPONSE TO THE BROWSER
       .then((apiResponse) => {
