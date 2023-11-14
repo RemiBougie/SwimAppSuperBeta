@@ -7,7 +7,7 @@ const options = {
   hostname: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com',
   path: '/dev/s3GetObj-Test',
   method: 'GET',
-  protocol: 'http:',
+  protocol: 'https:',
   headers: {
     'Content-Type': 'application/json',
     host: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com'
@@ -17,7 +17,7 @@ const signedReq = createRequest(options);
 
 async function apiRequest (signedRequest) {
   return new Promise((resolve, reject) => {
-    const apiRequest = http.request(signedRequest, (response) => {
+    const apiRequest = https.request(signedRequest, (response) => {
       response.setEncoding("utf8");
       let responseBody = "";
   
