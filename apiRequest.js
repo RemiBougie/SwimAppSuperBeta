@@ -14,7 +14,7 @@ async function apiRequest (signedRequest) {
   
       response.on("end", () => {
         console.log(responseBody);
-        resolve(JSON.stringify(responseBody));
+        resolve(JSON.parse(responseBody));
       });
     });
   
