@@ -39,7 +39,7 @@ async function createRequest (options) {
   });
 }
 
-//TEST CASE 
+/*//TEST CASE 
 const options = {
     hostname: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com',
     path: '/dev/s3GetObj-Test',
@@ -50,6 +50,6 @@ const options = {
       host: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com'
     }
   };
-createRequest(options);
+createRequest(options);*/
 
 module.exports = { createRequest };
