@@ -2,20 +2,20 @@ const http = require('http');
 const https = require('https');
 const { createRequest } = require('./createRequest.js');
 
-http.createServer( (req, res) => {
-  // CREATE SIGNED REQUEST TO API GATEWAY
-  const options = {
-    hostname: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com',
-    path: '/dev/s3GetObj-Test',
-    method: 'GET',
-    protocol: 'https:',
-    headers: {
-      'Content-Type': 'application/json',
-      host: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com'
-    }
-  };
-  const signedReq = createRequest(options);
+// CREATE SIGNED REQUEST TO API GATEWAY
+const options = {
+  hostname: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com',
+  path: '/dev/s3GetObj-Test',
+  method: 'GET',
+  protocol: 'https:',
+  headers: {
+    'Content-Type': 'application/json',
+    host: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com'
+  }
+};
+const signedReq = createRequest(options);
 
+http.createServer( (req, res) => {
   /*// SEND SIGNED REQUEST TO API GATEWAY AND RECEIVE RESPONSE
   const apiResponse = new Promise((resolve, reject) => {
     const apiRequest = http.request(signedReq, (response) => {
