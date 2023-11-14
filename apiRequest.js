@@ -22,6 +22,7 @@ const options = {
   }
 };
 const signedReq = createRequest(options);
+console.log(signedReq);
 
 async function apiRequest (signedRequest) {
   return new Promise((resolve, reject) => {
