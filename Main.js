@@ -70,7 +70,8 @@ http.createServer( (req, res) => {
             });
       
             response.on("end", () => {
-              resolve(JSON.parse(responseBody));
+              //resolve(JSON.parse(responseBody));
+              resolve(responseBody);
             });
           });
       
