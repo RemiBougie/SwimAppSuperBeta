@@ -1,6 +1,7 @@
 const http = require('http');
 const https = require('https');
 const { createRequest } = require('./createRequest.js');
+const { apiRequest } = require('./apiRequest.js');
 
 // CREATE SIGNED REQUEST TO API GATEWAY
 const options = {
@@ -60,27 +61,7 @@ http.createServer( (req, res) => {
     Promise.all([signedReq])
       // SEND SIGNED REQUEST TO API GATEWAY AND GET RESPONSE
       .then((signedRequest) => {
-        return new Promise((resolve, reject) => {
-          const apiRequest = http.request(signedReq, (response) => {
-            response.setEncoding("utf8");
-            let responseBody = "";
-      
-            response.on("data", (chunk) => {
-              responseBody += chunk;
-            });
-      
-            response.on("end", () => {
-              console.log(responseBody);
-              resolve(JSON.stringify(responseBody));
-            });
-          });
-      
-          apiRequest.on("error", (err) => {
-            reject(err);
-          });
-      
-          apiRequest.end();
-        });
+        return apiRequest(signedRequest);
       })
       // RETURN RESPONSE TO THE BROWSER
       .then((apiResponse) => {
