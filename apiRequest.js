@@ -35,14 +35,6 @@ const options = {
   headers: {
     'Content-Type': 'application/json',
     host: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com'
-  },
-  query: {
-    'Bucket': 's3-swim-app-super-beta',
-    'Key': 'set_1.html'
-  },
-  body: {
-    'Bucket': 's3-swim-app-super-beta',
-    'Key': 'set_1.html'
   }
 };
 createRequest(options).then((signedReq) => {
