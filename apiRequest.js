@@ -5,12 +5,20 @@ const { createRequest } = require('./createRequest.js');
 // CREATE SIGNED REQUEST TO API GATEWAY
 const options = {
   hostname: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com',
-  path: '/dev/test',
+  path: '/dev/s3GetObj-Test',
   method: 'GET',
   protocol: 'https:',
   headers: {
     'Content-Type': 'application/json',
     host: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com'
+  },
+  query: {
+    'Bucket': 's3-swim-app-super-beta',
+    'Key': 'set_1.html'
+  },
+  body: {
+    'Bucket': 's3-swim-app-super-beta',
+    'Key': 'set_1.html'
   }
 };
 const signedReq = createRequest(options);
@@ -39,4 +47,4 @@ async function apiRequest (signedRequest) {
   });
 }
 
-apiRequest(options);
+apiRequest(signedReq);
