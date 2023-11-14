@@ -36,12 +36,6 @@ http.createServer( (req, res) => {
     let value = 'Just a test value!';
 
     createRequest(options)
-      .then((signedRequest) => {
-        return apiRequest(signedRequest);
-      })
-      .then((apiResponse) => {
-
-    createRequest(options)
       // SEND SIGNED REQUEST TO API GATEWAY AND GET RESPONSE
       .then((signedRequest) => {
         return apiRequest(signedRequest);
