@@ -39,4 +39,17 @@ async function createRequest (options) {
   });
 }
 
+//TEST CASE 
+const options = {
+    hostname: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com',
+    path: '/dev/s3GetObj-Test',
+    method: 'GET',
+    protocol: 'https:',
+    headers: {
+      'Content-Type': 'application/json',
+      host: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com'
+    }
+  };
+createRequest(options);
+
 module.exports = { createRequest };
