@@ -14,32 +14,9 @@ const options = {
     host: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com'
   }
 };
-const signedReq = createRequest(options);
+//const signedReq = createRequest(options);
 
 http.createServer( (req, res) => {
-  /*// SEND SIGNED REQUEST TO API GATEWAY AND RECEIVE RESPONSE
-  const apiResponse = new Promise((resolve, reject) => {
-    const apiRequest = http.request(signedReq, (response) => {
-      response.setEncoding("utf8");
-      let responseBody = "";
-
-      response.on("data", (chunk) => {
-        responseBody += chunk;
-      });
-
-      response.on("end", () => {
-        resolve(JSON.parse(responseBody));
-      });
-    });
-
-    apiRequest.on("error", (err) => {
-      reject(err);
-    });
-
-    apiRequest.end();
-  }).then((value) => {
-  */
-
   let body = [];
 
   req.on('error', err => {
@@ -58,7 +35,13 @@ http.createServer( (req, res) => {
 
     let value = 'Just a test value!';
 
-    Promise.all([signedReq])
+    createRequest(options)
+      .then((signedRequest) => {
+        return apiRequest(signedRequest);
+      })
+      .then((apiResponse) => {
+
+    createRequest(options)
       // SEND SIGNED REQUEST TO API GATEWAY AND GET RESPONSE
       .then((signedRequest) => {
         return apiRequest(signedRequest);
