@@ -13,7 +13,7 @@ const options = {
     host: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com'
   }
 };
-//const signedReq = createRequest(options);
+const signedReq = createRequest(options);
 
 async function apiRequest (signedRequest) {
   return new Promise((resolve, reject) => {
