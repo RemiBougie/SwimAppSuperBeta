@@ -41,3 +41,5 @@ createRequest(options).then((signedReq) => {
   console.log(signedReq);
   apiRequest(signedReq);
 });
+
+module.exports = { apiRequest };
