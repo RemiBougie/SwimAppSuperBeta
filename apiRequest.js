@@ -5,7 +5,7 @@ const { createRequest } = require('./createRequest.js');
 // CREATE SIGNED REQUEST TO API GATEWAY
 const options = {
   hostname: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com',
-  path: '/dev/s3GetObj-Test',
+  path: '/dev/test',
   method: 'GET',
   protocol: 'https:',
   headers: {
@@ -13,7 +13,7 @@ const options = {
     host: 'wkx8abizkk.execute-api.us-east-2.amazonaws.com'
   }
 };
-const signedReq = createRequest(options);
+//const signedReq = createRequest(options);
 
 async function apiRequest (signedRequest) {
   return new Promise((resolve, reject) => {
@@ -39,4 +39,4 @@ async function apiRequest (signedRequest) {
   });
 }
 
-apiRequest(signedReq);
+apiRequest(options);
