@@ -29,7 +29,7 @@ async function createRequest (options) {
       
         // SIGN HTTP REQUEST
         crtSigner.sign(options).then((signedReq) => {
-          //console.log(signedReq);
+          console.log(signedReq);
           resolve(signedReq);
         });
       });
