@@ -1,4 +1,4 @@
-import { mockData } from '../mockData.mjs';
+import { mockData } from '../mockData.js';
 import SwimSetCard from '../components/swimSetCard';
 
 export default function Filter (titleSearch='', tagsSearch, setItems) {
