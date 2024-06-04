@@ -5,13 +5,13 @@ import SwimSetCard from './components/swimSetCard';
 import SearchBox from './components/searchBox';
 import TagSelection from './components/tagSelection';
 import Filter from './hooks/filter';
-import { mockData } from './mockData/mockSwimSets.js';
+import { mockSwimSets } from './mockData/mockSwimSets.js';
 import * as allTags from './allTags';
 
 function App() {
   let [titleSearch, setTitleSearch] = useState('');
   let [tagsSearch, setTagsSearch] = useState(allTags["allTags"]);
-  let [itemList, setItemList] = useState(mockData.map((item)=>{
+  let [itemList, setItemList] = useState(mockSwimSets.map((item)=>{
     return <SwimSetCard 
     swimSet_title={item.swimSet_title} 
     swimSet_tags={item.swimSet_tags}

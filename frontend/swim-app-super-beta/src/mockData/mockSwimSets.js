@@ -1,4 +1,4 @@
-export const mockData = [
+export const mockSwimSets = [
     {
         "id": "1234",
         "owner": "RemiB123",
@@ -97,5 +97,41 @@ export const mockData = [
         "swimSet_tags": ["butterfly","aerobic"],
         "favorite": false,
         "rating": 3.8
+    },
+    {
+        "id": "0123",
+        "owner": "RemiB123",
+        "swimSet_title": "Pre-meet warmup",
+        "body": {
+            "Seniors": "400 free\n400 IM drill/swim\n200 back\n6x50 build\n3x25 off blocks"
+        },
+        "notes": "Swimmers should feel free to modify",
+        "swimSet_tags": ["warmup", "freestyle", "im"],
+        "favorite": true,
+        "rating": 3.5
+    },
+    {
+        "id": "abcd",
+        "owner": "RemiB123",
+        "swimSet_title": "4-2 warmup",
+        "body": {
+            "Everyone": "400 swim\n200 kick"
+        },
+        "notes": "",
+        "swimSet_tags": ["warmup","kick"],
+        "favorite": false,
+        "rating": 3.0
+    },
+    {
+        "id": "bcde",
+        "owner": "RemiB123",
+        "swimSet_title": "",
+        "body": {
+            "Everyone": "100s SKSPSKPS"
+        },
+        "notes": "",
+        "swimSet_tags": ["warmup","kick","pull"],
+        "favorite": false,
+        "rating": 3.5
     }
 ]
