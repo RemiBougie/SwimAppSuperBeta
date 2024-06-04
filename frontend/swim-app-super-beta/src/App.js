@@ -5,7 +5,7 @@ import SwimSetCard from './components/swimSetCard';
 import SearchBox from './components/searchBox';
 import TagSelection from './components/tagSelection';
 import Filter from './hooks/filter';
-import { mockData } from './mockData.js';
+import { mockData } from './mockData/mockSwimSets.js';
 import * as allTags from './allTags';
 
 function App() {

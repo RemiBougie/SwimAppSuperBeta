@@ -1,4 +1,4 @@
-import { mockData } from '../mockData.js';
+import { mockData } from '../mockData/mockSwimSets.js';
 import SwimSetCard from '../components/swimSetCard';
 
 export default function Filter (titleSearch='', tagsSearch, setItems) {
@@ -11,12 +11,12 @@ export default function Filter (titleSearch='', tagsSearch, setItems) {
     console.log("selected tags: ", selectedTags);
 
     function titleFilter(data, user_id, title) {
-        return data.filter(swimSet => swimSet.user_id.includes(user_id))
+        return data.filter(swimSet => swimSet.owner.includes(user_id))
             .filter(swimSet => swimSet.swimSet_title.toLowerCase().includes(title))
     }
 
     function tagsFilter(data, user_id, tags) {
-        return data.filter(swimSet => swimSet.user_id.includes(user_id))
+        return data.filter(swimSet => swimSet.owner.includes(user_id))
             .filter(swimSet =>
                 tags.every(tag => swimSet.swimSet_tags.includes(tag)))
     }
