@@ -47,7 +47,7 @@ export const mockSwimSets = [
         "owner": "RemiB123",
         "swimSet_title": "Test Sets",
         "body": {"Seniors": "20x100 @ 1:20", "Juniors": "10x100 @ 1:40", "Age Group": "500 @ 12:00"},
-        "notes": "Juniors test set",
+        "notes": "Test set",
         "swimSet_tags": ["freestyle","aerobic"],
         "favorite": true,
         "rating": 4.0

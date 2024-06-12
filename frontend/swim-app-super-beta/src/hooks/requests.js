@@ -1,14 +1,35 @@
-/*
-const mockData = require(../mockData.mjs) // rename mockData to mockSwimSets
-const mockSwimPractices = require(../mockSwimPractices.js)
-const mockSwimSeasons = require (../mockSwimSeasons.js)
+const apiUrl = process.env.REACT_APP_API_URL
+const isMock = process.env.REACT_APP_MOCK
+
+/* if (isMock) {
+    const mockSwimSets = require('../mockData/mockSwimSets.js'); 
+    const mockSwimPractices = require('../mockData/mockSwimPractices.js');
+    //const mockSwimSeasons = require ('../mockData/mockSwimSeasons.js');
+} */
 
 //-- GET ------------------------------------------------------------------------------------------------------
 async function getAllSwimSets () {
     //replace with API call eventually 
-    return mockSwimSets
+    if (isMock) {
+        const mockSwimSets = require('../mockData/mockSwimSets');
+        console.log(mockSwimSets);
+        return mockSwimSets;
+    } else {
+        try {
+            let response = await fetch(apiUrl+'/swimSets')
+            if (!response.ok) {
+                throw new Error("Something don't work right...")
+            }
+            let data = await response.json()
+            console.log(data)
+            return response
+        } catch (error) {
+            console.error(error)
+        }
+    }
 };
 
+/*
 async function getAllSwimPractices () {
     //replace with API call eventually
     return mockSwimPractices
@@ -53,10 +74,11 @@ async function deleteSwimPractice (swimPractice) {
 async function deleteSwimSeason (swimSeason) {
     //replace with API call eventually
 }
-
+*/
 //-- EXPORT ---------------------------------------------------------------------------------------------------------
 export {
     getAllSwimSets,
+    /*
     getAllSwimPractices,
     getAllSwimSeasons,
 
@@ -68,5 +90,6 @@ export {
     deleteSwimSet,
     deleteSwimPractice,
     deleteSwimSeason
+    */
 }
-*/
+//*/

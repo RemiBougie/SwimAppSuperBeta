@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './App.css';
 import SwimSetCard from './components/swimSetCard';
@@ -7,8 +7,13 @@ import TagSelection from './components/tagSelection';
 import Filter from './hooks/filter';
 import { mockSwimSets } from './mockData/mockSwimSets.js';
 import * as allTags from './allTags';
+import {getAllSwimSets} from './hooks/requests'
 
 function App() {
+  useEffect(() => {
+    getAllSwimSets();
+   }, []);
+
   let [titleSearch, setTitleSearch] = useState('');
   let [tagsSearch, setTagsSearch] = useState(allTags["allTags"]);
   let [itemList, setItemList] = useState(mockSwimSets.map((item)=>{
