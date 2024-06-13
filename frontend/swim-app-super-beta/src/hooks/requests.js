@@ -1,5 +1,5 @@
 const apiUrl = process.env.REACT_APP_API_URL;
-const isMock = process.env.REACT_APP_MOCK;
+const isMock = process.env.REACT_APP_MOCK === 'true';
 
 /* if (isMock) {
     const mockSwimSets = require('../mockData/mockSwimSets.js'); 
@@ -13,6 +13,7 @@ async function getAllSwimSets (setSwimSets) {
     if (isMock) {
         console.log('Environment: ', process.env.NODE_ENV)
         console.log('apiUrl: ', apiUrl)
+        console.log('isMock: ', typeof isMock)
         console.log('In the isMock=true statement')
         const { mockSwimSets } = require('../mockData/mockSwimSets');
         console.log(mockSwimSets);
@@ -20,13 +21,21 @@ async function getAllSwimSets (setSwimSets) {
         //return mockSwimSets;
     } else {
         try {
-            let response = await fetch(apiUrl+'/swimSets')
-            if (!response.ok) {
-                throw new Error("Something don't work right...")
-            }
-            let data = await response.json()
-            console.log(data)
-            return response
+            fetch(apiUrl+'swimSets')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Something don't work right...")
+                }
+                console.log("response:", response);
+                return response.json();
+            })
+            .then(data => {
+                console.log("Data from S3", data);
+                setSwimSets(data);
+            })
+            .catch(error => {
+                console.error("Something didn't work right...", error)
+            })
         } catch (error) {
             console.error(error)
         }

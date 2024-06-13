@@ -41,7 +41,7 @@ function App() {
           tagsSearch={tagsSearch}
           setTagsSearch={setTagsSearch}/>
         <button onClick={() => {
-          Filter(titleSearch, tagsSearch, setItemList);}}>
+          Filter(titleSearch, tagsSearch, swimSets, setItemList);}}>
           Search
         </button>
         <div className="App-displaySwimSetCards">{itemList}</div>

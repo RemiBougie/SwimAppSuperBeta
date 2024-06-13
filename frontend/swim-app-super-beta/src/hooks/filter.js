@@ -1,7 +1,7 @@
-import { mockSwimSets } from '../mockData/mockSwimSets.js';
+//import { mockSwimSets } from '../mockData/mockSwimSets.js';
 import SwimSetCard from '../components/swimSetCard';
 
-export default function Filter (titleSearch='', tagsSearch, setItems) {
+export default function Filter (titleSearch='', tagsSearch, swimSets, setItems) {
     let user_id="RemiB123";
 
     // manipulate input data to correct format and find selected tags
@@ -39,7 +39,7 @@ export default function Filter (titleSearch='', tagsSearch, setItems) {
         return tags;
     }
 
-    let titleMatches = titleFilter(mockSwimSets, user_id, titleSearch);
+    let titleMatches = titleFilter(swimSets, user_id, titleSearch);
     let matches = tagsFilter(titleMatches, user_id, selectedTags);
 
     console.log("matches:", matches);
