@@ -1,5 +1,5 @@
-const apiUrl = process.env.REACT_APP_API_URL
-const isMock = process.env.REACT_APP_MOCK
+const apiUrl = process.env.REACT_APP_API_URL;
+const isMock = process.env.REACT_APP_MOCK;
 
 /* if (isMock) {
     const mockSwimSets = require('../mockData/mockSwimSets.js'); 
@@ -8,12 +8,16 @@ const isMock = process.env.REACT_APP_MOCK
 } */
 
 //-- GET ------------------------------------------------------------------------------------------------------
-async function getAllSwimSets () {
+async function getAllSwimSets (setSwimSets) {
     //replace with API call eventually 
     if (isMock) {
-        const mockSwimSets = require('../mockData/mockSwimSets');
+        console.log('Environment: ', process.env.NODE_ENV)
+        console.log('apiUrl: ', apiUrl)
+        console.log('In the isMock=true statement')
+        const { mockSwimSets } = require('../mockData/mockSwimSets');
         console.log(mockSwimSets);
-        return mockSwimSets;
+        setSwimSets(mockSwimSets);
+        //return mockSwimSets;
     } else {
         try {
             let response = await fetch(apiUrl+'/swimSets')
