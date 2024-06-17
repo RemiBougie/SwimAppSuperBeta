@@ -21,10 +21,15 @@ async function getAllSwimSets (setSwimSets) {
         //return mockSwimSets;
     } else {
         try {
-            fetch(apiUrl+'swimSets')
+            fetch(apiUrl+'swimSets', {
+                'headers': {
+                    'Content-Type': 'application/json'
+                }
+            })
             .then(response => {
                 if (!response.ok) {
-                    throw new Error("Something don't work right...")
+                    console.log(response.ok);
+                    throw new Error("Something don't work right...");
                 }
                 console.log("response:", response);
                 return response.json();
