@@ -1,17 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import './App.css';
 import SwimSetCard from './components/swimSetCard';
 import SearchBox from './components/searchBox';
 import TagSelection from './components/tagSelection';
 import Filter from './hooks/filter';
-import { mockData } from './mockData.mjs';
+//import { mockSwimSets } from './mockData/mockSwimSets.js';
 import * as allTags from './allTags';
+import { getAllSwimSets } from './hooks/requests'
 
 function App() {
   let [titleSearch, setTitleSearch] = useState('');
   let [tagsSearch, setTagsSearch] = useState(allTags["allTags"]);
-  let [itemList, setItemList] = useState(mockData.map((item)=>{
+  let [swimSets, setSwimSets] = useState([])
+
+  useEffect(() => {
+    getAllSwimSets(setSwimSets);
+   }, []);
+
+  console.log("swimSets", swimSets);
+
+  let [itemList, setItemList] = useState(swimSets.map((item)=>{
     return <SwimSetCard 
     swimSet_title={item.swimSet_title} 
     swimSet_tags={item.swimSet_tags}
@@ -32,8 +41,8 @@ function App() {
           tagsSearch={tagsSearch}
           setTagsSearch={setTagsSearch}/>
         <button onClick={() => {
-          Filter(titleSearch, tagsSearch, setItemList);}}>
-          Submit Query
+          Filter(titleSearch, tagsSearch, swimSets, setItemList);}}>
+          Search
         </button>
         <div className="App-displaySwimSetCards">{itemList}</div>
       </header>
