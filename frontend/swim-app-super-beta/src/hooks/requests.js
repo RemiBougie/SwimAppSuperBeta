@@ -36,10 +36,19 @@ async function getAllSwimSets (setSwimSets) {
             })
             .then(data => {
                 console.log("Data from S3", data);
-                setSwimSets(data);
-            })
-            .catch(error => {
-                console.error("Something didn't work right...", error)
+                let parsedData = []; //JSON.stringify(data);
+                
+                for (let i=0; i<data.length; i++) {
+                    if (data[i].length > 0) {
+                        parsedData.push(JSON.parse(JSON.stringify(data[i])))
+                    }
+                }
+
+                parsedData = JSON.parse(JSON.stringify(parsedData));
+                
+                console.log("parsedData: ", parsedData)
+                console.log(typeof parsedData);
+                setSwimSets(parsedData);
             })
         } catch (error) {
             console.error(error)
