@@ -8,8 +8,8 @@ const isMock = process.env.REACT_APP_MOCK === 'true';
 } */
 
 //-- GET ------------------------------------------------------------------------------------------------------
-async function getAllSwimSets (setSwimSets) {
-    //replace with API call eventually 
+async function getAllSwimSets (setSwimSets, setLoading, setItemList, generateSwimSetCards) {
+    //console.log("In getAllSwimSets");
     if (isMock) {
         console.log('Environment: ', process.env.NODE_ENV)
         console.log('apiUrl: ', apiUrl)
@@ -31,29 +31,53 @@ async function getAllSwimSets (setSwimSets) {
                     console.log(response.ok);
                     throw new Error("Something don't work right...");
                 }
-                console.log("response:", response);
+                //console.log("response:", response);
                 return response.json();
             })
             .then(data => {
-                console.log("Data from S3", data);
+                //console.log("Data from S3", data);
+                //console.log("Raw data is of type: ", typeof data)
                 let parsedData = []; //JSON.stringify(data);
+                //data = JSON.parse(JSON.stringify(data));
                 
-                for (let i=0; i<data.length; i++) {
-                    if (data[i].length > 0) {
+                for (const rawObj of data) {
+                    /*if (data[i].length > 0) {
                         parsedData.push(JSON.parse(JSON.stringify(data[i])))
+                    }*/
+                    if (rawObj.length > 0) {
+                        let obj = JSON.parse(rawObj);
+                        //let obj = rawObj
+                        //console.log("obj: ", obj);
+                        //console.log(typeof obj);
+                        let convertedDataObj = {
+                            id: obj["id"],
+                            owner: obj["owner"],
+                            swimSet_title: obj["swimSet_title"],
+                            body: obj["body"],
+                            notes: obj["notes"],
+                            swimSet_tags: obj["swimSet_tags"],
+                            favorite: obj["favorite"],
+                            rating: obj["rating"]
+                        };
+                        //console.log("convertedDataObj", convertedDataObj);
+                        parsedData.push(convertedDataObj);
                     }
+                    
                 }
 
-                parsedData = JSON.parse(JSON.stringify(parsedData));
+                //parsedData = JSON.parse(parsedData);
                 
-                console.log("parsedData: ", parsedData)
-                console.log(typeof parsedData);
+                //console.log("parsedData: ", parsedData)
+                //console.log(typeof parsedData);
                 setSwimSets(parsedData);
+                setLoading(false);
+                setItemList(generateSwimSetCards(parsedData));
             })
         } catch (error) {
             console.error(error)
         }
     }
+    //return swimSets;
 };
 
 /*

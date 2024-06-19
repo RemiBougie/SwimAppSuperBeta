@@ -1,6 +1,6 @@
 import React from 'react';
 import Checkbox from './checkbox';
-import * as allTags from '../allTags';
+import * as allTags from '../../allTags';
 
 export default function TagSelection({ tagsSearch, setTagsSearch }) {
     // needed for the display
@@ -8,16 +8,17 @@ export default function TagSelection({ tagsSearch, setTagsSearch }) {
 
     let div = [];
 
-    console.log("allTags", tagsJSON);
-    console.log("tagsSearch", tagsSearch);
+    //console.log("allTags", tagsJSON);
+    //console.log("tagsSearch", tagsSearch);
 
     for (const property in tagsJSON) {
         let subdiv = [];
         let category = tagsJSON[property];
-        subdiv = [...subdiv, <h3>{property}</h3>]
+        subdiv = [...subdiv, <h3 key={`label_${property}`}>{property}</h3>]
         for (const label in category) {
             subdiv = [...subdiv, 
                 <Checkbox 
+                    id={`search_${label}`}
                     className="App-Checkbox"
                     category={property}
                     label={label} 
@@ -25,10 +26,10 @@ export default function TagSelection({ tagsSearch, setTagsSearch }) {
                     tagsSearch={tagsSearch}
                     setTagsSearch={setTagsSearch}/>]
         }
-        div = [...div, <div className="App-checkboxList">{subdiv}</div>];
+        div = [...div, <div className="App-checkboxList" key={`div_${property}`}>{subdiv}</div>];
     }
 
-    console.log(tagsSearch);
+    //console.log(tagsSearch);
     return (<div className="App-tagSelection">{div}</div>);
 
 }

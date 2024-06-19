@@ -1,5 +1,5 @@
 //import { mockSwimSets } from '../mockData/mockSwimSets.js';
-import SwimSetCard from '../components/swimSetCard';
+import SwimSetCard from '../components/swimSets/swimSetCard';
 
 export default function Filter (titleSearch='', tagsSearch, swimSets, setItems) {
     let user_id="RemiB123";
@@ -8,7 +8,7 @@ export default function Filter (titleSearch='', tagsSearch, swimSets, setItems) 
     //titleSearch = titleSearch.toLowerCase();
     let selectedTags = findTrueTags(tagsSearch);
 
-    console.log("selected tags: ", selectedTags);
+    //console.log("selected tags: ", selectedTags);
 
     function titleFilter(data, user_id, title) {
         return data.filter(swimSet => swimSet.owner.includes(user_id))
@@ -23,15 +23,15 @@ export default function Filter (titleSearch='', tagsSearch, swimSets, setItems) 
 
     function findTrueTags(tagsArg) {
         let tags = [];
-        console.log('TESTING MY FINDTRUETAGS FUNCTION');
-        console.log('tagsSearch in the function:', tagsArg)
+        //console.log('TESTING MY FINDTRUETAGS FUNCTION');
+        //console.log('tagsSearch in the function:', tagsArg)
         for (const property in tagsArg) {
             let category = tagsArg[property];
-            console.log("property:", property);
-            console.log("category: ", category);
+            //console.log("property:", property);
+            //console.log("category: ", category);
             for (const label in category) {
                 if (tagsArg[property][label]) {
-                    console.log("label:", label);
+                    //console.log("label:", label);
                     tags = [...tags, label];
                 }
             }
@@ -42,7 +42,7 @@ export default function Filter (titleSearch='', tagsSearch, swimSets, setItems) 
     let titleMatches = titleFilter(swimSets, user_id, titleSearch);
     let matches = tagsFilter(titleMatches, user_id, selectedTags);
 
-    console.log("matches:", matches);
+    //console.log("matches:", matches);
 
     setItems(matches.map((item)=>{
         return <SwimSetCard 

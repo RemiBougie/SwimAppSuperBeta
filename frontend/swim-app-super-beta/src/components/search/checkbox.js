@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-export default function Checkbox ({ category, label, value, tagsSearch, setTagsSearch }) {
+export default function Checkbox ({ id, category, label, value, tagsSearch, setTagsSearch }) {
     // copy current JSON of current selection to temp variable that will be updated with the selection
     let temp = Object.assign({}, tagsSearch);
     //let [IAmCategory, setIAmCategory] = useState(category);
@@ -10,7 +10,7 @@ export default function Checkbox ({ category, label, value, tagsSearch, setTagsS
     let [checked, setChecked] = useState(false);
 
     return (
-        <label className="App-Checkbox">
+        <label className="App-Checkbox" key={id}>
             <input 
                 type="checkbox" 
                 checked={checked} 

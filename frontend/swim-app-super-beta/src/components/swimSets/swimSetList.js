@@ -1,7 +1,7 @@
 import React from 'react';
-import '../App.css';
+//import '../App.css';
 
-export default function SwimSetList ({ swimSet }) {
+export default function SwimSetList ({ swimSet_id, swimSet }) {
     let groupNames = Object.keys(swimSet);
 
     if (groupNames.length > 1) {
@@ -10,7 +10,7 @@ export default function SwimSetList ({ swimSet }) {
                 <ul>
                     {groupNames.map((groupName)=>{
                         return (
-                            <li className="App-groupCard">
+                            <li className="App-groupCard" key={`${swimSet_id}_${groupName}`}>
                                 <p style={{fontWeight: "bold"}}>{groupName}</p>
                                 <p style={{display: "flex", textAlign: "justify", textJustify: "left", justifyContent: "center"}}>{swimSet[groupName]}</p>
                             </li>
@@ -22,7 +22,7 @@ export default function SwimSetList ({ swimSet }) {
     } else {
         return (
             <section className="App-swimSetList2">
-                <div className="App-groupCard">
+                <div className="App-groupCard" key={`${swimSet_id}`}>
                     <p style={{fontWeight: "bold"}}>{groupNames[0]}</p>
                     <p style={{display: "flex", textAlign: "justify", textJustify: "left", justifyContent: "center"}}>{swimSet[groupNames[0]]}</p>
                 </div>
