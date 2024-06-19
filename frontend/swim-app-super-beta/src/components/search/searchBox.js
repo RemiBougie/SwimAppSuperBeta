@@ -1,5 +1,5 @@
 import React from 'react';
-import '../App.css'
+//import '../../App.css';
 
 export default function SearchBox ({ searchCriteria, search, setSearch }) {
     return (
