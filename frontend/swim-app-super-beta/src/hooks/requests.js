@@ -1,24 +1,13 @@
 const apiUrl = process.env.REACT_APP_API_URL;
 const isMock = process.env.REACT_APP_MOCK === 'true';
 
-/* if (isMock) {
-    const mockSwimSets = require('../mockData/mockSwimSets.js'); 
-    const mockSwimPractices = require('../mockData/mockSwimPractices.js');
-    //const mockSwimSeasons = require ('../mockData/mockSwimSeasons.js');
-} */
-
 //-- GET ------------------------------------------------------------------------------------------------------
 async function getAllSwimSets (setSwimSets, setLoading, setItemList, generateSwimSetCards) {
-    //console.log("In getAllSwimSets");
     if (isMock) {
         console.log('Environment: ', process.env.NODE_ENV)
-        console.log('apiUrl: ', apiUrl)
         console.log('isMock: ', typeof isMock)
-        console.log('In the isMock=true statement')
         const { mockSwimSets } = require('../mockData/mockSwimSets');
-        console.log(mockSwimSets);
         setSwimSets(mockSwimSets);
-        //return mockSwimSets;
     } else {
         try {
             fetch(apiUrl+'swimSets', {
@@ -31,24 +20,14 @@ async function getAllSwimSets (setSwimSets, setLoading, setItemList, generateSwi
                     console.log(response.ok);
                     throw new Error("Something don't work right...");
                 }
-                //console.log("response:", response);
                 return response.json();
             })
             .then(data => {
-                //console.log("Data from S3", data);
-                //console.log("Raw data is of type: ", typeof data)
-                let parsedData = []; //JSON.stringify(data);
-                //data = JSON.parse(JSON.stringify(data));
+                let parsedData = []; 
                 
                 for (const rawObj of data) {
-                    /*if (data[i].length > 0) {
-                        parsedData.push(JSON.parse(JSON.stringify(data[i])))
-                    }*/
                     if (rawObj.length > 0) {
                         let obj = JSON.parse(rawObj);
-                        //let obj = rawObj
-                        //console.log("obj: ", obj);
-                        //console.log(typeof obj);
                         let convertedDataObj = {
                             id: obj["id"],
                             owner: obj["owner"],
@@ -59,16 +38,10 @@ async function getAllSwimSets (setSwimSets, setLoading, setItemList, generateSwi
                             favorite: obj["favorite"],
                             rating: obj["rating"]
                         };
-                        //console.log("convertedDataObj", convertedDataObj);
                         parsedData.push(convertedDataObj);
                     }
                     
                 }
-
-                //parsedData = JSON.parse(parsedData);
-                
-                //console.log("parsedData: ", parsedData)
-                //console.log(typeof parsedData);
                 setSwimSets(parsedData);
                 setLoading(false);
                 setItemList(generateSwimSetCards(parsedData));
@@ -77,7 +50,6 @@ async function getAllSwimSets (setSwimSets, setLoading, setItemList, generateSwi
             console.error(error)
         }
     }
-    //return swimSets;
 };
 
 /*
@@ -143,4 +115,3 @@ export {
     deleteSwimSeason
     */
 }
-//*/

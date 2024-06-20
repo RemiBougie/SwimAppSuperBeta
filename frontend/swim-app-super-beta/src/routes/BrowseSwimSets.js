@@ -5,19 +5,10 @@ import SwimSetCard from '../components/swimSets/swimSetCard';
 import SearchBox from '../components/search/searchBox';
 import TagSelection from '../components/search/tagSelection';
 import Filter from '../hooks/filter';
-//import { mockSwimSets } from './mockData/mockSwimSets.js';
 import * as allTags from '../allTags';
 import { getAllSwimSets } from '../hooks/requests'
 
-function generateSwimSetCards(swimSets) { //}, setItemList) {
-  //console.log("allSwimSets passed to generateSwimSetCards: ", swimSets);
-  /*setItemList(swimSets.map((item)=>{
-    return <SwimSetCard 
-    swimSet_title={item.swimSet_title} 
-    swimSet_tags={item.swimSet_tags}
-    swimSet={item.body} 
-    swimSet_notes={item.notes} />})
-  )*/
+export function generateSwimSetCards(swimSets) {
   return swimSets.map((item)=>{
     return <SwimSetCard 
     swimSet_id={item.id}
@@ -27,7 +18,7 @@ function generateSwimSetCards(swimSets) { //}, setItemList) {
     swimSet_notes={item.notes} />})
 }
 
-function BrowseSwimSets() {
+export default function BrowseSwimSets() {
   let [loading, setLoading] = useState(true);
 
   let [titleSearch, setTitleSearch] = useState('');
@@ -36,16 +27,8 @@ function BrowseSwimSets() {
   let [itemList, setItemList] = useState(null);
 
   useEffect(() => {
-    //console.log("In the useEffect block of code!");
     getAllSwimSets(setSwimSets, setLoading, setItemList, generateSwimSetCards);
-    //.then((allSwimSets) => {generateSwimSetCards(allSwimSets, setItemList)});
-    //setTimeout(() => {setLoading(false)}, "1000");
   }, []);
-
-  //console.log("swimSets", swimSets);
-  //console.log("itemList", itemList);
-
-  //let [itemList, setItemList] = useState(generateSwimSetCards(swimSets, setItemList)};
 
   if (loading) {
     return <h2>Loading...</h2>
@@ -64,7 +47,7 @@ function BrowseSwimSets() {
           tagsSearch={tagsSearch}
           setTagsSearch={setTagsSearch}/>
         <button onClick={() => {
-          Filter(titleSearch, tagsSearch, swimSets, setItemList);}}>
+          Filter(titleSearch, tagsSearch, swimSets, setItemList, generateSwimSetCards);}}>
           Search
         </button>
         <div className="App-displaySwimSetCards">{ itemList }</div>
@@ -72,5 +55,3 @@ function BrowseSwimSets() {
     </div>
   );
 }
-
-export default BrowseSwimSets;

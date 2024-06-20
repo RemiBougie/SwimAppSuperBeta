@@ -7,11 +7,17 @@ import 'tachyons';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import BrowseSwimSets from './routes/BrowseSwimSets';
+import ErrorPage from './ErrorPage';
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <BrowseSwimSets/>
+    element: <BrowseSwimSets />,
+    errorElement: <ErrorPage />
+  },
+  {
+    path: "/BrowseSwimSets",
+    element: <BrowseSwimSets />
   }
 ])
 

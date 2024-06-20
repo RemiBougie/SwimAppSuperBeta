@@ -154,3 +154,8 @@ p {
   justify-content: left;
   white-space: pre-wrap;
 }
+
+h1 {
+  text-align: center;
+  justify-content: center;
+}
