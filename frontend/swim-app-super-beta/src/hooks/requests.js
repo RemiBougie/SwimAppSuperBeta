@@ -8,6 +8,8 @@ async function getAllSwimSets (setSwimSets, setLoading, setItemList, generateSwi
         console.log('isMock: ', typeof isMock)
         const { mockSwimSets } = require('../mockData/mockSwimSets');
         setSwimSets(mockSwimSets);
+        setLoading(false);
+        setItemList(generateSwimSetCards(mockSwimSets));
     } else {
         try {
             fetch(apiUrl+'swimSets', {
