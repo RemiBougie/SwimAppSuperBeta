@@ -1,14 +1,16 @@
 import React from 'react';
-import { Outlet, Link } from 'react-router-dom';
+import { Outlet, Link, useLoaderData } from 'react-router-dom';
 import '../App.css';
 import { getAllSwimSets } from '../hooks/requests'
 
 export async function loader() {
-    const allSwimSets = getAllSwimSets()
-
+    const allSwimSets = await getAllSwimSets();
+    return allSwimSets;
 }
 
 export default function Root() {
+    const allSwimSets = useLoaderData();
+    console.log("allSwimSets in Root(): ", allSwimSets);
     return(
         <div id="root">
             <div id="header">

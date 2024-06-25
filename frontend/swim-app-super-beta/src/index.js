@@ -6,7 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import 'tachyons';
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import Root from './routes/Root';
+import Root, { loader as rootLoader } from './routes/Root';
 import BrowseSwimSets from './routes/BrowseSwimSets';
 import ErrorPage from './ErrorPage';
 
@@ -37,10 +37,12 @@ const router = createBrowserRouter([
     path: "/",
     element: <Root />,
     errorElement: <ErrorPage />,
+    loader: rootLoader,
     children: [
       {
         path: "/BrowseSwimSets",
-        element: <BrowseSwimSets />
+        element: <BrowseSwimSets />,
+        loader: rootLoader
       }
     ]
   },

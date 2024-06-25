@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useLoaderData } from 'react-router-dom';
 
 import '../App.css';
 import SwimSetCard from '../components/swimSets/swimSetCard';
@@ -6,9 +7,15 @@ import SearchBox from '../components/search/searchBox';
 import TagSelection from '../components/search/tagSelection';
 import Filter from '../hooks/filter';
 import * as allTags from '../allTags';
-import { getAllSwimSets } from '../hooks/requests'
+import { getAllSwimSets } from '../hooks/requests';
+
+/*export function loader() {
+  const allSwimSets = use
+}
+*/
 
 export function generateSwimSetCards(swimSets) {
+  console.log("swimSets in generateSwimSetCards: ", swimSets);
   return swimSets.map((item)=>{
     return <SwimSetCard 
     swimSet_id={item.id}
@@ -23,11 +30,12 @@ export default function BrowseSwimSets() {
 
   let [titleSearch, setTitleSearch] = useState('');
   let [tagsSearch, setTagsSearch] = useState(allTags["allTags"]);
-  let [swimSets, setSwimSets] = useState([]);
-  let [itemList, setItemList] = useState(null);
+  let [swimSets, setSwimSets] = useState(useLoaderData());
+  console.log("swimSets state variable: ", swimSets);
+  let [itemList, setItemList] = useState(generateSwimSetCards(swimSets));
 
   useEffect(() => {
-    getAllSwimSets(setSwimSets, setLoading, setItemList, generateSwimSetCards);
+    setLoading(false);
   }, []);
 
   if (loading) {

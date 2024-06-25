@@ -2,17 +2,19 @@ const apiUrl = process.env.REACT_APP_API_URL;
 const isMock = process.env.REACT_APP_MOCK === 'true';
 
 //-- GET ------------------------------------------------------------------------------------------------------
-async function getAllSwimSets (setSwimSets, setLoading, setItemList, generateSwimSetCards) {
+async function getAllSwimSets () { //(setSwimSets, setLoading, setItemList, generateSwimSetCards) {
     if (isMock) {
         console.log('Environment: ', process.env.NODE_ENV)
         console.log('isMock: ', typeof isMock)
         const { mockSwimSets } = require('../mockData/mockSwimSets');
-        setSwimSets(mockSwimSets);
-        setLoading(false);
-        setItemList(generateSwimSetCards(mockSwimSets));
+        console.log("MOCK DATA: ", mockSwimSets);
+        return mockSwimSets
+        //setSwimSets(mockSwimSets);
+        //setLoading(false);
+        //setItemList(generateSwimSetCards(mockSwimSets));
     } else {
         try {
-            fetch(apiUrl+'swimSets', {
+            return fetch(apiUrl+'swimSets', {
                 'headers': {
                     'Content-Type': 'application/json'
                 }
@@ -44,9 +46,10 @@ async function getAllSwimSets (setSwimSets, setLoading, setItemList, generateSwi
                     }
                     
                 }
-                setSwimSets(parsedData);
-                setLoading(false);
-                setItemList(generateSwimSetCards(parsedData));
+                //setSwimSets(parsedData);
+                //setLoading(false);
+                //setItemList(generateSwimSetCards(parsedData));
+                return parsedData;
             })
         } catch (error) {
             console.error(error)
