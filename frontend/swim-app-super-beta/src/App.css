@@ -55,6 +55,15 @@
   overflow-x: scroll;
 }
 
+.App-displaySwimPracticeCards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: fit-content;
+  overflow-x: scroll;
+}
+
 .App-card {
   color: green;
   background-color:aqua;
@@ -62,10 +71,21 @@
   display: flex;
   font-size: 12;
   width: 400px;
-  height:fit-content;
+  height: fit-content;
   padding: 10px;
   margin: 10px;
   overflow: hidden;
+}
+
+.practice-card {
+  background-color: red;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  padding: 10px;
+  margin: 10px;
+  overflow: hidden;
+  width: 500px;
 }
 
 .App-tagCard {
@@ -110,6 +130,10 @@
   width: fit-content;
 }
 
+.menu {
+  justify-content: left;
+}
+
 ul {
   display: flex;
   flex-direction: row;
@@ -118,8 +142,6 @@ ul {
   height: fit-content;
   width: max-content;
   align-items: center;
-  padding:0;
-  margin:0;
 }
 
 ::-webkit-scrollbar {
@@ -162,11 +184,16 @@ h1 {
 
 .contents {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: flex-start;
 }
 
 .sidebar {
   display: flex;
   flex-direction: row;
+}
+
+li {
+  margin: 10px;
+  padding: 10px;
 }

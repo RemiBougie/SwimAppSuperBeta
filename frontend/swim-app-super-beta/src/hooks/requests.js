@@ -57,12 +57,62 @@ async function getAllSwimSets () { //(setSwimSets, setLoading, setItemList, gene
     }
 };
 
-/*
 async function getAllSwimPractices () {
-    //replace with API call eventually
-    return mockSwimPractices
+    if (isMock) {
+        console.log('Environment: ', process.env.NODE_ENV)
+        console.log('isMock: ', typeof isMock)
+        const { mockSwimPractices } = require('../mockData/mockSwimPractices');
+        console.log("MOCK DATA: ", mockSwimPractices);
+        return mockSwimPractices;
+        //setSwimSets(mockSwimSets);
+        //setLoading(false);
+        //setItemList(generateSwimSetCards(mockSwimSets));
+    } else {
+        try {
+            return fetch(apiUrl+'swimPractices', {
+                'headers': {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    console.log(response.ok);
+                    throw new Error("Something don't work right...");
+                }
+                return response.json();
+            })
+            .then(data => {
+                let parsedData = []; 
+                
+                for (const rawObj of data) {
+                    if (rawObj.length > 0) {
+                        let obj = JSON.parse(rawObj);
+                        let convertedDataObj = {
+                            id: obj["id"],
+                            owner: obj["owner"],
+                            swimPractice_title: obj["swimPractice_title"],
+                            body: obj["body"],
+                            notes: obj["notes"],
+                            swimPractice_tags: obj["swimPractice_tags"],
+                            favorite: obj["favorite"],
+                            rating: obj["rating"]
+                        };
+                        parsedData.push(convertedDataObj);
+                    }
+                    
+                }
+                //setSwimSets(parsedData);
+                //setLoading(false);
+                //setItemList(generateSwimSetCards(parsedData));
+                return parsedData;
+            })
+        } catch (error) {
+            console.error(error)
+        }
+    }
 };
 
+/*
 async function getAllSwimSeasons () {
     //replace with API call eventually
     return mockSwimSeason
@@ -106,8 +156,8 @@ async function deleteSwimSeason (swimSeason) {
 //-- EXPORT ---------------------------------------------------------------------------------------------------------
 export {
     getAllSwimSets,
-    /*
     getAllSwimPractices,
+    /*
     getAllSwimSeasons,
 
     postSwimSet,

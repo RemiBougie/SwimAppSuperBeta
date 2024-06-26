@@ -8,6 +8,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import Root, { loader as rootLoader } from './routes/Root';
 import BrowseSwimSets from './routes/BrowseSwimSets';
+import BrowseSwimPractices from './routes/BrowseSwimPractices';
+import Testing from './routes/Testing';
 import ErrorPage from './ErrorPage';
 
 /* 
@@ -43,6 +45,15 @@ const router = createBrowserRouter([
         path: "/BrowseSwimSets",
         element: <BrowseSwimSets />,
         loader: rootLoader
+      },
+      {
+        path: "/BrowseSwimPractices",
+        element: <BrowseSwimPractices />,
+        loader: rootLoader
+      },
+      {
+        path: "/testing",
+        element: <Testing />
       }
     ]
   },

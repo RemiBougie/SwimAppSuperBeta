@@ -30,7 +30,7 @@ export default function BrowseSwimSets() {
 
   let [titleSearch, setTitleSearch] = useState('');
   let [tagsSearch, setTagsSearch] = useState(allTags["allTags"]);
-  let [swimSets, setSwimSets] = useState(useLoaderData());
+  let [swimSets, setSwimSets] = useState(useLoaderData()[0]);
   console.log("swimSets state variable: ", swimSets);
   let [itemList, setItemList] = useState(generateSwimSetCards(swimSets));
 
