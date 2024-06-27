@@ -1,4 +1,12 @@
-export const mockSwimSeasons = [
+const today = new Date();
+
+const tomorrow = new Date();
+tomorrow.setDate(today.getDate() + 1);
+
+const inTwoDays = new Date();
+inTwoDays.setDate(tomorrow.getDate() + 1);
+
+export const mockSwimSeason =
     {
         "id": "testSeason",
         "author": "RemiB123",
@@ -9,23 +17,22 @@ export const mockSwimSeasons = [
         "rating": 4.0,
         "body": [
             {
-                "datetime": "2024-06-26T13:47:19.206Z",
+                "datetime": today,
                 "planned": "cdef",
                 "completed": "cdef",
                 "comments": "Good set of goal 50s"
             },
             {
-                "datetime": "2024-06-27T13:47:19.206Z",
+                "datetime": tomorrow,
                 "planned": "defg",
                 "completed": "efgh",
                 "comments": "Completely changed the plan today"
             },
             {
-                "datetime": "2024-06-28T13:47:19.206Z",
+                "datetime": inTwoDays,
                 "planned": "efgh",
                 "completed": null,
                 "comments": "To be replaced by TBD"
             }
         ]
     }
-]

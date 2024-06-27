@@ -9,6 +9,8 @@ import TagSelection from '../components/search/tagSelection';
 import Filter from '../hooks/filter';
 import * as allTags from '../allTags';
 
+
+// TO DO: MOVE THIS TO SwimPracticeCard.js and import it 
 export function generateSwimPracticeCards(swimPractices, allSwimSets) {
     //const allSwimSets = useLoaderData()[0];
     return swimPractices.map((item) => {

@@ -1,18 +1,20 @@
 import React from 'react';
 import { Outlet, Link, useLoaderData } from 'react-router-dom';
 import '../App.css';
-import { getAllSwimSets, getAllSwimPractices } from '../hooks/requests'
+import { getAllSwimSets, getAllSwimPractices, getAllSwimSeasons } from '../hooks/requests'
 
 export async function loader() {
     const allSwimSets = await getAllSwimSets();
     const allSwimPractices = await getAllSwimPractices();
-    return [allSwimSets, allSwimPractices];
+    const swimSeason = await getAllSwimSeasons()
+    return [allSwimSets, allSwimPractices, swimSeason];
 }
 
 export default function Root() {
-    const [allSwimSets, allSwimPractices] = useLoaderData();
+    const [allSwimSets, allSwimPractices, swimSeason] = useLoaderData();
     console.log("allSwimSets in Root(): ", allSwimSets);
     console.log("allSwimPractices in Root(): ", allSwimPractices);
+    console.log("swimSeason in Root(): ", swimSeason);
     return(
         <div id="root">
             <div id="header">

@@ -112,12 +112,26 @@ async function getAllSwimPractices () {
     }
 };
 
-/*
 async function getAllSwimSeasons () {
-    //replace with API call eventually
-    return mockSwimSeason
+    if (isMock) {
+        console.log('Environment: ', process.env.NODE_ENV)
+        console.log('isMock: ', typeof isMock)
+        const { mockSwimSeason } = require('../mockData/mockSwimSeason');
+        console.log("MOCK DATA: ", mockSwimSeason);
+        return mockSwimSeason;
+        //setSwimSets(mockSwimSets);
+        //setLoading(false);
+        //setItemList(generateSwimSetCards(mockSwimSets));
+    } else {
+        try {
+            throw new Error("Live data isn't set up yet, switch to mock");
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }
 
+/*
 //-- POST -----------------------------------------------------------------------------------------------------
 async function postSwimSet (swimSet) {
     //replace with API call eventually
@@ -157,9 +171,9 @@ async function deleteSwimSeason (swimSeason) {
 export {
     getAllSwimSets,
     getAllSwimPractices,
-    /*
     getAllSwimSeasons,
 
+    /*
     postSwimSet,
     postSwimPractice,
     postSwimSeason,
