@@ -8,19 +8,12 @@ import SideBySideGrid from '../components/swimSeasons/sideBySideGrid';
 //import CalendarItem from '../components/swimSeasons/calendarItem';
 //import { mockSwimSeason } from '../mockData/mockSwimSeason';
 
-export default function Testing() {
+export default function ViewSwimSeason() {
     let swimSeason = useLoaderData()[2];
-
-    let [view, setView] = useState('calendar');
-
-    console.log("view: ", view);
 
     return(
         <div className="App">
             <header className="App-header">
-                <button onClick={() => {
-                    setView(view==='calendar' ? 'side-by-side' : 'calendar')
-                }}>{view==='calendar' ? 'side-by-side' : 'calendar'}</button>
                 <CalendarView swimSeason={swimSeason} />
                 <SideBySideGrid swimSeason={swimSeason} />
             </header>
