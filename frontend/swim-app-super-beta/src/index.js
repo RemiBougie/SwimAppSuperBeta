@@ -9,7 +9,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root, { loader as rootLoader } from './routes/Root';
 import BrowseSwimSets from './routes/BrowseSwimSets';
 import BrowseSwimPractices from './routes/BrowseSwimPractices';
-import Testing from './routes/Testing';
+import ViewSwimSeason from './routes/ViewSwimSeason';
 import ErrorPage from './ErrorPage';
 
 /* 
@@ -52,8 +52,8 @@ const router = createBrowserRouter([
         loader: rootLoader
       },
       {
-        path: "/testing",
-        element: <Testing />,
+        path: "/ViewSwimSeason",
+        element: <ViewSwimSeason />,
         loader: rootLoader
       }
     ]

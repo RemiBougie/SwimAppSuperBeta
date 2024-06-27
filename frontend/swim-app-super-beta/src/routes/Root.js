@@ -32,7 +32,7 @@ export default function Root() {
                                 <Link to={`BrowseSwimPractices/`}>Browse Swim Practices</Link>
                             </li>
                             <li>
-                                <Link to={`testing/`}>Testing</Link>
+                                <Link to={`ViewSwimSeason/`}>View Swim Season</Link>
                             </li>
                         </ul>
                     </nav>
