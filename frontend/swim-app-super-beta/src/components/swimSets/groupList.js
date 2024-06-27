@@ -1,7 +1,6 @@
 import React from 'react';
-//import '../App.css';
 
-export default function SwimSetList ({ swimSet_id, swimSet }) {
+export default function GroupList ({ swimSet_id, swimSet }) {
     let groupNames = Object.keys(swimSet);
 
     if (groupNames.length > 1) {

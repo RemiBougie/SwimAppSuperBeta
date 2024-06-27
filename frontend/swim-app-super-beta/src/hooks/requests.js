@@ -1,27 +1,20 @@
 const apiUrl = process.env.REACT_APP_API_URL;
 const isMock = process.env.REACT_APP_MOCK === 'true';
 
-/* if (isMock) {
-    const mockSwimSets = require('../mockData/mockSwimSets.js'); 
-    const mockSwimPractices = require('../mockData/mockSwimPractices.js');
-    //const mockSwimSeasons = require ('../mockData/mockSwimSeasons.js');
-} */
-
 //-- GET ------------------------------------------------------------------------------------------------------
-async function getAllSwimSets (setSwimSets, setLoading, setItemList, generateSwimSetCards) {
-    //console.log("In getAllSwimSets");
+async function getAllSwimSets () { //(setSwimSets, setLoading, setItemList, generateSwimSetCards) {
     if (isMock) {
         console.log('Environment: ', process.env.NODE_ENV)
-        console.log('apiUrl: ', apiUrl)
         console.log('isMock: ', typeof isMock)
-        console.log('In the isMock=true statement')
         const { mockSwimSets } = require('../mockData/mockSwimSets');
-        console.log(mockSwimSets);
-        setSwimSets(mockSwimSets);
-        //return mockSwimSets;
+        console.log("MOCK DATA: ", mockSwimSets);
+        return mockSwimSets
+        //setSwimSets(mockSwimSets);
+        //setLoading(false);
+        //setItemList(generateSwimSetCards(mockSwimSets));
     } else {
         try {
-            fetch(apiUrl+'swimSets', {
+            return fetch(apiUrl+'swimSets', {
                 'headers': {
                     'Content-Type': 'application/json'
                 }
@@ -31,24 +24,14 @@ async function getAllSwimSets (setSwimSets, setLoading, setItemList, generateSwi
                     console.log(response.ok);
                     throw new Error("Something don't work right...");
                 }
-                //console.log("response:", response);
                 return response.json();
             })
             .then(data => {
-                //console.log("Data from S3", data);
-                //console.log("Raw data is of type: ", typeof data)
-                let parsedData = []; //JSON.stringify(data);
-                //data = JSON.parse(JSON.stringify(data));
+                let parsedData = []; 
                 
                 for (const rawObj of data) {
-                    /*if (data[i].length > 0) {
-                        parsedData.push(JSON.parse(JSON.stringify(data[i])))
-                    }*/
                     if (rawObj.length > 0) {
                         let obj = JSON.parse(rawObj);
-                        //let obj = rawObj
-                        //console.log("obj: ", obj);
-                        //console.log(typeof obj);
                         let convertedDataObj = {
                             id: obj["id"],
                             owner: obj["owner"],
@@ -59,38 +42,96 @@ async function getAllSwimSets (setSwimSets, setLoading, setItemList, generateSwi
                             favorite: obj["favorite"],
                             rating: obj["rating"]
                         };
-                        //console.log("convertedDataObj", convertedDataObj);
                         parsedData.push(convertedDataObj);
                     }
                     
                 }
-
-                //parsedData = JSON.parse(parsedData);
-                
-                //console.log("parsedData: ", parsedData)
-                //console.log(typeof parsedData);
-                setSwimSets(parsedData);
-                setLoading(false);
-                setItemList(generateSwimSetCards(parsedData));
+                //setSwimSets(parsedData);
+                //setLoading(false);
+                //setItemList(generateSwimSetCards(parsedData));
+                return parsedData;
             })
         } catch (error) {
             console.error(error)
         }
     }
-    //return swimSets;
 };
 
-/*
 async function getAllSwimPractices () {
-    //replace with API call eventually
-    return mockSwimPractices
+    if (isMock) {
+        console.log('Environment: ', process.env.NODE_ENV)
+        console.log('isMock: ', typeof isMock)
+        const { mockSwimPractices } = require('../mockData/mockSwimPractices');
+        console.log("MOCK DATA: ", mockSwimPractices);
+        return mockSwimPractices;
+        //setSwimSets(mockSwimSets);
+        //setLoading(false);
+        //setItemList(generateSwimSetCards(mockSwimSets));
+    } else {
+        try {
+            return fetch(apiUrl+'swimPractices', {
+                'headers': {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    console.log(response.ok);
+                    throw new Error("Something don't work right...");
+                }
+                return response.json();
+            })
+            .then(data => {
+                let parsedData = []; 
+                
+                for (const rawObj of data) {
+                    if (rawObj.length > 0) {
+                        let obj = JSON.parse(rawObj);
+                        let convertedDataObj = {
+                            id: obj["id"],
+                            owner: obj["owner"],
+                            swimPractice_title: obj["swimPractice_title"],
+                            body: obj["body"],
+                            notes: obj["notes"],
+                            swimPractice_tags: obj["swimPractice_tags"],
+                            favorite: obj["favorite"],
+                            rating: obj["rating"]
+                        };
+                        parsedData.push(convertedDataObj);
+                    }
+                    
+                }
+                //setSwimSets(parsedData);
+                //setLoading(false);
+                //setItemList(generateSwimSetCards(parsedData));
+                return parsedData;
+            })
+        } catch (error) {
+            console.error(error)
+        }
+    }
 };
 
 async function getAllSwimSeasons () {
-    //replace with API call eventually
-    return mockSwimSeason
+    if (isMock) {
+        console.log('Environment: ', process.env.NODE_ENV)
+        console.log('isMock: ', typeof isMock)
+        const { mockSwimSeason } = require('../mockData/mockSwimSeason');
+        console.log("MOCK DATA: ", mockSwimSeason);
+        return mockSwimSeason;
+        //setSwimSets(mockSwimSets);
+        //setLoading(false);
+        //setItemList(generateSwimSetCards(mockSwimSets));
+    } else {
+        try {
+            throw new Error("Live data isn't set up yet, switch to mock");
+        } catch (error) {
+            console.error(error);
+        }
+    }
 }
 
+/*
 //-- POST -----------------------------------------------------------------------------------------------------
 async function postSwimSet (swimSet) {
     //replace with API call eventually
@@ -129,10 +170,10 @@ async function deleteSwimSeason (swimSeason) {
 //-- EXPORT ---------------------------------------------------------------------------------------------------------
 export {
     getAllSwimSets,
-    /*
     getAllSwimPractices,
     getAllSwimSeasons,
 
+    /*
     postSwimSet,
     postSwimPractice,
     postSwimSeason,
@@ -143,4 +184,3 @@ export {
     deleteSwimSeason
     */
 }
-//*/

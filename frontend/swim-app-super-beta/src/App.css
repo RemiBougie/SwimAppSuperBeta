@@ -55,6 +55,15 @@
   overflow-x: scroll;
 }
 
+.App-displaySwimPracticeCards {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: fit-content;
+  overflow-x: scroll;
+}
+
 .App-card {
   color: green;
   background-color:aqua;
@@ -62,10 +71,21 @@
   display: flex;
   font-size: 12;
   width: 400px;
-  height:fit-content;
+  height: fit-content;
   padding: 10px;
   margin: 10px;
   overflow: hidden;
+}
+
+.practice-card {
+  background-color: red;
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+  padding: 10px;
+  margin: 10px;
+  overflow: hidden;
+  width: 500px;
 }
 
 .App-tagCard {
@@ -110,6 +130,10 @@
   width: fit-content;
 }
 
+.menu {
+  justify-content: left;
+}
+
 ul {
   display: flex;
   flex-direction: row;
@@ -118,8 +142,6 @@ ul {
   height: fit-content;
   width: max-content;
   align-items: center;
-  padding:0;
-  margin:0;
 }
 
 ::-webkit-scrollbar {
@@ -153,4 +175,89 @@ p {
   text-align: center;
   justify-content: left;
   white-space: pre-wrap;
+}
+
+h1 {
+  text-align: center;
+  justify-content: center;
+}
+
+.contents {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: row;
+}
+
+li {
+  margin: 10px;
+  padding: 10px;
+}
+
+.calendar-container .react-calendar {
+  display: flex;
+  width: fit-content;
+  max-width: 100%;
+  flex-basis: 420px;
+  flex-direction: column;
+  flex-grow: 100;
+  padding-top: 1em;
+  margin: 10px;
+  justify-self: center;
+}
+
+.side-by-side-grid {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  max-width: 100%;
+}
+
+.side-by-side-headers {
+  display: flex;
+  position: sticky;
+  width: 100%;
+  justify-content: space-between;
+  background-color: blue;
+}
+
+.side-by-side-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.side-by-side-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+.side-by-side-date {
+  justify-content: left;
+  text-align: left;
+}
+
+.side-by-side-data {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%
+}
+
+.sbs-placeholder {
+  width: 25%;
+  background-color: cyan;
+  color: black;
+}
+
+h3 {
+  justify-content: center;
+  padding: 50px;
+  margin: 10px;
 }
