@@ -10,6 +10,7 @@ import Root, { loader as rootLoader } from './routes/Root';
 import BrowseSwimSets from './routes/BrowseSwimSets';
 import BrowseSwimPractices from './routes/BrowseSwimPractices';
 import ViewSwimSeason from './routes/ViewSwimSeason';
+import WriteSwimSet from './routes/WriteSwimSet';
 import ErrorPage from './ErrorPage';
 
 /* 
@@ -55,6 +56,10 @@ const router = createBrowserRouter([
         path: "/ViewSwimSeason",
         element: <ViewSwimSeason />,
         loader: rootLoader
+      },
+      {
+        path: "/WriteSwimSet",
+        element: <WriteSwimSet />
       }
     ]
   },

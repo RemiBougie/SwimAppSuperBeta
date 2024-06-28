@@ -260,3 +260,7 @@ h3 {
   justify-content: center;
   margin: 10px;
 }
+
+form {
+  width: 100%;
+}

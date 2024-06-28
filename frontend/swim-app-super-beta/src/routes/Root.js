@@ -34,6 +34,9 @@ export default function Root() {
                             <li>
                                 <Link to={`ViewSwimSeason/`}>View Swim Season</Link>
                             </li>
+                            <li>
+                                <Link to={`WriteSwimSet/`}>Write Swim Set</Link>
+                            </li>
                         </ul>
                     </nav>
                 </div>
