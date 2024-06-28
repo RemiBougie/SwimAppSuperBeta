@@ -65,22 +65,28 @@ export default function WriteSwimSet () {
     }
 
     return (
-        <form>
-            <label>Swim Set Title</label><br/>
-            <input type="text" id="swim-set-title" name="swim-set-title" /><br/>
-            <label>Categories</label><br/>
-            {tagSelection()}
-            <div className="App-swimSetList1">
-                {groups.map((obj) =>
-                    <WriteGroupCard group={obj} removeGroup={removeGroup} editGroup={editGroup}/>)
-                }
-            </div>
-            <button onClick={(e) => {
-                addGroup(e);
-                //e.preventDefault();
-                //setGroups([...groups, {id: groups.length, groupName: '', workout: ''}]);
-            }
-            }>+</button>
-        </form>
+        <div className="App">
+            <header className="App-header">
+                <form>
+                    <label>Swim Set Title</label><br/>
+                    <input type="text" id="swim-set-title" name="swim-set-title" /><br/>
+                    <label>Categories</label><br/>
+                    {tagSelection()}
+                    <div className="App-swimSetList1">
+                        {groups.map((obj) =>
+                            <WriteGroupCard group={obj} removeGroup={removeGroup} editGroup={editGroup}/>)
+                        }
+                    </div>
+                    <button onClick={(e) => {
+                        addGroup(e);
+                        //e.preventDefault();
+                        //setGroups([...groups, {id: groups.length, groupName: '', workout: ''}]);
+                    }
+                    }>+</button><br/>
+                    <label>Notes</label><br/>
+                    <input type="text" id="swim-set-notes" name="swim-set-notes" /><br/>
+                </form>
+            </header>
+        </div>
      )
 }
