@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useLoaderData } from 'react-router-dom';
 
+import { DataContext } from '../../routes/Root';
+
 export default function CalendarItem( { swimDay, date }) {
-    const swimPractice = useLoaderData()[1];
-    const practice = swimPractice.find(practice => practice.id === swimDay.planned);
+    const swimPractices = useContext(DataContext)["swimPractices"];
+    const practice = swimPractices.find(practice => practice.id === swimDay.planned);
     const completed = swimDay.completed !== null;
     let color = completed ? 'green' : 'orange';
     if (practice) {

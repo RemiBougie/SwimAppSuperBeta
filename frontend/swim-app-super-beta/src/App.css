@@ -161,6 +161,7 @@ ul {
 }
 
 .App-groupCard {
+  color: black;
   background-color: yellow;
   margin: 5px;
   padding: 5px;

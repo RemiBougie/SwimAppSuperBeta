@@ -1,15 +1,37 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import { useLoaderData } from 'react-router-dom';
 
 import CalendarView from '../components/swimSeasons/calendarView';
 import SideBySideGrid from '../components/swimSeasons/sideBySideGrid';
+
+import { DataContext } from './Root';
 //import CalendarItem from '../components/swimSeasons/calendarItem';
 //import { mockSwimSeason } from '../mockData/mockSwimSeason';
 
+export async function loader( { params } ) {
+    // a clumsy ass way of doing this but idk how else to get the id passed to ViewSwimSeason
+    console.log("id in viewSwimSetLoader: ", params.id)
+    return params.id
+}
+
 export default function ViewSwimSeason() {
-    let swimSeason = useLoaderData()[2];
+    //let id = "testSeason";
+    //let swimSeasons = useLoaderData()[2];
+    //let swimSeason = swimSeasons.find((season) => season["id"] === id)
+    let swimSeasons = useContext(DataContext)["swimSeasons"];
+    let id = useLoaderData();
+    console.log("swimSeasons in ViewSwimSeason: ", swimSeasons);
+    const swimSeason = swimSeasons.find(season => season["id"] === id)
+
+    //const swimSeason = useLoaderData();
+
+    if (!swimSeason) {
+        return(
+            <h1>Swim Season not found....</h1>
+        )
+    }
 
     return(
         <div className="App">

@@ -13,6 +13,8 @@ export default function Checkbox ({ id, category, label, value, tagsSearch, setT
         <label className="App-Checkbox" key={id}>
             <input 
                 type="checkbox" 
+                name={label}
+                id={label}
                 checked={checked} 
                 onChange={e => {
                     temp[IAmCategory][IAmLabel]=!checked;

@@ -6,16 +6,26 @@ export default function WriteGroupCard( {group, removeGroup, editGroup}) {
     return(
         <div className="App-groupCard" key={group['id']}>
             <label>Group Name</label>
-            <input type="text" value={group.groupName} onChange={(e) => {
-                //e.preventDefault();
-                let groupName = e.target.value;
-                editGroup(group['id'], groupName, group['workout']);
-            }}/>
+            <input 
+                type="text" 
+                value={group.groupName}
+                id={`${group['id']}_groupName`} 
+                onChange={(e) => {
+                    //e.preventDefault();
+                    let groupName = e.target.value;
+                    editGroup(group['id'], groupName, group['workout']);
+                }
+            }/>
             <label>Workout</label>
-            <input type="text" value={group.workout} onChange={(e) => {
-                let workout = e.target.value;
-                editGroup(group['id'], group['groupName'], workout);
-            }}/>
+            <input 
+                type="text" 
+                value={group.workout} 
+                id={`${group['id']}_workout`} 
+                onChange={(e) => {
+                    let workout = e.target.value;
+                    editGroup(group['id'], group['groupName'], workout);
+                }
+            }/>
             <button onClick={(e)=>{
                 removeGroup(group['id'])
             }}>X</button>

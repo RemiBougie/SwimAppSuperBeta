@@ -19,6 +19,8 @@ export default function TagSelection({ tagsSearch, setTagsSearch }) {
             subdiv = [...subdiv, 
                 <Checkbox 
                     id={`search_${label}`}
+                    key={`${label}`}
+                    name={`${label}`}
                     className="App-Checkbox"
                     category={property}
                     label={label} 
