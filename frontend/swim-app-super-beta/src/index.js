@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext, useContext } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
@@ -9,7 +9,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Root, { loader as rootLoader } from './routes/Root';
 import BrowseSwimSets from './routes/BrowseSwimSets';
 import BrowseSwimPractices from './routes/BrowseSwimPractices';
-import ViewSwimSeason from './routes/ViewSwimSeason';
+import BrowseSwimSeasons from './routes/BrowseSwimSeasons';
+import ViewSwimSeason, { loader as viewSwimSeasonLoader} from './routes/ViewSwimSeason';
+import WriteSwimSet from './routes/WriteSwimSet';
 import ErrorPage from './ErrorPage';
 
 /* 
@@ -52,9 +54,18 @@ const router = createBrowserRouter([
         loader: rootLoader
       },
       {
-        path: "/ViewSwimSeason",
-        element: <ViewSwimSeason />,
+        path: "/BrowseSwimSeasons",
+        element: <BrowseSwimSeasons />,
         loader: rootLoader
+      },
+      {
+        path: "/ViewSwimSeason/:id",
+        element: <ViewSwimSeason />,
+        loader: viewSwimSeasonLoader
+      },
+      {
+        path: "/WriteSwimSet",
+        element: <WriteSwimSet />
       }
     ]
   },

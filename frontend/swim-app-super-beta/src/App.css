@@ -161,6 +161,7 @@ ul {
 }
 
 .App-groupCard {
+  color: black;
   background-color: yellow;
   margin: 5px;
   padding: 5px;
@@ -259,4 +260,8 @@ li {
 h3 {
   justify-content: center;
   margin: 10px;
+}
+
+form {
+  width: 100%;
 }

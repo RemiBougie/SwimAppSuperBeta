@@ -1,12 +1,15 @@
 const apiUrl = process.env.REACT_APP_API_URL;
 const isMock = process.env.REACT_APP_MOCK === 'true';
 
+const { mockSwimSets } = require('../mockData/mockSwimSets');
+const { mockSwimPractices } = require('../mockData/mockSwimPractices');
+const { mockSwimSeasons } = require('../mockData/mockSwimSeasons');
+
 //-- GET ------------------------------------------------------------------------------------------------------
 async function getAllSwimSets () { //(setSwimSets, setLoading, setItemList, generateSwimSetCards) {
     if (isMock) {
         console.log('Environment: ', process.env.NODE_ENV)
         console.log('isMock: ', typeof isMock)
-        const { mockSwimSets } = require('../mockData/mockSwimSets');
         console.log("MOCK DATA: ", mockSwimSets);
         return mockSwimSets
         //setSwimSets(mockSwimSets);
@@ -61,7 +64,6 @@ async function getAllSwimPractices () {
     if (isMock) {
         console.log('Environment: ', process.env.NODE_ENV)
         console.log('isMock: ', typeof isMock)
-        const { mockSwimPractices } = require('../mockData/mockSwimPractices');
         console.log("MOCK DATA: ", mockSwimPractices);
         return mockSwimPractices;
         //setSwimSets(mockSwimSets);
@@ -83,8 +85,9 @@ async function getAllSwimPractices () {
             })
             .then(data => {
                 let parsedData = []; 
-                
+                console.log("raw swimPractices data: ", data)
                 for (const rawObj of data) {
+                    console.log("rawObj.length in getSwimPractices: ", rawObj.length)
                     if (rawObj.length > 0) {
                         let obj = JSON.parse(rawObj);
                         let convertedDataObj = {
@@ -116,28 +119,98 @@ async function getAllSwimSeasons () {
     if (isMock) {
         console.log('Environment: ', process.env.NODE_ENV)
         console.log('isMock: ', typeof isMock)
-        const { mockSwimSeason } = require('../mockData/mockSwimSeason');
-        console.log("MOCK DATA: ", mockSwimSeason);
-        return mockSwimSeason;
+        console.log("MOCK DATA: ", mockSwimSeasons);
+        return mockSwimSeasons;
         //setSwimSets(mockSwimSets);
         //setLoading(false);
         //setItemList(generateSwimSetCards(mockSwimSets));
     } else {
         try {
-            throw new Error("Live data isn't set up yet, switch to mock");
+            return fetch(apiUrl+'swimSeasons')
+            .then(response => {
+                if (!response.ok) {
+                    console.log(response.ok);
+                    throw new Error("Something don't work right...");
+                }
+                return response.json();
+            })
+            .then(data => {
+                let parsedData = []; 
+                console.log("Raw allSwimSeasons data: ", data);
+                
+                for (const rawObj of data) {
+                    console.log("rawObj.length: ", rawObj.length)
+                    if (rawObj.length > 0) {
+                        let obj = JSON.parse(rawObj);
+                        let rawBody = obj["body"]
+                        let parsedBody = []
+                        for (const swimDay of rawBody) {
+                            if (swimDay.length > 0) {
+                                let swimDayObj = JSON.parse(swimDay);
+                                let convertedSwimDay = {
+                                    id: swimDayObj["id"],
+                                    datetime: new Date(swimDayObj["datetime"]),
+                                    planned: swimDayObj["planned"],
+                                    completed: swimDayObj["completed"],
+                                    comments: swimDayObj["comments"]
+                                }
+                                parsedBody.push(convertedSwimDay);
+                            }
+                        }
+                        let convertedDataObj = {
+                            id: obj["id"],
+                            owner: obj["owner"],
+                            title: obj["title"],
+                            active: obj["active"],
+                            favorite: obj["favorite"],
+                            notes: obj["notes"],
+                            rating: obj["rating"],
+                            body: parsedBody
+                        };
+                        parsedData.push(convertedDataObj);
+                    }
+                    
+                }
+                //setSwimSets(parsedData);
+                //setLoading(false);
+                //setItemList(generateSwimSetCards(parsedData));
+                return parsedData;
+            })
         } catch (error) {
-            console.error(error);
+            console.error(error)
         }
     }
 }
 
-/*
+
 //-- POST -----------------------------------------------------------------------------------------------------
-async function postSwimSet (swimSet) {
+async function postSwimSet (data) {
     //replace with API call eventually
-    mockSwimSets.push(swimSet) // actually, check if it exists. If so, update, otherwise push
+    if(isMock) {
+        mockSwimSets.push(data); // actually, check if it exists. If so, update, otherwise push
+        console.log("mockSwimSets after post: ", mockSwimSets);
+        return { headers: {mock: "mock response"} }
+    } else {
+        return fetch(apiUrl+'swimSets', 
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then((response) => {
+            console.log(response);
+            return response.json()
+        })
+        .catch( error => 
+            {console.error("ERROR: ", error);}
+        )
+    }
+    
 }
 
+/*
 async function postSwimPractice (swimPractice) {
     //replace with API call eventually
     mockSwimPractices.push(swimPractice) // actually, check if it exists. If so, update, otherwise push
@@ -173,8 +246,8 @@ export {
     getAllSwimPractices,
     getAllSwimSeasons,
 
-    /*
     postSwimSet,
+    /*
     postSwimPractice,
     postSwimSeason,
     postSwimSeasonPlan,
