@@ -12,6 +12,7 @@ import { DataContext } from './Root';
 
 export async function loader( { params } ) {
     // a clumsy ass way of doing this but idk how else to get the id passed to ViewSwimSeason
+    // because I can't use useContext(DataContext) in this function
     console.log("id in viewSwimSetLoader: ", params.id)
     return params.id
 }

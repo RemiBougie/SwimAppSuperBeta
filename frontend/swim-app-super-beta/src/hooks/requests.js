@@ -190,6 +190,22 @@ async function postSwimSet (data) {
         mockSwimSets.push(data); // actually, check if it exists. If so, update, otherwise push
         console.log("mockSwimSets after post: ", mockSwimSets);
         return { headers: {mock: "mock response"} }
+    } else {
+        return fetch(apiUrl+'swimSets', 
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then((response) => {
+            console.log(response);
+            return response.json()
+        })
+        .catch( error => 
+            {console.error("ERROR: ", error);}
+        )
     }
     
 }

@@ -57,12 +57,31 @@ export default function WriteSwimSet () {
     }
 
     const validateData = () => {
+        let formErrors = [];
+        // validate groups
+        try {
+            groups.forEach((group) => {
+                let fieldErrors = {};
+                console.log("GROUP: ", group);
+                console.log("group[groupName].length", group['groupName'].length);
+                if (group['groupName'].length === 0) {fieldErrors['groupName'] = 'Group Name is required.'};
+                if (group['workout'].length === 0) {fieldErrors['workout'] = 'Workout is required.'};
+                // TO DO: make sure groupName is unique within the body
+                if (Object.keys(fieldErrors).length > 0 ) {formErrors = [...formErrors, fieldErrors]};
+            })
+        } catch (error) {
+            console.error(error);
+            formErrors.push({'groups': 'There must be at least one group in the swimSet.'});
+        }
+        // validate rating
+        if (formData['rating'] < 0.0 || formData['rating'] > 5.0) formErrors.push({'rating': 'Rating must be between 0.0 and 5.0'});
+
+        // reformat the formData to match what should get written to the DB
         let temp = formData;
-        let body = [];
+        let body = {};
         for (const group of groups) {
-            let data = {};
-            data[group['groupName']] = group['workout'];
-            body.push(data);
+            body[group['groupName']] = group['workout'];
+            //body.push(data);
         }
         temp['body'] = body;
 
@@ -72,23 +91,6 @@ export default function WriteSwimSet () {
         setFormData(temp);
 
         console.log('formData after submission: ', formData)
-
-        let formErrors = [];
-        // validate groups
-        try {
-            formData['body'].forEach((group) => {
-                let fieldErrors = {};
-                if (group['groupName'].length === 0) fieldErrors['groupName'] = 'Group Name is required.';
-                if (group['workout'].length === 0) fieldErrors['workout'] = 'Workout is required.';
-                // TO DO: make sure groupName is unique within the body
-                if (Object.keys(fieldErrors).length > 0 ) formErrors = [...formErrors, fieldErrors];
-            })
-        } catch (error) {
-            console.error(error);
-            formErrors.push({'groups': 'There must be at least one group in the swimSet.'});
-        }
-        // validate rating
-        if (formData['rating'] < 0.0 || formData['rating'] > 5.0) formErrors.push({'rating': 'Rating must be between 0.0 and 5.0'});
 
         return formErrors;
     }
