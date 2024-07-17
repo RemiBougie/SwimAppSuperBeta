@@ -5,7 +5,7 @@ import SwimSetList from './swimSetList';
 
 function SwimPracticeCard( {swimPractice, allSwimSets} ) {
     return(
-        <div className="practice-card grow" key={swimPractice.id}>
+        <div className="practice-card" key={swimPractice.id}>
             { swimPractice.swimPractice_title.length > 0 ? <h3>{swimPractice.swimPractice_title}</h3> : null }
             <TagsList tagArray={swimPractice.swimPractice_tags} />
             <SwimSetList swimSets={swimPractice.body} allSwimSets={allSwimSets}/>

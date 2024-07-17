@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { DataContext } from './Root';
 
 import '../App.css';
 import SwimSetCard from '../components/swimSets/swimSetCard';
@@ -14,29 +15,41 @@ import { getAllSwimSets } from '../hooks/requests';
 }
 */
 
-export function generateSwimSetCards(swimSets) {
+const tags = structuredClone(allTags["allTags"]);
+
+export function generateSwimSetCards(swimSets, clickHandler=null) {
   console.log("swimSets in generateSwimSetCards: ", swimSets);
   return swimSets.map((item)=>{
     return <SwimSetCard 
-    swimSet_id={item.id}
-    swimSet_title={item.swimSet_title} 
-    swimSet_tags={item.swimSet_tags}
-    swimSet={item.body} 
-    swimSet_notes={item.notes} />})
+    /* onClick={(e) => {
+      e.preventDefault();
+      if (selectSwimSet) {
+        selectSwimSet(item)
+      }
+    }} */
+    swimSet={item} 
+    clickHandler={clickHandler}/>})
 }
 
-export default function BrowseSwimSets() {
+export default function BrowseSwimSets({clickHandler=null}) {
+  let allSwimSets = useContext(DataContext)["swimSets"];
+
   let [loading, setLoading] = useState(true);
 
   let [titleSearch, setTitleSearch] = useState('');
-  let [tagsSearch, setTagsSearch] = useState(allTags["allTags"]);
-  let [swimSets, setSwimSets] = useState(useLoaderData()[0]);
-  console.log("swimSets state variable: ", swimSets);
-  let [itemList, setItemList] = useState(generateSwimSetCards(swimSets));
+  let [tagsSearch, setTagsSearch] = useState(tags);
+  let [swimSets, setSwimSets] = useState(allSwimSets);
+  //console.log("swimSets state variable: ", swimSets);
+  let [itemList, setItemList] = useState(generateSwimSetCards(swimSets, clickHandler));
 
   useEffect(() => {
     setLoading(false);
   }, []);
+
+  // only used if practiceSets!=null
+  /* const selectSwimSet = (x) => {
+    setPracticeSets([...practiceSets, x]);
+  } */
 
   if (loading) {
     return <h2>Loading...</h2>

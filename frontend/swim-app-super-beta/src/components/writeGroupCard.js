@@ -6,7 +6,7 @@ export default function WriteGroupCard( {group, removeGroup, editGroup}) {
     return(
         <div className="App-groupCard" key={group['id']}>
             <label>Group Name</label>
-            <input 
+            <textarea
                 type="text" 
                 value={group.groupName}
                 id={`${group['id']}_groupName`} 
@@ -17,7 +17,7 @@ export default function WriteGroupCard( {group, removeGroup, editGroup}) {
                 }
             }/>
             <label>Workout</label>
-            <input 
+            <textarea
                 type="text" 
                 value={group.workout} 
                 id={`${group['id']}_workout`} 

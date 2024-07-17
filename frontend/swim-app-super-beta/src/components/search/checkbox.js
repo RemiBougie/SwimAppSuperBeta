@@ -7,7 +7,7 @@ export default function Checkbox ({ id, category, label, value, tagsSearch, setT
     //let [IAmLabel, setIAmLabel] = useState(label);
     let IAmCategory = category;
     let IAmLabel = label;
-    let [checked, setChecked] = useState(false);
+    let [checked, setChecked] = useState(value);
 
     return (
         <label className="App-Checkbox" key={id}>

@@ -4,16 +4,16 @@ import * as allTags from '../../allTags';
 
 export default function TagSelection({ tagsSearch, setTagsSearch }) {
     // needed for the display
-    const tagsJSON = allTags["allTags"];
+    //const tagsJSON = allTags["allTags"];
 
     let div = [];
 
     //console.log("allTags", tagsJSON);
     //console.log("tagsSearch", tagsSearch);
 
-    for (const property in tagsJSON) {
+    for (const property in tagsSearch) {
         let subdiv = [];
-        let category = tagsJSON[property];
+        let category = tagsSearch[property];
         subdiv = [...subdiv, <h3 key={`label_${property}`}>{property}</h3>]
         for (const label in category) {
             subdiv = [...subdiv, 

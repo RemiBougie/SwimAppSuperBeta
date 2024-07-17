@@ -1,4 +1,4 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useState, useEffect, useContext } from 'react';
 import { Outlet, Link, useLoaderData } from 'react-router-dom';
 import '../App.css';
 import { getAllSwimSets, getAllSwimPractices, getAllSwimSeasons } from '../hooks/requests'
@@ -13,6 +13,8 @@ export async function loader() {
 export const DataContext = createContext();
 
 export default function Root() {
+    let [loading, setLoading] = useState(true);
+
     const data = useLoaderData();
     const dataObj = {"swimSets": data[0], "swimPractices": data[1], "swimSeasons": data[2]};
     //const [allSwimSets, allSwimPractices, swimSeason] = useLoaderData();
@@ -21,6 +23,15 @@ export default function Root() {
     console.log("allSwimSeasons in  Root(): ", data[2]);
     //console.log("swimSeason in Root(): ", data[2]);
     console.log("DataContext: ", DataContext);
+
+    useEffect(() => {
+        setLoading(false);
+      }, []);
+    
+    if (loading) {
+        return <h2>Loading...</h2>
+    }
+
     return(
         <div id="root">
             <DataContext.Provider value={dataObj}>
@@ -42,7 +53,10 @@ export default function Root() {
                                     <Link to={`BrowseSwimSeasons/`}>Browse Swim Seasons</Link>
                                 </li>
                                 <li>
-                                    <Link to={`WriteSwimSet/`}>Write Swim Set</Link>
+                                    <Link to={`WriteSwimSet/new`}>Write Swim Set</Link>
+                                </li>
+                                <li>
+                                    <Link to={`WriteSwimPractice/`}>Write Swim Practice</Link>
                                 </li>
                                 <li>
                                     <Link to={`ViewSwimSeason/testSeason`}>testSeason</Link>

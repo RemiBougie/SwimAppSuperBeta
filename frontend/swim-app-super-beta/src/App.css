@@ -64,17 +64,57 @@
   overflow-x: scroll;
 }
 
+.writeSwimPractice-displaySwimSets {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  justify-items: center;
+  width: fit-content;
+}
+
 .App-card {
   color: green;
   background-color:aqua;
   flex-direction: column;
   display: flex;
   font-size: 12;
-  width: 400px;
+  max-width: min(90%, 400px);
+  width: fit-content;
   height: fit-content;
   padding: 10px;
   margin: 10px;
   overflow: hidden;
+  z-index: 1;
+}
+
+.swimSetCard-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+}
+
+.swimSetCard-button {
+  cursor: pointer;
+  text-align: center;
+  text-justify: center;
+  height: 30px;
+  margin: 0;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.swimSetCard-menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  font-size: 12px;
+  top: 25%;
+  right: 0;
+  background-color: white;
+  z-index: 10000;
 }
 
 .practice-card {
@@ -84,8 +124,9 @@
   height: fit-content;
   padding: 10px;
   margin: 10px;
-  overflow: hidden;
+  overflow: wrap;
   max-width: 33%;
+  width: fit-content;
 }
 
 .App-tagCard {
@@ -94,6 +135,7 @@
   margin: 5px;
   padding: 5px;
   font-size: 12px;
+  z-index: 2;
 }
 
 .App-tagList {
@@ -101,16 +143,19 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: left;
+  z-index: 2;
 }
 
 .App-swimSetList1 {
   overflow-x: scroll;
   width: auto;
+  z-index: 2;
 }
 
 .App-swimSetList2 {
   display: flex;
   justify-content: center;
+  z-index: 2;
 }
 
 .App-checkboxList {
@@ -170,6 +215,7 @@ ul {
   margin: 5px;
   font-size: 12px;
   height: fit-content;
+  z-index: 2;
 }
 
 p {
@@ -264,4 +310,9 @@ h3 {
 
 form {
   width: 100%;
+}
+
+.writeSwimSetForm {
+  width: 100%;
+  background-color: orange;
 }

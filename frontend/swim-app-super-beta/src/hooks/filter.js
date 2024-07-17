@@ -1,4 +1,4 @@
-export default function Filter (titleSearch='', tagsSearch, swimSets, setItems, generateSwimSetCards) {
+export default function Filter (titleSearch='', tagsSearch, swimSets, setItems, generateSwimSetCards, selectSwimSet=null) {
     let user_id="RemiB123";
 
     // manipulate input data to correct format and find selected tags
@@ -31,5 +31,5 @@ export default function Filter (titleSearch='', tagsSearch, swimSets, setItems, 
     let titleMatches = titleFilter(swimSets, user_id, titleSearch);
     let matches = tagsFilter(titleMatches, user_id, selectedTags);
 
-    setItems(generateSwimSetCards(matches));
+    setItems(generateSwimSetCards(matches, selectSwimSet));
 }

@@ -210,12 +210,21 @@ async function postSwimSet (data) {
     
 }
 
-/*
+
 async function postSwimPractice (swimPractice) {
+    if (isMock) {
+        console.log("swimPractice to POST: ", swimPractice)
+        //mockSwimPractices.push(swimPractice);
+        //console.log("mockSwimPractices after POST: ", mockSwimPractices);
+        return { headers: {mock: "mock response"}}
+    } else {
+        throw new Error("Live data not set up yet, switch to mockData")
+    }
     //replace with API call eventually
-    mockSwimPractices.push(swimPractice) // actually, check if it exists. If so, update, otherwise push
+    //mockSwimPractices.push(swimPractice) // actually, check if it exists. If so, update, otherwise push
 }
 
+/*
 async function postSwimSeason (swimSeason) {
     //replace with API call eventually
     mockSwimSeasons.push(swimSeason) // actually, check if it exists. If so, update, otherwise push
@@ -247,8 +256,8 @@ export {
     getAllSwimSeasons,
 
     postSwimSet,
-    /*
     postSwimPractice,
+    /*
     postSwimSeason,
     postSwimSeasonPlan,
 
