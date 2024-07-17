@@ -6,7 +6,7 @@ import '../App.css';
 import SwimSetCard from '../components/swimSets/swimSetCard';
 import SearchBox from '../components/search/searchBox';
 import TagSelection from '../components/search/tagSelection';
-import Filter from '../hooks/filter';
+import {FilterSwimSets} from '../hooks/filter';
 import * as allTags from '../allTags';
 import { getAllSwimSets } from '../hooks/requests';
 
@@ -38,11 +38,12 @@ export default function BrowseSwimSets({clickHandler=null}) {
 
   let [titleSearch, setTitleSearch] = useState('');
   let [tagsSearch, setTagsSearch] = useState(tags);
-  let [swimSets, setSwimSets] = useState(allSwimSets);
+  //let [swimSets, setSwimSets] = useState(allSwimSets);
   //console.log("swimSets state variable: ", swimSets);
-  let [itemList, setItemList] = useState(generateSwimSetCards(swimSets, clickHandler));
+  let [itemList, setItemList] = useState(generateSwimSetCards(allSwimSets, clickHandler));
 
   useEffect(() => {
+    setTagsSearch(tags);
     setLoading(false);
   }, []);
 
@@ -68,7 +69,7 @@ export default function BrowseSwimSets({clickHandler=null}) {
           tagsSearch={tagsSearch}
           setTagsSearch={setTagsSearch}/>
         <button onClick={() => {
-          Filter(titleSearch, tagsSearch, swimSets, setItemList, generateSwimSetCards);}}>
+          FilterSwimSets(titleSearch, tagsSearch, allSwimSets, setItemList, generateSwimSetCards, clickHandler);}}>
           Search
         </button>
         <div className="App-displaySwimSetCards">{ itemList }</div>
