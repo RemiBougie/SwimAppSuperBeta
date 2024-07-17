@@ -18,7 +18,7 @@ import { getAllSwimSets } from '../hooks/requests';
 const tags = structuredClone(allTags["allTags"]);
 
 export function generateSwimSetCards(swimSets, clickHandler=null) {
-  console.log("swimSets in generateSwimSetCards: ", swimSets);
+  //console.log("swimSets in generateSwimSetCards: ", swimSets);
   return swimSets.map((item)=>{
     return <SwimSetCard 
     /* onClick={(e) => {

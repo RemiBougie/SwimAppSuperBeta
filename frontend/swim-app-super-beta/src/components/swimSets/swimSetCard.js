@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 import TagsList from './tagsList';
 import GroupList from './groupList';
@@ -7,10 +7,24 @@ import GroupList from './groupList';
 function SwimSetCard ({swimSet, clickHandler=null}) {//( {swimSet_id, swimSet_title, swimSet_tags, swimSet, swimSet_notes}) {
     //console.log("swimSet in swimSetCard(): ", swimSet);
     let [isMenuVisible, setIsMenuVisible] = useState(false);
+    const menuRef = useRef(null);
 
     const toggleMenu = () => {
         setIsMenuVisible(!isMenuVisible);
     }
+
+    const handleClickOutside = (e) => {
+        if (menuRef.current && !menuRef.current.contains(e.target)) {
+            setIsMenuVisible(false);
+        }
+    }
+
+    useEffect(() => {
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
 
     return (
     <div className="App-card grow" key={swimSet["swimSet_id"]}
@@ -27,7 +41,7 @@ function SwimSetCard ({swimSet, clickHandler=null}) {//( {swimSet_id, swimSet_ti
             onClick={toggleMenu}
         >...</button>
         { isMenuVisible  && (
-            <div className="swimSetCard-menu">
+            <div className="swimSetCard-menu" ref={menuRef}>
                 <ul className="swimSetCard-menu">
                     <li><Link to={`/WriteSwimSet/${swimSet["id"]}`}>Edit</Link></li>
                     <li>Delete</li>

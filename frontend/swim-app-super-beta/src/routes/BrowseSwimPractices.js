@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useLoaderData } from 'react-router-dom';
+import { DataContext } from './Root';
 
 import '../App.css';
 import SwimSetCard from '../components/swimSets/swimSetCard';
 import SwimPracticeCard from '../components/swimPractices/swimPracticeCard';
 import SearchBox from '../components/search/searchBox';
 import TagSelection from '../components/search/tagSelection';
-import Filter from '../hooks/filter';
+import {FilterSwimPractices }from '../hooks/filter';
 import * as allTags from '../allTags';
-
-
-// TO DO: MOVE THIS TO SwimPracticeCard.js and import it 
-export function generateSwimPracticeCards(swimPractices, allSwimSets) {
+ 
+export function generateSwimPracticeCards(swimPractices, allSwimSets, clickHandler=null) {
     //const allSwimSets = useLoaderData()[0];
     return swimPractices.map((item) => {
         return(
@@ -35,9 +34,11 @@ export default function BrowseSwimPractices() {
 
   let [titleSearch, setTitleSearch] = useState('');
   let [tagsSearch, setTagsSearch] = useState(allTags["allTags"]);
-  let [allSwimSets, setAllSwimSets] = useState(useLoaderData()[0]);
-  let [swimPractices, setSwimPractices] = useState(useLoaderData()[1]);
-  let [itemList, setItemList] = useState(generateSwimPracticeCards(swimPractices, allSwimSets));
+  //let [allSwimSets, setAllSwimSets] = useState(useLoaderData()[0]);
+  //let [swimPractices, setSwimPractices] = useState(useLoaderData()[1]);
+  const allSwimSets = useContext(DataContext)["swimSets"];
+  const allSwimPractices = useContext(DataContext)["swimPractices"];
+  let [itemList, setItemList] = useState(generateSwimPracticeCards(allSwimPractices, allSwimSets));
   console.log("swimSets state variable: ", allSwimSets);
 
   useEffect(() => {
@@ -60,6 +61,9 @@ export default function BrowseSwimPractices() {
           className="App-tagSelection"
           tagsSearch={tagsSearch}
           setTagsSearch={setTagsSearch}/>
+        <button onClick={() => {
+          FilterSwimPractices(titleSearch, tagsSearch, allSwimPractices, allSwimSets, setItemList, generateSwimPracticeCards);
+        }}>Search</button>
         <div className="App-displaySwimPracticeCards"> {itemList}</div>
       </header>
     </div>

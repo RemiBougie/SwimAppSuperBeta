@@ -1,3 +1,16 @@
+function findTrueTags(tagsArg) {
+    let tags = [];
+    for (const property in tagsArg) {
+        let category = tagsArg[property];
+        for (const label in category) {
+            if (tagsArg[property][label]) {
+                tags = [...tags, label];
+            }
+        }
+    }
+    return tags;
+}
+
 function FilterSwimSets (titleSearch='', tagsSearch, swimSets, setItems, generateSwimSetCards, clickHandler=null) {
     let user_id="RemiB123";
 
@@ -15,25 +28,36 @@ function FilterSwimSets (titleSearch='', tagsSearch, swimSets, setItems, generat
                 tags.every(tag => swimSet.swimSet_tags.includes(tag)))
     }
 
-    function findTrueTags(tagsArg) {
-        let tags = [];
-        for (const property in tagsArg) {
-            let category = tagsArg[property];
-            for (const label in category) {
-                if (tagsArg[property][label]) {
-                    tags = [...tags, label];
-                }
-            }
-        }
-        return tags;
-    }
-
     let titleMatches = titleFilter(swimSets, user_id, titleSearch);
     let matches = tagsFilter(titleMatches, user_id, selectedTags);
 
     setItems(generateSwimSetCards(matches, clickHandler));
 }
 
+function FilterSwimPractices (titleSearch='', tagsSearch, swimPractices, allSwimSets, setItems, generateSwimPracticeCards, clickHandler=null) {
+    const user_id='RemiB123';
+    console.log("in FilterSwimPractices()!");
+
+    let selectedTags = findTrueTags(tagsSearch);
+
+    function titleFilter(data, user_id, title) {
+        return data.filter(swimPractice => swimPractice.owner.includes(user_id))
+            .filter(swimPractice => swimPractice.swimPractice_title.toLowerCase().includes(title))
+    }
+
+    function tagsFilter(data, user_id, tags) {
+        return data.filter(swimPractice => swimPractice.owner.includes(user_id))
+            .filter(swimPractice =>
+                tags.every(tag => swimPractice.swimPractice_tags.includes(tag)))
+    }
+
+    let titleMatches = titleFilter(swimPractices, user_id, titleSearch);
+    let matches = tagsFilter(titleMatches, user_id, selectedTags);
+
+    setItems(generateSwimPracticeCards(matches, allSwimSets, clickHandler));
+}
+
 export {
-    FilterSwimSets
+    FilterSwimSets,
+    FilterSwimPractices
 }
