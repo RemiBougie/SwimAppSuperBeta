@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { useLoaderData, useNavigate } from 'react-router-dom';
+import { DataContext } from './Root';
 
 import { postSwimPractice } from '../hooks/requests';
 import * as allTags from '../allTags';
@@ -8,17 +10,76 @@ import SwimSetCard from '../components/swimSets/swimSetCard';
 import WriteSwimSet from './WriteSwimSet';
 import BrowseSwimSets from './BrowseSwimSets';
 
-const allTagsClone = structuredClone(allTags["allTags"]);
+const blankSwimPractice = {
+    id: uuidv4(),
+    swimPractice_title: '',
+    swimPractice_tags: [],
+    body: [],
+    notes: '',
+    rating: 0.0,
+    favorite: false
+}
 
-export default function WriteSwimPractice() {
-    let [swimSets, setSwimSets] = useState([]);
+export async function loader( {params} ) {
+    return params.id;
+}
+
+export default function WriteSwimPractice( {swimPractices=null, setSwimPractices=null}) {
+    // If this <WriteSwimPractice /> component is mounted within another component (when editing a swimSeason), 
+    // then swimPractices and setSwimPractices are hooks used to pass the swimPractice data up to the parent component
+
+    // The below block of code initializes a swimPractice object to either be a blankSwimPractice (when creating
+    // a new swimPractice) or an existing swimPractice found by id in the URL (for editing an existing swimPractice)
+    let id = useLoaderData();
+    let allSwimSets = useContext(DataContext)['swimSets'];
+    let allSwimPractices = useContext(DataContext)['swimPractices'];
+    const allTagsClone = structuredClone(allTags["allTags"]);
+
+    let swimPractice = null;
+
+    if (id === 'new' || swimPractices) {
+        swimPractice = blankSwimPractice;
+    } else {
+        swimPractice = allSwimPractices.find(swimPractice => swimPractice.id === id)
+    }
+
+    // set swimSets state, the list of swimSets in the swimPractice
+    let selectedSwimSets = [];
+    for (const swimSet_id of swimPractice['body']) {
+        let foundSwimSet = allSwimSets.find(swimSet => swimSet['id'] === swimSet_id);
+        if (foundSwimSet) {
+            selectedSwimSets.push(foundSwimSet);
+        };
+    }
+    let [swimSets, setSwimSets] = useState(selectedSwimSets);
+
+    // set selectedTags state
+    for (const category in allTagsClone) {
+        Object.keys(allTagsClone[category]).map((subcategory) => {
+            allTagsClone[category][subcategory] = swimPractice['swimPractice_tags'].includes(subcategory);
+        })
+    }
     let [selectedTags, setSelectedTags] = useState(allTagsClone);
+
     let [formData, setFormData] = useState({
-        swimSet_title: '',
-        notes: '',
-        rating: 0.0,
-        favorite: false
+        id: swimPractice['id'],
+        swimPractice_title: swimPractice['swimPractice_title'],
+        notes: swimPractice['notes'],
+        rating: swimPractice['rating'],
+        favorite: swimPractice['favorite']
     });
+
+    const navigate = useNavigate();
+
+    // TEST TO SEE IF STATE IS SET CORRECTLY
+    console.log('swimPractice: ', swimPractice);
+    console.log('selectedSwimSets: ', swimSets);
+    console.log('selectedTags: ', selectedTags);
+    console.log('formData: ', formData);
+ 
+    // The above block of code initializes a swimPractice object to either be a blankSwimPractice (when creating
+    // a new swimPractice) or an existing swimPractice found by id in the URL (for editing an existing swimPractice)
+
     let [writeSwimSetVisibility, setWriteSwimSetVisibility] = useState(false);
     let [browseSwimSetVisibility, setBrowseSwimSetVisibility] = useState(false);
     let [errors, setErrors] = useState([]);
@@ -40,20 +101,92 @@ export default function WriteSwimPractice() {
         setSwimSets(swimSets.filter((swimSet) => swimSet.id !== selectedSwimSet.id))
     }
 
+    function findTrueTags(tagsArg) {
+        console.log(tagsArg);
+        let tags = [];
+        for (const property in tagsArg) {
+            let category = tagsArg[property];
+            for (const label in category) {
+                if (tagsArg[property][label]) {
+                    tags = [...tags, label];
+                }
+            }
+        }
+        return tags;
+    }
+
+    const validateData = () => {
+        let formErrors = [];
+        /* validating swimPractice: 
+        1. There is at least one swimSet
+        2. Validate rating
+        */
+        try {
+            let fieldErrors = {};
+            if (swimSets.length === 0) {fieldErrors['swimSets'] = 'At least one swim set is required.'};
+            //if (Object.keys(fieldErrors).length > 0 ) {formErrors = [...formErrors, fieldErrors]};
+            if (Object.keys(fieldErrors).length > 0 ) {formErrors.push('There must be at least one swimSet.')};
+        } catch (error) {
+            console.error(error);
+            formErrors.push('There must be at least one swimSet.')
+        }
+
+        if (formData['rating'] <0.0 || formData['rating'] > 5.0) {formErrors.push('Rating must be between 0.0 and 5.0')};
+
+        let temp = formData;
+        let body = [];
+        for (const swimSet of swimSets) {
+            body = [...body, swimSet['id']];
+        }
+
+        temp['body'] = body;
+
+        console.log('selectedTags: ', selectedTags);
+        temp['swimPractice_tags'] = findTrueTags(selectedTags);
+        temp['owner'] = 'RemiB123';
+        setFormData(temp);
+
+        console.log('formData after submission: ', formData)
+
+        return formErrors;
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        postSwimPractice(formData)
+        let formErrors = validateData();
+
+        if (formErrors.length === 0) {
+            postSwimPractice(formData)
+            .then((response) => {
+                console.log('Form Data Submitted: ', formData);
+                console.log('response: ', response);
+                return response;
+            })
+            .then((response) => {
+                if (response.ok && setSwimPractices) {
+                    setSwimPractices([...swimSets, formData]);
+                }
+            })
+            .then(() => {
+                navigate('/BrowseSwimPractices');
+            })
+        } else {
+            setErrors(formErrors);
+            console.log("ERRORS: ", errors);
+        }
+        
     }
 
     return (
         <div className="App">
             <header className="App-header">
-                <form onSubmit={handleSubmit}>
+                <div className="writeSwimPracticeForm">
                     <label>Swim Practice Title</label><br/>
                     <input 
                         type="text"
                         id="swim-practice-title"
                         name="swim-practice-title"
+                        defaultValue={formData['swimPractice_title']}
                         onChange={(e) => {
                             e.preventDefault();
                             let temp = formData;
@@ -97,6 +230,7 @@ export default function WriteSwimPractice() {
                     <textarea
                         id="swim-practice-notes"
                         name="swim-practice-notes"
+                        defaultValue={formData['notes']}
                         onChange={(e) => {
                             e.preventDefault();
                             let temp = formData;
@@ -110,6 +244,7 @@ export default function WriteSwimPractice() {
                         type="number" 
                         id="swim-practice-rating" 
                         name="swim-practice-rating" 
+                        defaultValue={formData['rating']}
                         onChange={(e) => {
                             e.preventDefault();
                             let temp=formData;
@@ -122,15 +257,16 @@ export default function WriteSwimPractice() {
                         type="checkbox" 
                         id="swim-practice-favorite" 
                         name="swim-practice-favorite" 
+                        defaultValue={formData['favorite']}
                         onChange={(e) => {
                             e.preventDefault();
                             let temp = formData;
                             temp['favorite'] = !formData['favorite'];
                             setFormData(temp);
                         }}/><br/>
-
-                    <button type="submit">Submit</button>
-                </form>
+                    {errors.length > 0 ? <div>{ errors.map(error => <p className="error">{error}</p>) }</div> : null}
+                    <button type="submit" onClick={handleSubmit}>Submit</button>
+                </div>
             </header>
         </div>
     )

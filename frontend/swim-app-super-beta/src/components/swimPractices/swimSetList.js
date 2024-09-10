@@ -7,7 +7,10 @@ function SwimSetList( { swimSets, allSwimSets }) {
     for (const swimSet_id of swimSets) {
         //console.log("swimSet_id: ", swimSet_id);
         //console.log("found swimSet object: ", allSwimSets.find(swimSet => swimSet.id === swimSet_id));
-        swimSetData.push(allSwimSets.find(swimSet => swimSet.id === swimSet_id))
+        let swimSet_data = allSwimSets.find(swimSet => swimSet.id === swimSet_id)
+        if (swimSet_data) {
+            swimSetData.push(swimSet_data);
+        }
     }
 
     return generateSwimSetCards(swimSetData);

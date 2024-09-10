@@ -56,7 +56,7 @@ export default function Root() {
                                     <Link to={`WriteSwimSet/new`}>Write Swim Set</Link>
                                 </li>
                                 <li>
-                                    <Link to={`WriteSwimPractice/`}>Write Swim Practice</Link>
+                                    <Link to={`WriteSwimPractice/new`}>Write Swim Practice</Link>
                                 </li>
                                 <li>
                                     <Link to={`ViewSwimSeason/testSeason`}>testSeason</Link>

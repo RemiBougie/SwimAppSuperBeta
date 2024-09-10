@@ -15,7 +15,7 @@ import { getAllSwimSets } from '../hooks/requests';
 }
 */
 
-const tags = structuredClone(allTags["allTags"]);
+//const tags = structuredClone(allTags["allTags"]);
 
 export function generateSwimSetCards(swimSets, clickHandler=null) {
   //console.log("swimSets in generateSwimSetCards: ", swimSets);
@@ -33,11 +33,13 @@ export function generateSwimSetCards(swimSets, clickHandler=null) {
 
 export default function BrowseSwimSets({clickHandler=null}) {
   let allSwimSets = useContext(DataContext)["swimSets"];
+  const tags = structuredClone(allTags["allTags"]);
 
   let [loading, setLoading] = useState(true);
 
   let [titleSearch, setTitleSearch] = useState('');
   let [tagsSearch, setTagsSearch] = useState(tags);
+  console.log("tags: ", tags);
   //let [swimSets, setSwimSets] = useState(allSwimSets);
   //console.log("swimSets state variable: ", swimSets);
   let [itemList, setItemList] = useState(generateSwimSetCards(allSwimSets, clickHandler));

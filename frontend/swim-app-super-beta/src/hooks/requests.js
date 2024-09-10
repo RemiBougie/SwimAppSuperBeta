@@ -187,11 +187,54 @@ async function getAllSwimSeasons () {
 async function postSwimSet (data) {
     //replace with API call eventually
     if(isMock) {
-        mockSwimSets.push(data); // actually, check if it exists. If so, update, otherwise push
+        let existingDataIndex = mockSwimSets.findIndex((swimSet) => swimSet["id"] === data["id"])
+        //let existingDataIndex = mockSwimSets.find(swimSet => { swimSet["id"] === data["id"]})
+        if (existingDataIndex) {
+            mockSwimSets.splice(existingDataIndex, 1, data);
+        } else {
+            mockSwimSets.push(data);
+            console.log("new mockSwimSets: ", mockSwimSets)
+        }
+        // actually, check if it exists. If so, update, otherwise push
         console.log("mockSwimSets after post: ", mockSwimSets);
-        return { headers: {mock: "mock response"} }
+        return { headers: {mock: "mock response"}, ok: true }
     } else {
+        console.log("swimSet to POST: ", data);
         return fetch(apiUrl+'swimSets', 
+        {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        /*.then((response) => {
+            console.log(response);
+            return response //response.json()
+        })*/
+        .catch( error => 
+            {console.error("ERROR: ", error);}
+        )
+    }
+    
+}
+
+
+async function postSwimPractice (data) {
+    if (isMock) {
+        console.log("swimPractice to POST: ", data)
+        let existingDataIndex = mockSwimPractices.findIndex((swimPractice) => swimPractice["id"] === data["id"])
+        //let existingDataIndex = mockSwimSets.find(swimSet => { swimSet["id"] === data["id"]})
+        if (existingDataIndex) {
+            mockSwimPractices.splice(existingDataIndex, 1, data);
+        } else {
+            mockSwimPractices.push(data);
+        }
+        //console.log("mockSwimPractices after POST: ", mockSwimPractices);
+        return { headers: {mock: "mock response"}, ok: true}
+    } else {
+        //throw new Error("Live data not set up yet, switch to mockData")
+        return fetch(apiUrl+'swimPractices',
         {
             method: 'POST',
             headers: {
@@ -203,22 +246,9 @@ async function postSwimSet (data) {
             console.log(response);
             return response.json()
         })
-        .catch( error => 
-            {console.error("ERROR: ", error);}
-        )
-    }
-    
-}
-
-
-async function postSwimPractice (swimPractice) {
-    if (isMock) {
-        console.log("swimPractice to POST: ", swimPractice)
-        //mockSwimPractices.push(swimPractice);
-        //console.log("mockSwimPractices after POST: ", mockSwimPractices);
-        return { headers: {mock: "mock response"}}
-    } else {
-        throw new Error("Live data not set up yet, switch to mockData")
+        .catch(error => {
+            console.error("ERROR: ", error);
+        })
     }
     //replace with API call eventually
     //mockSwimPractices.push(swimPractice) // actually, check if it exists. If so, update, otherwise push
@@ -235,16 +265,75 @@ async function postSwimSeasonPlan (swimSeason, practicePlan) {
         // comments, date, etc. This way the entire swimSeason obejct doesn't need to get updated every time a
         // practice is completed or the plan is changed. 
 }
-
+*/
 //-- DELETE -------------------------------------------------------------------------------------------------------
-async function deleteSwimSet (swimSet) {
-    //replace with API call eventually
+async function deleteSwimSet (data) {
+    if (isMock) {
+        console.log("swimSet to delete: ", data);
+        let dataIndex = mockSwimSets.findIndex((swimSet) => swimSet["id"] === data["id"]);
+        if (dataIndex > 0) {
+            //console.log("prior to delete: ", mockSwimSets);
+            mockSwimSets.splice(dataIndex, 1);
+            console.log("Deleted?");
+            console.log(mockSwimSets);
+        } else {
+            throw new Error("Something went wrong with the delete...")
+        }
+        return { headers: {mock: "mock response"}, ok: true}
+    } else {
+        //throw new Error("Live data hasn't been set up yet");
+        let queryString = new URLSearchParams({id: data["id"]}).toString();
+        return fetch(apiUrl+'swimSets?'+queryString, 
+        {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        .then((response) => {
+            console.log("response: ", response);
+            return response.json();
+        })
+        .catch(error => {
+            console.error("ERROR: ", error);
+        })
+    }
 }
 
-async function deleteSwimPractice (swimPractice) {
-    //replace with API call eventually
+async function deleteSwimPractice (data) {
+    if (isMock) {
+        console.log("swimPractice to delete: ", data);
+        let dataIndex = mockSwimPractices.findIndex((swimPractice) => swimPractice["id"] === data["id"]);
+        if (dataIndex > 0) {
+            //console.log("prior to delete: ", mockSwimSets);
+            mockSwimPractices.splice(dataIndex, 1);
+            console.log("Deleted?");
+            console.log(mockSwimPractices);
+        } else {
+            throw new Error("Something went wrong with the delete...")
+        }
+        return { headers: {mock: "mock response"}, ok: true}
+    } else {
+        //throw new Error("Live data hasn't been set up yet");
+        let queryString = new URLSearchParams({id: data["id"]}).toString();
+        return fetch(apiUrl+'swimPractices?'+queryString, 
+        {
+            method: 'DELETE',
+            headers: {
+                'Content-type': 'application/json'
+            }
+        })
+        .then((response) => {
+            console.log("response: ", response);
+            return response.json();
+        })
+        .catch(error => {
+            console.error("ERROR: ", error);
+        })
+    }
 }
 
+/*
 async function deleteSwimSeason (swimSeason) {
     //replace with API call eventually
 }
@@ -260,9 +349,11 @@ export {
     /*
     postSwimSeason,
     postSwimSeasonPlan,
+    */
 
     deleteSwimSet,
     deleteSwimPractice,
+    /*
     deleteSwimSeason
     */
 }

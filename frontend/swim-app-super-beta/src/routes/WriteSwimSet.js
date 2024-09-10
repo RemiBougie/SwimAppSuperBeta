@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import { DataContext } from './Root';
 
 import '../App.css';
@@ -20,18 +20,17 @@ const blankSwimSet = {
     favorite: false
 }
 
-const allTagsClone = structuredClone(allTags["allTags"]);
-
 export async function loader( {params}) {
     return params.id;
     //allSwimSets.find(swimSet => swimSet.id === swimSet_id)
 }
 
 export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
-    //console.log("swimSet passed to WriteSwimSet(): ", swimSet);
-    //console.log("blankSwimSet: ", blankSwimSet)
+    // The below block of code initializes a swimSet object to either be a blankSwimSet (when creating
+    // a new swimSet) or an existing swimSet found by id in the URL (for editing an existing swimSet)
     let id = useLoaderData();
     let allSwimSets = useContext(DataContext)['swimSets'];
+    const allTagsClone = structuredClone(allTags["allTags"]);
 
     let swimSet = null;
 
@@ -41,8 +40,6 @@ export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
         swimSet = allSwimSets.find(swimSet => swimSet.id === id)
     }
 
-    console.log("swimSet in WriteSwimSet(): ", swimSet);
-
     // set groups state
     let allGroups = []
     for (const groupName of Object.keys(swimSet['body'])) {
@@ -51,21 +48,12 @@ export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
     let [groups, setGroups] = useState(allGroups);
 
     // set selectedTags state
-    //const tags = allTags['allTags'];
-    //console.log("swimSet_tags: ", swimSet['swimSet_tags']);
-    //console.log('allTagsClone: ', allTagsClone)
     for (const category in allTagsClone) {
-        //console.log(category);
         Object.keys(allTagsClone[category]).map((subcategory) => {
             allTagsClone[category][subcategory] = swimSet['swimSet_tags'].includes(subcategory);
-            /* for (const selectedTag of swimSet['swimSet_tags']) {
-                tags[category][subcategory] = subcategory === selectedTag
-                console.log(selectedTag, subcategory, subcategory === selectedTag);
-            } */
         })
     }
     let [selectedTags, setSelectedTags] = useState(allTagsClone);
-    //console.log(selectedTags);
 
     let [formData, setFormData] = useState({
         id: swimSet['id'],
@@ -76,7 +64,10 @@ export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
     });
     let [errors, setErrors] = useState([]);
 
-    //console.log("groups: ", groups)
+    const navigate = useNavigate();
+    // The above block of code initializes a swimSet object to either be a blankSwimSet (when creating
+    // a new swimSet) or an existing swimSet found by id in the URL (for editing an existing swimSet)
+
 
     const addGroup = (e) => {
         e.preventDefault();
@@ -125,14 +116,16 @@ export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
                 if (group['groupName'].length === 0) {fieldErrors['groupName'] = 'Group Name is required.'};
                 if (group['workout'].length === 0) {fieldErrors['workout'] = 'Workout is required.'};
                 // TO DO: make sure groupName is unique within the body
-                if (Object.keys(fieldErrors).length > 0 ) {formErrors = [...formErrors, fieldErrors]};
+                //if (Object.keys(fieldErrors).length > 0 ) {formErrors = [...formErrors, fieldErrors]};
+                if (Object.keys(fieldErrors).length > 0 ) {formErrors.push("There is an issue with the groups. Make sure groups are named and each group has a workout.")};
             })
         } catch (error) {
             console.error(error);
-            formErrors.push({'groups': 'There must be at least one group in the swimSet.'});
+            //formErrors.push({'groups': 'There must be at least one group in the swimSet.'});
+            formErrors.push("There is an issue with the groups. Make sure groups are named and each group has a workout.")
         }
         // validate rating
-        if (formData['rating'] < 0.0 || formData['rating'] > 5.0) formErrors.push({'rating': 'Rating must be between 0.0 and 5.0'});
+        if (formData['rating'] < 0.0 || formData['rating'] > 5.0) formErrors.push('Rating must be between 0.0 and 5.0');
 
         // reformat the formData to match what should get written to the DB
         let temp = formData;
@@ -148,7 +141,7 @@ export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
         //temp['id'] = uuidv4();
         setFormData(temp);
 
-        console.log('formData after submission: ', formData)
+        console.log('formData after validation: ', formData)
 
         return formErrors;
     }
@@ -162,11 +155,18 @@ export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
             .then((response) => {
                 console.log('Form Data Submitted:', formData);
                 console.log('response: ', response);
+                return response
             })
             .then((response) => {
+                console.log('response.ok', response.ok);
+                console.log('setSwimSets', setSwimSets);
                 if (response.ok && setSwimSets) {
+                    console.log('Setting swimSets!');
                     setSwimSets([...swimSets, formData]);
                 }
+            })
+            .then(() => {
+                navigate('/BrowseSwimSets');
             })
         } else {
             setErrors(formErrors);
@@ -177,13 +177,13 @@ export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
     return (
         <div className="App">
             <header className="App-header">
-                <form className="writeSwimSetForm" onSubmit={handleSubmit}>
+                <div className="writeSwimSetForm">
                     <label>Swim Set Title</label><br/>
                     <input 
                         type="text" 
                         id="swim-set-title" 
                         name="swim-set-title" 
-                        value={swimSet['swimSet_title']}
+                        defaultValue={formData['swimSet_title']}
                         onChange={(e) => {
                             e.preventDefault();
                             let temp=formData;
@@ -210,7 +210,7 @@ export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
                     <textarea
                         id="swim-set-notes" 
                         name="swim-set-notes" 
-                        value={swimSet['notes']}
+                        defaultValue={formData['notes']}
                         onChange={(e) => {
                             e.preventDefault();
                             let temp=formData;
@@ -223,7 +223,7 @@ export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
                         type="number" 
                         id="swim-set-rating" 
                         name="swim-set-rating" 
-                        value={swimSet['rating']}
+                        defaultValue={formData['rating']}
                         onChange={(e) => {
                             e.preventDefault();
                             let temp=formData;
@@ -236,16 +236,16 @@ export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
                         type="checkbox" 
                         id="swim-set-favorite" 
                         name="swim-set-favorite" 
-                        value={swimSet['favorite']}
+                        defaultValue={formData['favorite']}
                         onChange={(e) => {
                             e.preventDefault();
                             let temp = formData;
                             temp['favorite'] = !formData['favorite'];
                             setFormData(temp);
                         }}/><br/>
-
-                    <button type="submit">Submit</button>
-                </form>
+                    {errors.length > 0 ? <div>{ errors.map(error => <p className="error">{error}</p>) }</div> : null}
+                    <button type="submit" onClick={handleSubmit}>Submit</button>
+                </div>
             </header>
         </div>
      )
