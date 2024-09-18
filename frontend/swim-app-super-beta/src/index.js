@@ -60,17 +60,17 @@ const router = createBrowserRouter([
         loader: rootLoader
       },
       {
-        path: "/ViewSwimSeason/:id",
+        path: "/ViewSwimSeason/:swimSeason_id",
         element: <ViewSwimSeason />,
         loader: viewSwimSeasonLoader
       },
       {
-        path: "/WriteSwimSet/:id",
+        path: "/WriteSwimSet/:swimSet_id",
         element: <WriteSwimSet />,
         loader: writeSwimSetLoader
       },
       {
-        path: "/WriteSwimPractice/:id",
+        path: "/WriteSwimPractice/:swimPractice_id",
         element: <WriteSwimPractice />,
         loader: writeSwimPracticeLoader
       }

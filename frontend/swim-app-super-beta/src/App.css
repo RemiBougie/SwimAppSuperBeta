@@ -15,6 +15,10 @@
 }
 
 .App-header {
+  background-color: white;
+}
+
+.App-contents {
   background-color: #282c34;
   min-height: 100vh;
   min-width: fit-content;
@@ -40,10 +44,42 @@
   }
 }
 
+.browse-swim-sets {
+  background-color: greenyellow;
+  min-width: fit-content;
+}
+
+.browse-swim-practices {
+  background-color: blueviolet;
+  min-width: fit-content;
+}
+
+.browse-swim-seasons {
+  background-color: white;
+  justify-content: left;
+  justify-self: left;
+}
+
+.write-swim-set {
+  width: 100%;
+  min-width: fit-content;
+  background-color: orange;
+}
+
+.write-swim-practice {
+  background-color: purple;
+  min-width: fit-content;
+}
+
+.view-swim-season {
+  background-color: yellow;
+  min-width: fit-content;
+}
+
 .App-tagSelection {
   display: flex;
   flex-direction: row;
-  justify-content: left;
+  justify-content: center;
   width: fit-content;
 }
 
@@ -196,6 +232,8 @@
 
 .menu {
   justify-content: left;
+  display: flex;
+  flex-direction: row;
 }
 
 ul {
@@ -254,11 +292,6 @@ h1 {
   align-items: flex-start;
 }
 
-.sidebar {
-  display: flex;
-  flex-direction: row;
-}
-
 li {
   margin: 10px;
   padding: 10px;
@@ -267,7 +300,7 @@ li {
 .calendar-container .react-calendar {
   display: flex;
   width: fit-content;
-  max-width: 100%;
+  max-width: 100vw;
   flex-basis: 420px;
   flex-direction: column;
   flex-grow: 100;
@@ -307,6 +340,7 @@ li {
 .side-by-side-date {
   justify-content: left;
   text-align: left;
+  color: black;
 }
 
 .side-by-side-data {
@@ -314,6 +348,20 @@ li {
   flex-direction: row;
   justify-content: space-between;
   width: 100%
+}
+
+.blank-swim-plan-card {
+  background-color: green;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.incomplete-swim-plan-card {
+  background-color: green;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
 }
 
 .sbs-placeholder {
@@ -331,12 +379,54 @@ form {
   width: 100%;
 }
 
-.writeSwimSetForm {
-  width: 100%;
-  background-color: orange;
-}
-
 .error {
   color: red;
   font-size: 12px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7); /* Darken background */
+  z-index: 100; /* Make sure overlay is on top */
+  cursor: pointer;
+}
+
+.modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Center the modal */
+  background: white;
+  padding: 20px;
+  z-index: 101; /* Higher than the overlay */
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  min-width: 300px;
+  min-height: 300px;
+  width: 75vw;
+  height: 75vh;
+  overflow: scroll;
+}
+
+/* Close Button */
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.save-btn {
+  position: fixed;
+  bottom: 5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 102;
 }

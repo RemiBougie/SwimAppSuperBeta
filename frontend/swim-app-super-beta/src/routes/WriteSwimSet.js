@@ -21,7 +21,7 @@ const blankSwimSet = {
 }
 
 export async function loader( {params}) {
-    return params.id;
+    return params.swimSet_id;
     //allSwimSets.find(swimSet => swimSet.id === swimSet_id)
 }
 
@@ -166,7 +166,9 @@ export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
                 }
             })
             .then(() => {
-                navigate('/BrowseSwimSets');
+                // navigate('/BrowseSwimSets');
+                // problem with this: if the WriteSwimSet is a child of another 
+                // in-progress form, all progess is lost when clicking "submit"
             })
         } else {
             setErrors(formErrors);
@@ -175,78 +177,74 @@ export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
     }
 
     return (
-        <div className="App">
-            <header className="App-header">
-                <div className="writeSwimSetForm">
-                    <label>Swim Set Title</label><br/>
-                    <input 
-                        type="text" 
-                        id="swim-set-title" 
-                        name="swim-set-title" 
-                        defaultValue={formData['swimSet_title']}
-                        onChange={(e) => {
-                            e.preventDefault();
-                            let temp=formData;
-                            temp['swimSet_title'] = e.target.value;
-                            setFormData(temp);
-                        }}/><br/>
+        <div className="write-swim-set">
+            <label>Swim Set Title</label><br/>
+            <input 
+                type="text" 
+                id="swim-set-title" 
+                name="swim-set-title" 
+                defaultValue={formData['swimSet_title']}
+                onChange={(e) => {
+                    e.preventDefault();
+                    let temp=formData;
+                    temp['swimSet_title'] = e.target.value;
+                    setFormData(temp);
+                }}/><br/>
 
-                    <label>Categories</label><br/>
-                    <TagSelection tagsSearch={selectedTags} setTagsSearch={setSelectedTags}/>
+            <label>Categories</label><br/>
+            <TagSelection tagsSearch={selectedTags} setTagsSearch={setSelectedTags}/>
 
-                    <div className="App-swimSetList1">
-                        {groups.map((obj) =>
-                            <WriteGroupCard group={obj} removeGroup={removeGroup} editGroup={editGroup}/>)
-                        }
-                    </div>
-                    <button onClick={(e) => {
-                        addGroup(e);
-                        //e.preventDefault();
-                        //setGroups([...groups, {id: groups.length, groupName: '', workout: ''}]);
-                    }
-                    }>+</button><br/>
+            <div className="App-swimSetList1">
+                {groups.map((obj) =>
+                    <WriteGroupCard group={obj} removeGroup={removeGroup} editGroup={editGroup}/>)
+                }
+            </div>
+            <button onClick={(e) => {
+                addGroup(e);
+                //e.preventDefault();
+                //setGroups([...groups, {id: groups.length, groupName: '', workout: ''}]);
+            }
+            }>+</button><br/>
 
-                    <label>Notes</label><br/>
-                    <textarea
-                        id="swim-set-notes" 
-                        name="swim-set-notes" 
-                        defaultValue={formData['notes']}
-                        onChange={(e) => {
-                            e.preventDefault();
-                            let temp=formData;
-                            temp['notes'] = e.target.value;
-                            setFormData(temp);
-                        }} /><br/>
+            <label>Notes</label><br/>
+            <textarea
+                id="swim-set-notes" 
+                name="swim-set-notes" 
+                defaultValue={formData['notes']}
+                onChange={(e) => {
+                    e.preventDefault();
+                    let temp=formData;
+                    temp['notes'] = e.target.value;
+                    setFormData(temp);
+                }} /><br/>
 
-                    <label>Rating</label><br/>
-                    <input 
-                        type="number" 
-                        id="swim-set-rating" 
-                        name="swim-set-rating" 
-                        defaultValue={formData['rating']}
-                        onChange={(e) => {
-                            e.preventDefault();
-                            let temp=formData;
-                            temp['rating'] = e.target.value;
-                            setFormData(temp);
-                        }}/><br/>
+            <label>Rating</label><br/>
+            <input 
+                type="number" 
+                id="swim-set-rating" 
+                name="swim-set-rating" 
+                defaultValue={formData['rating']}
+                onChange={(e) => {
+                    e.preventDefault();
+                    let temp=formData;
+                    temp['rating'] = e.target.value;
+                    setFormData(temp);
+                }}/><br/>
 
-                    <label>Favorite</label><br/>
-                    <input 
-                        type="checkbox" 
-                        id="swim-set-favorite" 
-                        name="swim-set-favorite" 
-                        defaultValue={formData['favorite']}
-                        onChange={(e) => {
-                            e.preventDefault();
-                            let temp = formData;
-                            temp['favorite'] = !formData['favorite'];
-                            setFormData(temp);
-                        }}/><br/>
-                    {errors.length > 0 ? <div>{ errors.map(error => <p className="error">{error}</p>) }</div> : null}
-                    <button type="submit" onClick={handleSubmit}>Submit</button>
-                </div>
-            </header>
+            <label>Favorite</label><br/>
+            <input 
+                type="checkbox" 
+                id="swim-set-favorite" 
+                name="swim-set-favorite" 
+                defaultValue={formData['favorite']}
+                onChange={(e) => {
+                    e.preventDefault();
+                    let temp = formData;
+                    temp['favorite'] = !formData['favorite'];
+                    setFormData(temp);
+                }}/><br/>
+            {errors.length > 0 ? <div>{ errors.map(error => <p className="error">{error}</p>) }</div> : null}
+            <button type="submit" onClick={handleSubmit}>Submit</button>
         </div>
      )
 }

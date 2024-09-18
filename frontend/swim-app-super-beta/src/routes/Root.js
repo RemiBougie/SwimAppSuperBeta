@@ -33,15 +33,12 @@ export default function Root() {
     }
 
     return(
-        <div id="root">
+        <div className="App">
             <DataContext.Provider value={dataObj}>
-                <div id="header">
+                <div id="App-header">
                     <h1>Swim App Super Beta</h1>
                     <h3>This is just a placeholder root route</h3>
-                </div>
-                <div className="contents">
-                    <div className="sidebar">
-                        <nav>
+                    <nav>
                             <ul className="menu">
                                 <li>
                                     <Link to={`BrowseSwimSets/`}>Browse Swim Sets</Link>
@@ -63,7 +60,8 @@ export default function Root() {
                                 </li>
                             </ul>
                         </nav>
-                    </div>
+                </div>
+                <div className="App-contents">
                     <Outlet />
                 </div>
             </DataContext.Provider>

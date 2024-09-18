@@ -14,7 +14,10 @@ export function generateSwimPracticeCards(swimPractices, allSwimSets, clickHandl
     //const allSwimSets = useLoaderData()[0];
     return swimPractices.map((item) => {
         return(
-            <SwimPracticeCard swimPractice={item} allSwimSets={allSwimSets}/>
+            <SwimPracticeCard 
+              swimPractice={item} 
+              allSwimSets={allSwimSets}
+              clickHandler={clickHandler}/>
         )
     })
     /*
@@ -29,17 +32,14 @@ export function generateSwimPracticeCards(swimPractices, allSwimSets, clickHandl
     */
 }
 
-export default function BrowseSwimPractices() {
+export default function BrowseSwimPractices({clickHandler=null}) {
   let [loading, setLoading] = useState(true);
 
   let [titleSearch, setTitleSearch] = useState('');
   let [tagsSearch, setTagsSearch] = useState(allTags["allTags"]);
-  //let [allSwimSets, setAllSwimSets] = useState(useLoaderData()[0]);
-  //let [swimPractices, setSwimPractices] = useState(useLoaderData()[1]);
   const allSwimSets = useContext(DataContext)["swimSets"];
   const allSwimPractices = useContext(DataContext)["swimPractices"];
-  let [itemList, setItemList] = useState(generateSwimPracticeCards(allSwimPractices, allSwimSets));
-  console.log("swimSets state variable: ", allSwimSets);
+  let [itemList, setItemList] = useState(generateSwimPracticeCards(allSwimPractices, allSwimSets, clickHandler));
 
   useEffect(() => {
     setLoading(false);
@@ -50,22 +50,19 @@ export default function BrowseSwimPractices() {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="browse-swim-practices">
         <h3>Search for swim practices here!</h3>
         <SearchBox 
           searchCriteria="Swim Practice Title" 
           search={titleSearch}
           setSearch={setTitleSearch}/>
         <TagSelection 
-          className="App-tagSelection"
           tagsSearch={tagsSearch}
           setTagsSearch={setTagsSearch}/>
         <button onClick={() => {
-          FilterSwimPractices(titleSearch, tagsSearch, allSwimPractices, allSwimSets, setItemList, generateSwimPracticeCards);
+          FilterSwimPractices(titleSearch, tagsSearch, allSwimPractices, allSwimSets, setItemList, generateSwimPracticeCards, clickHandler);
         }}>Search</button>
         <div className="App-displaySwimPracticeCards"> {itemList}</div>
-      </header>
     </div>
   );
 }

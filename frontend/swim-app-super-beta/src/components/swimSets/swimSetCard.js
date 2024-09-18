@@ -6,7 +6,7 @@ import { deleteSwimSet } from '../../hooks/requests';
 //import '../App.css';
 
 function SwimSetCard ({swimSet, clickHandler=null}) {//( {swimSet_id, swimSet_title, swimSet_tags, swimSet, swimSet_notes}) {
-    console.log("swimSet in swimSetCard(): ", swimSet);
+    //console.log("swimSet in swimSetCard(): ", swimSet);
     let [isMenuVisible, setIsMenuVisible] = useState(false);
     const menuRef = useRef(null);
 

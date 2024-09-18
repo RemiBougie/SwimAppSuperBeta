@@ -225,7 +225,7 @@ async function postSwimPractice (data) {
         console.log("swimPractice to POST: ", data)
         let existingDataIndex = mockSwimPractices.findIndex((swimPractice) => swimPractice["id"] === data["id"])
         //let existingDataIndex = mockSwimSets.find(swimSet => { swimSet["id"] === data["id"]})
-        if (existingDataIndex) {
+        if (existingDataIndex > 0) {
             mockSwimPractices.splice(existingDataIndex, 1, data);
         } else {
             mockSwimPractices.push(data);

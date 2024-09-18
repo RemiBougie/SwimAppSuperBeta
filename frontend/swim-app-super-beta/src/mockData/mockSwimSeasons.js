@@ -6,6 +6,9 @@ tomorrow.setDate(today.getDate() + 1);
 const inTwoDays = new Date();
 inTwoDays.setDate(tomorrow.getDate() + 1);
 
+const inThreeDays = new Date();
+inThreeDays.setDate(inTwoDays.getDate() + 1);
+
 export const mockSwimSeasons = [
     {
         "id": "testSeason",
@@ -36,6 +39,13 @@ export const mockSwimSeasons = [
                 "planned": "efgh",
                 "completed": null,
                 "comments": "To be replaced by TBD"
+            },
+            {
+                "id": "45678",
+                "datetime": inThreeDays,
+                "planned": null,
+                "completed": null,
+                "comments": "Plan still up in the air"
             }
         ]
     }

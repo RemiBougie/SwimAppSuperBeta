@@ -15,15 +15,14 @@ export const allTags = {
         "relays": false,
         "finishes": false,
         "streamlines": false,
-        "underwaters": false,
-        "resistance": false
+        "underwaters": false
     },
     "intensity": {
         "warmup": false,
+        "easy": false,
         "aerobic": false,
-        "anaerobic": false,
-        "fast": false,
-        "easy": false
+        "threshold": false,
+        "maximum": false
     },
     "distance": {
         "sprint": false,
@@ -33,6 +32,8 @@ export const allTags = {
     "equipment": {
         "fins": false,
         "snorkel": false,
-        "paddles": false
+        "paddles": false,
+        "stretch cords": false,
+        "resistance": false,
     }
 }

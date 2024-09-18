@@ -5,7 +5,7 @@ export default function BrowseSwimSeasons() {
     let swimSeasons = useLoaderData()[2]
 
     return(
-        <ul>
+        <ul className="browse-swim-seasons">
             {swimSeasons.map((swimSeason) => {
                 return (
                     <li>

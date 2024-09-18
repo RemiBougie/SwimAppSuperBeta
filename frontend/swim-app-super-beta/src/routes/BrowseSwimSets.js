@@ -20,15 +20,7 @@ import { getAllSwimSets } from '../hooks/requests';
 export function generateSwimSetCards(swimSets, clickHandler=null) {
   //console.log("swimSets in generateSwimSetCards: ", swimSets);
   return swimSets.map((item)=>{
-    return <SwimSetCard 
-    /* onClick={(e) => {
-      e.preventDefault();
-      if (selectSwimSet) {
-        selectSwimSet(item)
-      }
-    }} */
-    swimSet={item} 
-    clickHandler={clickHandler}/>})
+    return <SwimSetCard swimSet={item} clickHandler={clickHandler}/>})
 }
 
 export default function BrowseSwimSets({clickHandler=null}) {
@@ -59,8 +51,7 @@ export default function BrowseSwimSets({clickHandler=null}) {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className="browse-swim-sets">
         <h3>Search for swim sets here!</h3>
         <SearchBox 
           searchCriteria="Swim Set Title" 
@@ -75,7 +66,6 @@ export default function BrowseSwimSets({clickHandler=null}) {
           Search
         </button>
         <div className="App-displaySwimSetCards">{ itemList }</div>
-      </header>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { useLoaderData } from 'react-router-dom';
 
 import SideBySideItem from './sideBySideItem';
 
-export default function SideBySideGrid( {swimSeason}) {
+export default function SideBySideGrid( {swimSeason, openModal, setComponentToRender, setDataToEdit, dataHandler}) {
     // pseudo-code:
     // for every "swimDay" in the swimSeason body:
     // HEADERS: have "Planned", "Completed", and "Comments" headers frozen at the top
@@ -12,12 +12,17 @@ export default function SideBySideGrid( {swimSeason}) {
         // the "planned", "completed", and "comments" elements of the swimDay
             // if completed is null, should still leave a gap 
 
-    console.log("swimSeason in SideBySideGrid(): ", swimSeason);
+    //console.log("swimSeason in SideBySideGrid(): ", swimSeason);
     const body = swimSeason['body'];
 
     function generateSwimDays(body) {
         return body.map((swimDay) => {
-            return <SideBySideItem swimDay={swimDay} />;
+            return <SideBySideItem 
+                swimDay={swimDay} 
+                openModal={openModal} 
+                setComponentToRender={setComponentToRender}
+                setDataToEdit={setDataToEdit}
+                dataHandler={dataHandler}/>;
         })
     }
 
