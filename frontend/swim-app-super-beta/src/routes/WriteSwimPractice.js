@@ -42,7 +42,7 @@ export default function WriteSwimPractice( {swimPractice_id=null, submitHandler=
     let swimPractice = null;
     let existing = false;
 
-    if (swimPractice_id === 'new' || submitHandler) {
+    if (swimPractice_id === 'new') {
         swimPractice = blankSwimPractice;
     } else {
         swimPractice = allSwimPractices.find(swimPractice => swimPractice.id === swimPractice_id);

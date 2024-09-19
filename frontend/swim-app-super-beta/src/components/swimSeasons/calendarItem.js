@@ -17,5 +17,5 @@ export default function CalendarItem( { swimDay, date }) {
         //return <p> { practice.swimPractice_title.length > 0 ? practice.swimPractice_title : `Practice on ${date}`}</p>
     }
     
-    return <p>Couldn't find the practice...</p>
+    return <p>No practice planned</p>
 }

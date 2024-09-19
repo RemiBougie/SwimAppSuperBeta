@@ -1,14 +1,17 @@
 import React, { useState, useRef, useEffect} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import SwimSetCard from '../swimSets/swimSetCard';
 import TagsList from '../swimSets/tagsList';
 import SwimSetList from './swimSetList';
+import DropdownMenu from '../dropdownMenu';
 import { deleteSwimPractice } from '../../hooks/requests';
 
-function SwimPracticeCard( {swimPractice, allSwimSets, clickHandler=null} ) {
+
+function SwimPracticeCard( {swimPractice, allSwimSets, additionalMenuOptions=[], clickHandler=null} ) {
     let [isMenuVisible, setIsMenuVisible] = useState(false);
     const menuRef = useRef(null);
+    const navigate=useNavigate();
 
     const toggleMenu = () => {
         setIsMenuVisible(!isMenuVisible);
@@ -35,6 +38,31 @@ function SwimPracticeCard( {swimPractice, allSwimSets, clickHandler=null} ) {
         };
     }, []);
 
+    /*
+    // if menuOptions not passed in as a prop, set to default values
+    if (!menuOptions) {
+        menuOptions = [
+            {'onClick': null, "text": <Link to={`/WriteSwimPractice/${swimPractice["id"]}`}>Edit</Link>},
+            {'onClick': () => handleDelete(swimPractice), "text": "Delete"}
+        ]
+
+        if (clickHandler) {
+            menuOptions.push({'onClick': () => clickHandler(swimPractice), 'text': 'Add to Swim Season'})
+        }
+    }
+    */
+
+    let menuOptions = [
+        {'onClick': null, "text": <Link to={`/WriteSwimPractice/${swimPractice["id"]}`}>Edit</Link>},
+        {'onClick': () => handleDelete(swimPractice), "text": "Delete"}
+    ]
+
+    for (const option of additionalMenuOptions) {
+        menuOptions.push(option);
+    }
+    //console.log("menuOptions: ", menuOptions);
+
+
     return(
         <div className="practice-card" key={swimPractice["id"]}
             onClick={(e) => {
@@ -53,17 +81,7 @@ function SwimPracticeCard( {swimPractice, allSwimSets, clickHandler=null} ) {
             </div>
             { isMenuVisible && (
                 <div ref={menuRef}>
-                    <ul className="swimSetCard-menu">
-                        <li><Link to={`/WriteSwimPractice/${swimPractice["id"]}`}>Edit</Link></li>
-                        <li onClick={()=>{
-                            handleDelete(swimPractice);
-                        }}>Delete</li>
-                        <li onClick={() => {
-                            if (clickHandler) {
-                                clickHandler(swimPractice)
-                            }
-                        }}>Add to Swim Season</li>
-                    </ul>
+                    <DropdownMenu data={menuOptions} />
                 </div>
             )}
             <TagsList tagArray={swimPractice["swimPractice_tags"]} />

@@ -17,7 +17,7 @@ export default function BlankSwimPlanCard( {openModal, setComponentToRender, set
                 e.preventDefault();
                 openModal();
                 setDataToEdit(data);
-                setComponentToRender(<WriteSwimPractice submitHandler={dataHandler}/>);
+                setComponentToRender(<WriteSwimPractice swimPractice_id="new" submitHandler={dataHandler}/>);
                 }}>Write New Practice</button>
         </div>
     )

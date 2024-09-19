@@ -23,13 +23,22 @@ export default function ViewSwimSeason() {
     let [componentToRender, setComponentToRender] = useState(null)
     let [swimSeason, setSwimSeason] = useState(swimSeasons.find(season => season["id"] === id))
     let [dataToEdit, setDataToEdit] = useState({"swimPlan_id": "", "data": ""});
-    let [swimPracticeId, setSwimPracticeId] = useState('');
+    let [swimPracticeId, setSwimPracticeId] = useState('empty');
 
     useEffect(() => {
-        if (swimPracticeId != '') {
-            updateData(swimPracticeId);
-            setSwimPracticeId('');
+        updateData(swimPracticeId);
+        if (swimPracticeId !== '' || swimPracticeId !== null) {
+            setSwimPracticeId('empty');
         }
+        setSwimPracticeId('empty');
+        // TEST BLOCK
+        console.log("TESTING STATE VARIABLES IN ViewSwimSeason!");
+        console.log("TESTING STATE VARIABLES IN ViewSwimSeason!");
+        console.log("TESTING STATE VARIABLES IN ViewSwimSeason!");
+        console.log("swimSeason: ", swimSeason);
+        console.log("dataToEdit: ", dataToEdit);
+        console.log("swimPracticeId: ", swimPracticeId);
+
     }, [swimPracticeId]);
 
     if (!swimSeason) {
@@ -60,13 +69,22 @@ export default function ViewSwimSeason() {
         let data = dataToEdit["data"];
 
         let dataIndex = temp["body"].findIndex((swimPlan) => swimPlan["id"] === swimPlan_id);
-        let oldSwimPlan = temp["body"][dataIndex][data];
         if (dataIndex > 0) {temp["body"][dataIndex][data] = newData;}
+
+        // TESTING BLOCK
+        console.log("TESTING updateData");
+        console.log("TESTING updateData");
+        console.log("TESTING updateData");
+        console.log("swimPlan_id", swimPlan_id);
+        console.log("data: ", data);
+        console.log("dataIndex: ", dataIndex);
+        console.log("newData:", newData);
 
         setSwimSeason(temp);     
     };
 
-    const addSwimPractice = (swimPractice) => {
+    const handleSwimPracticeId = (swimPractice) => {
+        console.log("handling swimPracticeId with id: ", swimPractice["id"]);
         setSwimPracticeId(swimPractice["id"]);
         closeModal();
     };
@@ -83,7 +101,7 @@ export default function ViewSwimSeason() {
                 openModal={openModal} 
                 setComponentToRender={setComponentToRender}
                 setDataToEdit={setDataToEdit}
-                dataHandler={addSwimPractice}/>
+                dataHandler={handleSwimPracticeId}/>
             <Modal 
                 isOpen={modalVisibility} 
                 onClose={closeModal} 
