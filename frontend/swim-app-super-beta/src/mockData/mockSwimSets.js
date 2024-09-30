@@ -5,7 +5,7 @@ export const mockSwimSets = [
         "swimSet_title": "Geronimo!",
         "body": {"Group A": "4x100 @ 1:30\n4x50 @ 1:00"},
         "notes": "This set sucks.",
-        "swimSet_tags": ["anaerobic","fast","freestyle"],
+        "swimSet_tags": ["threshold","freestyle"],
         "favorite": false,
         "rating": 3
     },
@@ -27,7 +27,7 @@ export const mockSwimSets = [
         "swimSet_title": "Goal 50s",
         "body": { "Group A": "30x50@1:00\nMake up missed ones afterwards!"},
         "notes": "This set is painful but great.",
-        "swimSet_tags": ["anaerobic","backstroke","breaststroke","butterfly","fast","freestyle"],
+        "swimSet_tags": ["threshold","backstroke","breaststroke","butterfly","freestyle"],
         "favorite": true,
         "rating": 4.5
     },
@@ -38,7 +38,7 @@ export const mockSwimSets = [
         "body": {"Group A": "100 butterfly\n100 backstroke\n100 breaststroke\n100 freestyle\n200 IM\nAll for time!",
             "Group B": "100 butterfly\n100 backstroke\n100 breaststroke\n100 freestyle\n100 IM\nAll for time!"},
         "notes": "Points are awarded based on PowerPoints. +1 point for every 0.01 under goal time.",
-        "swimSet_tags": ["anaerobic","backstroke","breaststroke","butterfly","freestyle","sprint"],
+        "swimSet_tags": ["threshold","backstroke","breaststroke","butterfly","freestyle","sprint"],
         "favorite": true,
         "rating": 4.3
     },
@@ -82,7 +82,7 @@ export const mockSwimSets = [
         "swimSet_title": "Breaststroke Technique",
         "body": {"Everyone": "2 x {\n\t2 x {\n\t\t3 x 50 drill @ 1:00\n\t\t-1: triple kick\n\t\t-2: double kick\n\t\t-3: single kick\n\t}\n\t2 x 100 snappy breast K @ 2:00\n\t2 x 50 breast (25 smooth, 25 build) @ 1:00\n\t2 x 25 FAST breast @ :45\n\t50 EZ @ 1:30\n}"},
         "notes": "Focus is keeping your arms out of the way when generating power with legs.",
-        "swimSet_tags": ["breaststroke","aerobic","drill","fast","kick"],
+        "swimSet_tags": ["breaststroke","aerobic","drill","kick"],
         "favorite": false,
         "rating": 4.0
     },

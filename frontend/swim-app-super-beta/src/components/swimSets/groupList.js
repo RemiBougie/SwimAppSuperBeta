@@ -5,7 +5,7 @@ export default function GroupList ({ swimSet_id, swimSet }) {
 
     if (groupNames.length > 1) {
         return (
-            <section className="App-swimSetList1" >
+            <div className="App-swimSetList1" >
                 <ul>
                     {groupNames.map((groupName)=>{
                         return (
@@ -16,16 +16,16 @@ export default function GroupList ({ swimSet_id, swimSet }) {
                         );
                     })}
                 </ul>
-            </section>
+            </div>
         );
     } else {
         return (
-            <section className="App-swimSetList2">
+            <div className="App-swimSetList2">
                 <div className="App-groupCard" key={`${swimSet_id}`}>
                     <p style={{fontWeight: "bold"}}>{groupNames[0]}</p>
                     <p style={{display: "flex", textAlign: "justify", textJustify: "left", justifyContent: "center"}}>{swimSet[groupNames[0]]}</p>
                 </div>
-            </section>
+            </div>
         )
     }
 

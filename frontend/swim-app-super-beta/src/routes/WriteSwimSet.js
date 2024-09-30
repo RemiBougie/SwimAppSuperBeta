@@ -25,19 +25,24 @@ export async function loader( {params}) {
     //allSwimSets.find(swimSet => swimSet.id === swimSet_id)
 }
 
-export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
+export default function WriteSwimSet ( {swimSet_id=null, swimSets=null, setSwimSets=null, submitHandler=null} ) {
     // The below block of code initializes a swimSet object to either be a blankSwimSet (when creating
     // a new swimSet) or an existing swimSet found by id in the URL (for editing an existing swimSet)
-    let id = useLoaderData();
+    let URL_id = useLoaderData();
+    if (!swimSet_id) {
+        swimSet_id = URL_id;
+    }
     let allSwimSets = useContext(DataContext)['swimSets'];
     const allTagsClone = structuredClone(allTags["allTags"]);
 
     let swimSet = null;
+    let existing = false;
 
-    if (id === 'new' || swimSets) {
+    if (swimSet_id === 'new' || swimSets) {
         swimSet = blankSwimSet;
     } else {
-        swimSet = allSwimSets.find(swimSet => swimSet.id === id)
+        swimSet = allSwimSets.find(swimSet => swimSet.id === swimSet_id);
+        existing = true;
     }
 
     // set groups state
@@ -105,7 +110,7 @@ export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
         return tags;
     }
 
-    const validateData = () => {
+    const validateData = (saveAsNew) => {
         let formErrors = [];
         // validate groups
         try {
@@ -139,6 +144,9 @@ export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
         temp['swimSet_tags'] = findTrueTags(selectedTags);
         temp['owner'] = 'RemiB123';
         //temp['id'] = uuidv4();
+        if (saveAsNew && existing) {
+            temp['id'] = uuidv4();
+        }
         setFormData(temp);
 
         console.log('formData after validation: ', formData)
@@ -146,9 +154,8 @@ export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
         return formErrors;
     }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        let formErrors = validateData();
+    const handleSubmit = (saveAsNew) => {
+        let formErrors = validateData(saveAsNew);
 
         if (formErrors.length === 0) {
             postSwimSet(formData)
@@ -163,6 +170,10 @@ export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
                 if (response.ok && setSwimSets) {
                     console.log('Setting swimSets!');
                     setSwimSets([...swimSets, formData]);
+                } 
+                if (response.ok && submitHandler) {
+                    console.log('Submit handler from parent called');
+                    submitHandler(formData);
                 }
             })
             .then(() => {
@@ -244,7 +255,25 @@ export default function WriteSwimSet ( {swimSets=null, setSwimSets=null} ) {
                     setFormData(temp);
                 }}/><br/>
             {errors.length > 0 ? <div>{ errors.map(error => <p className="error">{error}</p>) }</div> : null}
-            <button type="submit" onClick={handleSubmit}>Submit</button>
+
+            { existing ? 
+                <div>
+                    <button 
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleSubmit(true);}}>Save As New
+                    </button>
+                    <button
+                        onClick={(e) => {
+                            e.preventDefault();
+                            handleSubmit(false)}}>Edit Original
+                    </button>
+                </div>
+            : <button 
+            onClick={(e)=> {
+                e.preventDefault();
+                handleSubmit(true)
+            }}>Save</button>}
         </div>
      )
 }

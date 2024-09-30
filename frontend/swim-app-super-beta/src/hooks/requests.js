@@ -189,7 +189,8 @@ async function postSwimSet (data) {
     if(isMock) {
         let existingDataIndex = mockSwimSets.findIndex((swimSet) => swimSet["id"] === data["id"])
         //let existingDataIndex = mockSwimSets.find(swimSet => { swimSet["id"] === data["id"]})
-        if (existingDataIndex) {
+        console.log("Matching swimSet_id found at index: ", existingDataIndex, " of mockSwimSets.")
+        if (existingDataIndex >= 0) {
             mockSwimSets.splice(existingDataIndex, 1, data);
         } else {
             mockSwimSets.push(data);
@@ -225,7 +226,7 @@ async function postSwimPractice (data) {
         console.log("swimPractice to POST: ", data)
         let existingDataIndex = mockSwimPractices.findIndex((swimPractice) => swimPractice["id"] === data["id"])
         //let existingDataIndex = mockSwimSets.find(swimSet => { swimSet["id"] === data["id"]})
-        if (existingDataIndex > 0) {
+        if (existingDataIndex >= 0) {
             mockSwimPractices.splice(existingDataIndex, 1, data);
         } else {
             mockSwimPractices.push(data);

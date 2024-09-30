@@ -9,7 +9,7 @@ function isSameDay(date1, date2) {
     return date1.getFullYear() === date2.getFullYear() && date1.getMonth() === date2.getMonth() && date1.getDate() === date2.getDate();
 }
 
-export default function CalendarView ( { swimSeason } ) {
+export default function CalendarView ( { swimSeason, handleCalendarItemClick, calendarRef } ) {
     const [value, setValue] = useState(new Date());
 
     //console.log("swimSeason in CalendarView(): ", swimSeason);
@@ -25,12 +25,12 @@ export default function CalendarView ( { swimSeason } ) {
             //return plan.planned;
             // to be:
             //console.log(swimDay);
-            return <CalendarItem swimDay={swimDay} date={date}/>
+            return <CalendarItem swimDay={swimDay} date={date} handleCalendarItemClick={handleCalendarItemClick}/>
         }
     }
 
     return (
-        <div className="calendar-container">
+        <div className="calendar-container" ref={calendarRef}>
             <Calendar
                 onChange={onChange}
                 value={value}

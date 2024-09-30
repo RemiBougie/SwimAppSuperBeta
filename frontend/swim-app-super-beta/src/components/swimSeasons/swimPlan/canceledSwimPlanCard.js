@@ -8,7 +8,7 @@ export default function CanceledSwimPlanCard({setDataToEdit, swimPlan, dataHandl
             <button onClick={(e) => {
                 e.preventDefault();
                 setDataToEdit(data);
-                dataHandler({"id": null})
+                dataHandler({"id": "remove"})
             }}>Undo</button>
             <p>Practice Canceled</p>
         </div>

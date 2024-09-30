@@ -11,34 +11,34 @@ export default function IncompleteSwimPlanCard( {openModal, setComponentToRender
                 e.preventDefault();
                 setDataToEdit(data);
                 dataHandler({"id": swimPlan["planned"]});
-            }}>Completed As Planned</button>
+            }}>✓ Completed As Planned</button>
 
             <button onClick={(e) => {
                 e.preventDefault();
                 setDataToEdit(data);
                 setComponentToRender(<WriteSwimPractice swimPractice_id={swimPlan["planned"]} submitHandler={dataHandler}/>);
                 openModal();
-            }}>Modified From Planned</button>
+            }}>✎ Modified From Planned</button>
 
             <button onClick={(e) => {
                 e.preventDefault();
                 setDataToEdit(data);
                 setComponentToRender(<BrowseSwimPractices clickHandler={dataHandler} />);
                 openModal()
-            }}>Different Existing Practice</button>
+            }}>🔍 Different Existing Practice</button>
 
             <button onClick={(e) => {
                 e.preventDefault();
                 openModal();
                 setDataToEdit(data);
                 setComponentToRender(<WriteSwimPractice swimPractice_id="new" submitHandler={dataHandler} />)
-            }}>New Practice</button>
+            }}>+  New Practice</button>
 
             <button onClick={(e) => {
                 e.preventDefault();
                 setDataToEdit(data);
                 dataHandler({"id": "canceled"});
-            }}>Practice Canceled</button>
+            }}>✕ Practice Canceled</button>
         </div>
     )
 }

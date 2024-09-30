@@ -11,7 +11,7 @@ function findTrueTags(tagsArg) {
     return tags;
 }
 
-function FilterSwimSets (titleSearch='', tagsSearch, swimSets, setItems, generateSwimSetCards, clickHandler=null) {
+function FilterSwimSets (titleSearch='', tagsSearch, swimSets, setItems, generateSwimSetCards, openModal=null, closeModal=null, setComponentToRender=null, clickHandler=null) {
     let user_id="RemiB123";
 
     // manipulate input data to correct format and find selected tags
@@ -31,7 +31,7 @@ function FilterSwimSets (titleSearch='', tagsSearch, swimSets, setItems, generat
     let titleMatches = titleFilter(swimSets, user_id, titleSearch);
     let matches = tagsFilter(titleMatches, user_id, selectedTags);
 
-    setItems(generateSwimSetCards(matches, clickHandler));
+    setItems(generateSwimSetCards(matches, openModal, closeModal, setComponentToRender, clickHandler));
 }
 
 function FilterSwimPractices (titleSearch='', tagsSearch, swimPractices, allSwimSets, setItems, generateSwimPracticeCards, clickHandler=null) {

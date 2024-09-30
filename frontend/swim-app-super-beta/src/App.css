@@ -1,6 +1,10 @@
 .App {
   text-align: center;
   width: 100vw;
+  background: radial-gradient(circle, #496D93, #64A596);
+  max-height: 100vh;
+  max-width: 100vw;
+  overflow: scroll;
 }
 
 .App-logo {
@@ -19,7 +23,7 @@
 }
 
 .App-contents {
-  background-color: #282c34;
+  /*background-color: #282c34;*/
   min-height: 100vh;
   min-width: fit-content;
   display: flex;
@@ -45,12 +49,11 @@
 }
 
 .browse-swim-sets {
-  background-color: greenyellow;
+  /*background: radial-gradient(circle, #25568B, #377F6E);*/
   min-width: fit-content;
 }
 
 .browse-swim-practices {
-  background-color: blueviolet;
   min-width: fit-content;
 }
 
@@ -63,16 +66,15 @@
 .write-swim-set {
   width: 100%;
   min-width: fit-content;
-  background-color: orange;
+  /*background-color: orange;*/
 }
 
 .write-swim-practice {
-  background-color: purple;
+  /*background-color: purple;*/
   min-width: fit-content;
 }
 
 .view-swim-season {
-  background-color: yellow;
   min-width: fit-content;
 }
 
@@ -109,35 +111,43 @@
   width: fit-content;
 }
 
-.App-card {
-  color: green;
+.swim-set-card {
+  /*color: green;*/
   position: relative;
-  background-color:aqua;
-  display: flex;
-  flex-direction: column;
+  background-color: rgba(217, 217, 217, 0.5);
+  border: 1px solid rgba(256, 256, 256, 0.5);
+  /*display: flex;
+  flex-direction: column;*/
   font-size: 12;
   width: fit-content;
   height: fit-content;
-  max-width: min(90%, 400px);
+  max-width: min(90%, 20vw);
   min-width: 300px;
   padding: 10px;
   margin: 10px;
+  border-radius: 13px;
   overflow: hidden;
   z-index: 2;
 }
 
-.practice-card {
-  background-color: red;
+.swim-practice-card {
+  /*color: green;*/
   position: relative;
-  display: flex;
-  flex-direction: column;
-  height: fit-content;
+  background-color: rgba(73, 109, 147, 0.5);
+  border: 1px solid rgba(256, 256, 256, 0.5);
+  /*box-shadow: 5px 5px 5px white;*/
+  /*display: flex;
+  flex-direction: column;*/
+  font-size: 12;
   width: fit-content;
-  max-width: min(90%, 400px);
+  height: fit-content;
+  max-width: min(90%, 30vw);
+  min-width: 300px;
   padding: 10px;
   margin: 10px;
+  border-radius: 13px;
   overflow: hidden;
-  z-index: 1;
+  z-index: 2;
 }
 
 .swimCard-header {
@@ -145,31 +155,43 @@
   flex-direction: row;
   justify-content: right;
   align-items: first baseline;
-  align-content: center;
+  align-content: right;
   width: 100%;
   z-index: 2;
 }
 
 .swimCard_favorite {
   width: 30px;
+  justify-content: right;
+  /*color: red;*/
 }
 
 .swimCard_title {
-  text-align: center;
-  text-justify: center;
+  color: white;
+  text-align: left;
+  text-justify: left;
+  justify-self: left;
   align-content: center;
   width: calc(100% - 70px);
+  font-size: 24pt;
+  font-weight: normal;
   z-index: 3;
 }
 
 .swimSetCard-button {
+  border: none;
+  background: transparent;
+  color: white;
   cursor: pointer;
   text-align: center;
   text-justify: center;
+  justify-content: right;
   height: 30px;
   width: 30px;
   margin: 0;
-  z-index: 3;
+  font-size: 24pt;
+  border-radius: 17px 17px 0px 0px;
+  z-index: 5;
 }
 
 .swimSetCard-menu {
@@ -177,18 +199,19 @@
   flex-direction: column;
   position: absolute;
   font-size: 12px;
-  top: 60px;
-  right: 0;
+  top: 55px;
+  right: 10px;
   background-color: white;
   color: black;
+  border-radius: 17px 0px 17px 17px;
   z-index: 4;
 }
 
 .App-tagCard {
-  color: black;
-  background-color: magenta;
-  margin: 5px;
-  padding: 5px;
+  color: white;
+  border-radius: 10px;
+  margin: 2px;
+  padding: 5px 10px 5px 10px;
   font-size: 12px;
   z-index: 2;
 }
@@ -198,6 +221,7 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: left;
+  padding: 0;
   z-index: 2;
 }
 
@@ -205,12 +229,29 @@
   overflow-x: scroll;
   width: auto;
   z-index: 2;
+  margin: 0;
+  padding: 5px;
 }
 
 .App-swimSetList2 {
   display: flex;
   justify-content: center;
   z-index: 2;
+  margin: 0;
+  padding: 5px;
+}
+
+.swim-practice-set-list {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  align-self: center;
+  align-items: center;
+  justify-content: center;
+  justify-self: center;
+  justify-items: center;
+  padding: 5px;
+  margin: 2.5px;
 }
 
 .App-checkboxList {
@@ -241,9 +282,10 @@ ul {
   flex-direction: row;
   justify-content: center;
   list-style: none;
-  height: fit-content;
   width: max-content;
   align-items: center;
+  margin: 0px;
+  padding: 0px;
 }
 
 ::-webkit-scrollbar {
@@ -263,20 +305,44 @@ ul {
 }
 
 .App-groupCard {
-  color: black;
-  background-color: yellow;
+  color: white;
+  background-color: rgba(217, 217, 217, 0.5);
   margin: 5px;
   padding: 5px;
   min-width: 200px;
   width: fit-content;
-  margin: 5px;
   font-size: 12px;
+  border-radius: 13px;
+  height: fit-content;
+  z-index: 2;
+}
+
+.swim-set-card-notes {
+  display: flex;
+  flex-direction: column;
+  color: white;
+  background-color: rgba(217, 217, 217, 0.25);
+  text-justify: center;
+  text-align: center;
+  justify-content: center;
+  justify-self: center;
+  justify-items: center;
+  align-self: center;
+  align-items: center;
+  align-content: center;
+  margin: 5px;
+  padding: 5px;
+  min-width: 200px;
+  width: 100%;
+  font-size: 12px;
+  border-radius: 13px;
   height: fit-content;
   z-index: 2;
 }
 
 p {
   text-align: center;
+  height: fit-content;
   justify-content: left;
   white-space: pre-wrap;
 }
@@ -293,13 +359,14 @@ h1 {
 }
 
 li {
-  margin: 10px;
+  margin: 5px;
   padding: 10px;
 }
 
 .calendar-container .react-calendar {
   display: flex;
   width: fit-content;
+  color: black;
   max-width: 100vw;
   flex-basis: 420px;
   flex-direction: column;
@@ -312,71 +379,147 @@ li {
 .side-by-side-grid {
   display: flex;
   flex-direction: column;
-  width: 90%;
-  max-width: 100%;
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  justify-content: right;
+  justify-items: right;
+  justify-self: right;
+  align-content: right;
+  align-items: right;
+  align-self: right;
 }
 
 .side-by-side-headers {
   display: flex;
   position: sticky;
-  width: 100%;
-  justify-content: space-between;
+  top: 0px;
+  width: 100vw;
+  justify-content: space-around;
   background-color: blue;
+  z-index: 5;
 }
 
 .side-by-side-list {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 100vw;
 }
 
 .side-by-side-item {
   display: flex;
   flex-direction: column;
   width: 100%;
-  overflow-y: scroll;
+  border-bottom: 3px solid rgba(256, 256, 256, 0.5);
 }
 
 .side-by-side-date {
   justify-content: left;
   text-align: left;
-  color: black;
+  margin-left: 30px;
+  font-size: 24pt;
 }
 
 .side-by-side-data {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 100%
 }
 
-.blank-swim-plan-card {
-  background-color: green;
+.back-to-calendar-btn {
   display: flex;
-  flex-direction: column;
+  position: sticky;
+  bottom: 10px;
+  transform: translate(85vw, 0);
+  justify-self: right;
+  justify-content: right;
+  justify-items: right;
+  align-self: right;
+  align-content: right;
+  align-items: right;
+  width: fit-content;
+  z-index: 5;
+}
+
+.blank-swim-plan-card {
+  position: relative;
+  background-color: rgba(73, 109, 147, 0.5);
+  border: 1px solid rgba(256, 256, 256, 0.5);
+  font-size: 12;
+  width: 30vw;
+  height: fit-content;
+  max-width: min(90%, 30vw);
+  min-width: 300px;
   padding: 10px;
+  margin: 10px;
+  border-radius: 13px;
+  overflow: hidden;
+  z-index: 2;
 }
 
 .incomplete-swim-plan-card {
-  background-color: green;
   display: flex;
   flex-direction: column;
+  position: relative;
+  background-color: rgba(73, 109, 147, 0.5);
+  border: 1px solid rgba(256, 256, 256, 0.5);
+  font-size: 12;
+  width: 30vw;
+  height: fit-content;
+  max-width: min(90%, 30vw);
+  min-width: 300px;
   padding: 10px;
+  margin: 10px;
+  border-radius: 13px;
+  overflow: hidden;
+  z-index: 2;
 }
 
-.sbs-placeholder {
-  width: 25%;
-  background-color: cyan;
-  color: black;
+.swim-plan-comments {
+  /*color: green;*/
+  position: relative;
+  background-color: rgba(73, 109, 147, 0.5);
+  border: 1px solid rgba(256, 256, 256, 0.5);
+  /*box-shadow: 5px 5px 5px white;*/
+  /*display: flex;
+  flex-direction: column;*/
+  font-size: 12;
+  width: 30vw;
+  height: fit-content;
+  max-width: min(90%, 30vw);
+  min-width: 300px;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 13px;
+  overflow: hidden;
+  z-index: 2;
 }
 
 h3 {
   justify-content: center;
-  margin: 10px;
+  width: fit-content;
+  /*margin: 10px;*/
 }
 
 form {
   width: 100%;
+}
+
+button {
+  text-align: left; 
+  border: 1px solid white;
+  background-color: rgba(73, 109, 147, 0.5);
+  color: white;
+  cursor: pointer;
+  text-justify: center;
+  justify-content: right;
+  height: fit-content;
+  width: fit-content;
+  font-size: 24pt;
+  border-radius: 5px;
+  margin: 5px;
 }
 
 .error {
@@ -400,7 +543,7 @@ form {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%); /* Center the modal */
-  background: white;
+  background: radial-gradient(circle, #496D93, #64A596);
   padding: 20px;
   z-index: 101; /* Higher than the overlay */
   border-radius: 8px;
