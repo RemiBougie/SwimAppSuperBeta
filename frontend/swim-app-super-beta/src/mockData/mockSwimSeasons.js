@@ -18,6 +18,8 @@ export const mockSwimSeasons = [
         "favorite": true,
         "notes": "Test swim season object",
         "rating": 4.0,
+        "startDate": today,
+        "endDate": inThreeDays,
         "body": [
             {
                 "id": "12345",

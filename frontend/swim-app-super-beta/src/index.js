@@ -13,6 +13,7 @@ import BrowseSwimSeasons from './routes/BrowseSwimSeasons';
 import ViewSwimSeason, { loader as viewSwimSeasonLoader} from './routes/ViewSwimSeason';
 import WriteSwimSet, { loader as writeSwimSetLoader } from './routes/WriteSwimSet';
 import WriteSwimPractice, { loader as writeSwimPracticeLoader } from './routes/WriteSwimPractice';
+import WriteSwimSeason from './routes/WriteSwimSeason';
 import ErrorPage from './ErrorPage';
 
 /* 
@@ -73,6 +74,11 @@ const router = createBrowserRouter([
         path: "/WriteSwimPractice/:swimPractice_id",
         element: <WriteSwimPractice />,
         loader: writeSwimPracticeLoader
+      },
+      {
+        path: "/WriteSwimSeason",
+        element: <WriteSwimSeason />,
+        loader: rootLoader
       }
     ]
   },

@@ -78,6 +78,10 @@
   min-width: fit-content;
 }
 
+.write-swim-season {
+  min-width: fit-content;
+}
+
 .App-tagSelection {
   display: flex;
   flex-direction: row;
@@ -374,6 +378,10 @@ li {
   padding-top: 1em;
   margin: 10px;
   justify-self: center;
+}
+
+.react-datepicker {
+  color: black;
 }
 
 .side-by-side-grid {
