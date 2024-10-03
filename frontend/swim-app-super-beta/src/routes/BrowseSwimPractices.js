@@ -95,6 +95,9 @@ export default function BrowseSwimPractices({ clickHandler = null }) {
             allSwimSets,
             setItemList,
             generateSwimPracticeCards,
+            openModal,
+            closeModal,
+            setModalComponent,
             clickHandler
           );
         }}

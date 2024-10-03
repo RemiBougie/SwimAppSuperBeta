@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import DatePicker from "react-datepicker";
 import { v4 as uuidv4 } from "uuid";
+import { useNavigate } from "react-router-dom";
 //import { useLoaderData, useNavigate } from "react-router-dom";
 import { DataContext } from "./Root";
 
@@ -20,6 +21,8 @@ export default function WriteSwimSeason() {
     endDate: endDate,
   });
   const [errors, setErrors] = useState([]);
+
+  const navigate = useNavigate();
 
   const validateData = () => {
     let formErrors = [];
@@ -57,6 +60,8 @@ export default function WriteSwimSeason() {
     if (formErrors.length === 0) {
       console.log("Info to submit!!!", formData);
       postSwimSeason(formData);
+      navigate(`/ViewSwimSeason/${formData["id"]}`);
+      //.then(() => );
     } else {
       setErrors(formErrors);
       console.log("ERRORS: ", formErrors);

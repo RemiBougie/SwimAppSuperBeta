@@ -50,7 +50,7 @@ export default function SideBySideGrid({
         <h3>COMMENTS</h3>
       </div>
       <div className="side-by-side-list">{items}</div>
-      <button className="back-to-calendar-btn" onClick={handleBackToCalendarClick}>Back to Calendar</button>
+      <button className="back-to-calendar-btn custom-btn" onClick={handleBackToCalendarClick}>Back to Calendar</button>
     </div>
   );
 
