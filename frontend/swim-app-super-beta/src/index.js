@@ -15,6 +15,7 @@ import WriteSwimSet, { loader as writeSwimSetLoader } from './routes/WriteSwimSe
 import WriteSwimPractice, { loader as writeSwimPracticeLoader } from './routes/WriteSwimPractice';
 import WriteSwimSeason from './routes/WriteSwimSeason';
 import ErrorPage from './ErrorPage';
+import Login from './routes/Login';
 
 /* 
 TO DO
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     loader: rootLoader,
     children: [
+      {
+        path: "/Login",
+        element: <Login />,
+      },
       {
         path: "/BrowseSwimSets",
         element: <BrowseSwimSets />,

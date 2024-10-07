@@ -11,6 +11,7 @@ inThreeDays.setDate(inTwoDays.getDate() + 1);
 
 export const mockSwimSeasons = [
     {
+        // METADATA
         "id": "testSeason",
         "owner": "RemiB123",
         "title": "Summer 2024",
@@ -20,6 +21,8 @@ export const mockSwimSeasons = [
         "rating": 4.0,
         "startDate": today,
         "endDate": inThreeDays,
+
+        // DATA
         "body": [
             {
                 "id": "12345",

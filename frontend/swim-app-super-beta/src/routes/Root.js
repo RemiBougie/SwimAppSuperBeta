@@ -40,6 +40,7 @@ export default function Root() {
     return <h2>Loading...</h2>;
   }
 
+  /// stupid lil comment
   return (
     <div className="App">
       <DataContext.Provider value={dataObj}>
@@ -48,6 +49,9 @@ export default function Root() {
           <h3>This is just a placeholder root route</h3>
           <nav>
             <ul className="menu">
+              <li>
+                <Link to={`Login/`}>Login</Link>
+              </li>
               <li>
                 <Link to={`BrowseSwimSets/`}>Browse Swim Sets</Link>
               </li>
