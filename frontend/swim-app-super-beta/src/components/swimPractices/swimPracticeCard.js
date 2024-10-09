@@ -6,7 +6,7 @@ import TagsList from "../swimSets/tagsList";
 import SwimSetList from "./swimSetList";
 import DropdownMenu from "../dropdownMenu";
 import WriteSwimPractice from "../../routes/WriteSwimPractice";
-import { deleteSwimPractice } from "../../hooks/requests";
+import { deleteSwimPractice } from "../../common/requests";
 
 function SwimPracticeCard({
   swimPractice,

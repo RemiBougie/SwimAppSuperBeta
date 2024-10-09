@@ -7,7 +7,7 @@ import { DataContext } from "./Root";
 
 import "react-datepicker/dist/react-datepicker.css";
 
-import { postSwimSeason } from "../hooks/requests";
+import { postSwimSeason } from "../common/requests";
 
 export default function WriteSwimSeason() {
   const [startDate, setStartDate] = useState(null);

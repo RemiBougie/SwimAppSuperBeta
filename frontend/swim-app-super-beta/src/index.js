@@ -46,10 +46,7 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     loader: rootLoader,
     children: [
-      {
-        path: "/Login",
-        element: <Login />,
-      },
+      { index: true, element: <BrowseSwimSets /> },
       {
         path: "/BrowseSwimSets",
         element: <BrowseSwimSets />,
@@ -87,6 +84,11 @@ const router = createBrowserRouter([
       }
     ]
   },
+  {
+    path: '/auth',
+    element: <Login />,
+    errorElement: <ErrorPage />
+  }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

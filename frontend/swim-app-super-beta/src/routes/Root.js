@@ -1,11 +1,13 @@
 import React, { createContext, useState, useEffect, useContext } from "react";
-import { Outlet, Link, useLoaderData } from "react-router-dom";
+import { Outlet, Link, useLoaderData, useNavigate } from "react-router-dom";
 import "../App.css";
+
 import {
   getAllSwimSets,
   getAllSwimPractices,
   getAllSwimSeasons,
-} from "../hooks/requests";
+} from "../common/requests";
+import { logout, isAuthenticated } from "../common/auth";
 
 export async function loader() {
   const allSwimSets = await getAllSwimSets();
@@ -18,6 +20,7 @@ export const DataContext = createContext();
 
 export default function Root() {
   let [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const data = useLoaderData();
   const dataObj = {
@@ -40,12 +43,27 @@ export default function Root() {
     return <h2>Loading...</h2>;
   }
 
+  if (!isAuthenticated()) {
+    return navigate("/auth");
+  }
+
   /// stupid lil comment
   return (
     <div className="App">
       <DataContext.Provider value={dataObj}>
         <div id="App-header">
-          <h1>Swim App Super Beta</h1>
+          <div>
+            <h1>Swim App Super Beta</h1>
+            <button
+              onClick={() => {
+                logout();
+                navigate("/auth");
+              }}
+            >
+              Log Out
+            </button>
+          </div>
+
           <h3>This is just a placeholder root route</h3>
           <nav>
             <ul className="menu">

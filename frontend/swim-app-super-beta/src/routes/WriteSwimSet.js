@@ -8,7 +8,7 @@ import * as allTags from '../allTags';
 import WriteGroupCard from '../components/writeGroupCard';
 import TagSelection from '../components/search/tagSelection';
 
-import { postSwimSet } from '../hooks/requests';
+import { postSwimSet } from '../common/requests';
 
 const blankSwimSet = {
     id: uuidv4(),

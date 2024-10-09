@@ -1,115 +1,105 @@
 import React, { useState } from "react";
-import AWS from "aws-sdk";
-import {
-  CognitoUserPool,
-  CognitoUser,
-  AuthenticationDetails,
-} from "amazon-cognito-identity-js";
+import { login } from "../common/auth";
+import { useNavigate } from "react-router-dom";
+import "../App.css";
 
-const poolData = {
-  UserPoolId: "us-east-2_JdjrKNjPr",
-  ClientId: "2mdjgoaquj0fhdji40dqjicafk",
-};
-
-const userPool = new CognitoUserPool(poolData);
-
+// Login form
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [passwordsMatch, setPasswordsMatch] = useState(false);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  //const history = useHistory();
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
 
+    console.log("Handle login called.");
+
     try {
-      const tokens = await loginHelper(username, password);
+      const tokens = await login(
+        username,
+        password,
+        showNewPassword ? newPassword : null
+      );
       console.log("Login successful!", tokens);
+      // to do: set up protected route to navigate to after successful login
+      //history.push('/BrowseSwimSets');
+      navigate("/BrowseSwimSets");
     } catch (err) {
-      setError(err.message || "Login failed");
+      if (err.message === "New password is required") {
+        setShowNewPassword(true);
+      } else {
+        setError(err.message || "Login failed");
+      }
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <form className="Login" onSubmit={handleLogin}>
-      <div>
-        <label>Username: </label>
-        <input
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-      </div>
-      <div>
-        <label>Password: </label>
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => {
-            setPassword(e.target.value);
-          }}
-          required
-        />
-      </div>
+    <div className="App">
+      <div className="App-contents">
+        <form onSubmit={handleLogin}>
+          <div>
+            <label>Username: </label>
+            <input
+              type="text"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              required
+            />
+          </div>
+          <div>
+            <label>Password: </label>
+            <input
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+              required
+            />
+          </div>
 
-      <button type="submit" disabled={isLoading}>
-        {isLoading ? "Logging in..." : "Login"}
-      </button>
-      <button>Login with Google</button>
-      <button>Login with Facebook</button>
+          {showNewPassword && (
+            <>
+              <p>You must reset your password. </p>
+              <div>
+                <label>Set new password: </label>
+                <input
+                  value={newPassword}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+              </div>
 
-      {error && <p className="error">{error}</p>}
-    </form>
+              <div>
+                <label>Confirm new password: </label>
+                <input
+                  onChange={(e) =>
+                    setPasswordsMatch(e.target.value === newPassword)
+                  }
+                />
+              </div>
+
+              {!passwordsMatch ? <p>Passwords do not match.</p> : null}
+            </>
+          )}
+
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? "Logging in..." : "Login"}
+          </button>
+          <button>Login with Google</button>
+          <button>Login with Facebook</button>
+
+          {error && <p className="error">{error}</p>}
+        </form>
+      </div>
+    </div>
   );
 }
-
-function loginHelper(username, password) {
-  const authenticationData = {
-    Username: username,
-    Password: password,
-  };
-
-  const authenticationDetails = new AuthenticationDetails(authenticationData);
-
-  const userData = {
-    Username: username,
-    Pool: userPool,
-  };
-
-  const cognitoUser = new CognitoUser(userData);
-
-  return new Promise((resolve, reject) => {
-    cognitoUser.authenticateUser(authenticationDetails, {
-      onSuccess: (result) => {
-        const accessToken = result.getAccessToken().getJwtToken();
-        const idToken = result.getIdToken().getJwtToken();
-        const refreshToken = result.getRefreshToken().getToken();
-
-        console.log("Access Token: ", accessToken);
-        console.log("ID Token: ", idToken);
-        console.log("Refresh Token: ", refreshToken);
-
-        resolve({
-          accessToken,
-          idToken,
-          refreshToken,
-        });
-      },
-
-      onFailure: (err) => {
-        console.error(
-          "Authentication Error: ",
-          err.message || JSON.stringify(err)
-        );
-        reject(err);
-      },
-    });
-  });
-}
-
-// command + shift + P
