@@ -14,9 +14,13 @@ import ViewSwimSeason, { loader as viewSwimSeasonLoader} from './routes/ViewSwim
 import WriteSwimSet, { loader as writeSwimSetLoader } from './routes/WriteSwimSet';
 import WriteSwimPractice, { loader as writeSwimPracticeLoader } from './routes/WriteSwimPractice';
 import WriteSwimSeason from './routes/WriteSwimSeason';
-import ErrorPage from './ErrorPage';
-import Login from './routes/Login';
 
+import Auth from './routes/Auth';
+import Login from './components/authForms/login';
+import SignUp from './components/authForms/signUp';
+import ConfirmationCode from './components/authForms/confirmationCode';
+
+import ErrorPage from './ErrorPage';
 /* 
 TO DO
 -Create root route that loads all swimSet. 
@@ -85,9 +89,16 @@ const router = createBrowserRouter([
     ]
   },
   {
-    path: '/auth',
-    element: <Login />,
-    errorElement: <ErrorPage />
+    path: "/auth",
+    element: <Auth />,
+    errorElement: <ErrorPage />,
+    children: [
+      { index: true, element: <Login />},
+      {
+        path: "SignUp",
+        element: <SignUp />
+      }
+    ]
   }
 ])
 
