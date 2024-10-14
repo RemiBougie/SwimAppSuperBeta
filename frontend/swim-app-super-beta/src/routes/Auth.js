@@ -12,15 +12,12 @@ export default function Auth() {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  /*
   useEffect(() => {
-    setLoading(false);
+    //setLoading(false);
+    if (isAuthenticated()) {
+      navigate("/");
+    }
   },  []);
-  */
-
-  if (isAuthenticated()) {
-    return navigate("/");
-  }
 
   /*
   if (loading) {

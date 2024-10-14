@@ -5,6 +5,8 @@ import {
 } from "amazon-cognito-identity-js";
 import { useNavigate } from "react-router-dom";
 
+import { awsConfig } from "../aws-config";
+
 const userPoolId = process.env.REACT_APP_USER_POOL_ID;
 const clientId = process.env.REACT_APP_CLIENT_ID;
 
@@ -79,6 +81,7 @@ export function login(username, password, newPassword = null) {
               onSuccess: (result) => {
                 const accessToken = result.getAccessToken().getJwtToken();
                 const idToken = result.getIdToken().getJwtToken();
+                const refreshToken = result.getRefreshToken().getJwtToken();
                 localStorage.setItem("accessToken", accessToken);
                 localStorage.setItem("idToken", idToken);
                 resolve(result);
@@ -97,13 +100,26 @@ export function login(username, password, newPassword = null) {
   });
 }
 
+export function GoogleSignIn() {
+  const { domain, redirectSignIn, responseType, scope } = awsConfig.oauth;
+  const clientId = awsConfig["clientId"];
+
+  const oauthUrl = `https://${domain}/oauth2/authorize?identity_provider=Google&redirect_uri=${redirectSignIn}&response_type=${responseType}&client_id=${clientId}&scope=${scope.join(
+    " "
+  )}`;
+
+  window.location.href = oauthUrl;
+}
+
 export function logout() {
   const cognitoUser = userPool.getCurrentUser();
   if (cognitoUser) {
     cognitoUser.signOut();
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("idToken");
   }
+
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("idToken");
+  localStorage.removeItem("refreshToken");
 }
 
 export function isAuthenticated() {
@@ -127,40 +143,39 @@ function validatePassword(password) {
 */
 
 export function signUp(username, password, email) {
-    //const isValidPassword = validatePassword(password);
-    return new Promise((resolve, reject) => {
-        const attributeList = [
-            {
-                Name: 'email',
-                Value: email,
-            },
-        ];
+  //const isValidPassword = validatePassword(password);
+  return new Promise((resolve, reject) => {
+    const attributeList = [
+      {
+        Name: "email",
+        Value: email,
+      },
+    ];
 
-        userPool.signUp(username, password, attributeList, null, (err, result) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(result);
-            }
-        })
-    })
+    userPool.signUp(username, password, attributeList, null, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
 }
 
 export function confirmRegistration(username, confirmationCode) {
-    const userData = {
-        Username: username,
-        Pool: userPool
-    };
-    const cognitoUser = new CognitoUser(userData);
+  const userData = {
+    Username: username,
+    Pool: userPool,
+  };
+  const cognitoUser = new CognitoUser(userData);
 
-    return new Promise((resolve, reject) => {
-        cognitoUser.confirmRegistration(confirmationCode, true, (err, result) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(result);
-            }
-        })
-    })
-
+  return new Promise((resolve, reject) => {
+    cognitoUser.confirmRegistration(confirmationCode, true, (err, result) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(result);
+      }
+    });
+  });
 }

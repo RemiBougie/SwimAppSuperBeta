@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { login } from "../../common/auth";
+import { login, GoogleSignIn } from "../../common/auth";
 import Modal from "../modal";
 import ConfirmationCode from "./confirmationCode";
+import { exchangeAuthCodeForTokens, getAuthCodeFromUrl } from "../../common/utils";
+
+import { awsConfig } from "../../aws-config";
 
 // Login form
 export default function Login() {
@@ -56,6 +59,25 @@ export default function Login() {
     }
   };
 
+  useEffect(() => {
+    console.log("AWS CONFIG: ", awsConfig);
+    const authCode = getAuthCodeFromUrl();
+
+    if (authCode) {
+        exchangeAuthCodeForTokens(authCode)
+        .then((tokens) => {
+            localStorage.setItem("accessToken", tokens.access_token);
+            localStorage.setItem("idToken", tokens.id_token);
+            localStorage.setItem("refreshToken", tokens.refresh_token)
+            window.history.replaceState({}, document.title, "/");
+        })
+        .then(() => {
+          navigate("/");
+        })
+        .catch((err) => console.error('Error exchanging tokens: ', err));
+    }
+  }, []);
+
   return (
     <>
       <form onSubmit={handleLogin}>
@@ -107,7 +129,11 @@ export default function Login() {
           {isLoading ? "Logging in..." : "Login"}
         </button>
         <br />
-        <button>Login with Google</button>
+        <button
+            onClick={(e) => {
+                e.preventDefault();
+                GoogleSignIn();
+            }}>Login with Google</button>
         <br />
         <button>Login with Facebook</button>
         <br />
