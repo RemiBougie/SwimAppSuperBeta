@@ -7,7 +7,7 @@ import SwimSetCard from "../components/swimSets/swimSetCard";
 import SwimPracticeCard from "../components/swimPractices/swimPracticeCard";
 import SearchBox from "../components/search/searchBox";
 import TagSelection from "../components/search/tagSelection";
-import { FilterSwimPractices } from "../common/filter";
+import { FilterSwimPractices } from "../utils/filter";
 import * as allTags from "../allTags";
 import Modal from "../components/modal";
 

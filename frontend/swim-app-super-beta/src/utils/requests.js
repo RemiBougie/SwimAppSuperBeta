@@ -7,6 +7,8 @@ const { mockSwimSets } = require("../mockData/mockSwimSets");
 const { mockSwimPractices } = require("../mockData/mockSwimPractices");
 const { mockSwimSeasons } = require("../mockData/mockSwimSeasons");
 
+const accessToken = localStorage.getItem('accessToken');
+
 //-- GET ------------------------------------------------------------------------------------------------------
 //-- GET ------------------------------------------------------------------------------------------------------
 //-- GET ------------------------------------------------------------------------------------------------------
@@ -25,6 +27,7 @@ async function getAllSwimSets() {
       return fetch(apiUrl + "swimSets", {
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${accessToken}`
         },
       })
         .then((response) => {
@@ -78,6 +81,7 @@ async function getAllSwimPractices() {
       return fetch(apiUrl + "swimPractices", {
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${accessToken}`
         },
       })
         .then((response) => {
@@ -129,7 +133,12 @@ async function getAllSwimSeasons() {
     //setItemList(generateSwimSetCards(mockSwimSets));
   } else {
     try {
-      return fetch(apiUrl + "swimSeasons")
+      return fetch(apiUrl + "swimSeasons", {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${accessToken}`
+        }
+      })
         .then((response) => {
           if (!response.ok) {
             console.log(response.ok);
@@ -215,6 +224,7 @@ async function postSwimSet(data) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Authorization": `Bearer ${accessToken}`
         },
         body: JSON.stringify(data),
       })
@@ -249,6 +259,7 @@ async function postSwimPractice(data) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${accessToken}`
       },
       body: JSON.stringify(data),
     })
@@ -332,6 +343,7 @@ async function deleteSwimSet(data) {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
+        "Authorization": `Bearer ${accessToken}`
       },
     })
       .then((response) => {
@@ -366,6 +378,7 @@ async function deleteSwimPractice(data) {
       method: "DELETE",
       headers: {
         "Content-type": "application/json",
+        "Authorization": `Bearer ${accessToken}`
       },
     })
       .then((response) => {

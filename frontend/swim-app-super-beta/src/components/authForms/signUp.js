@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { signUp } from "../../common/auth";
+import { signUp } from "../../utils/auth";
 import ConfirmationCode from "./confirmationCode";
 import Modal from "../modal";
 

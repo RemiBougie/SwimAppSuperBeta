@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import TagsList from "./tagsList";
 import GroupList from "./groupList";
-import { deleteSwimSet } from "../../common/requests";
+import { deleteSwimSet } from "../../utils/requests";
 import DropdownMenu from "../dropdownMenu";
 import Modal from "../modal";
 import WriteSwimSet from "../../routes/WriteSwimSet";

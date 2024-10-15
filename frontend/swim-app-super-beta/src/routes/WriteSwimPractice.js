@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { DataContext } from "./Root";
 
-import { postSwimPractice } from "../common/requests";
+import { postSwimPractice } from "../utils/requests";
 import * as allTags from "../allTags";
 import TagSelection from "../components/search/tagSelection";
 import SwimSetCard from "../components/swimSets/swimSetCard";

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { login, GoogleSignIn } from "../../common/auth";
+import { login, GoogleSignIn } from "../../utils/auth";
 import Modal from "../modal";
 import ConfirmationCode from "./confirmationCode";
-import { exchangeAuthCodeForTokens, getAuthCodeFromUrl } from "../../common/utils";
+import { exchangeAuthCodeForTokens, getAuthCodeFromUrl } from "../../utils/token";
 
 import { awsConfig } from "../../aws-config";
 

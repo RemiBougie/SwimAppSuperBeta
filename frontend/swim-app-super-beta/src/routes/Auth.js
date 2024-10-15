@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { login } from "../common/auth";
+import { login } from "../utils/auth";
 import { Outlet, useNavigate } from "react-router-dom";
 import "../App.css";
 
 //import Login from "../components/authForms/login";
 //import SignUp from "../components/authForms/signUp";
-import { isAuthenticated } from "../common/auth";
+import { isAuthenticated } from "../utils/auth";
 
 export default function Auth() {
   const [showLoginForm, setShowLoginForm] = useState(true);

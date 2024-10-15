@@ -3,8 +3,8 @@ import {
   CognitoUser,
   AuthenticationDetails,
 } from "amazon-cognito-identity-js";
-import { useNavigate } from "react-router-dom";
 
+import { storeTokens, deleteTokens } from "./token";
 import { awsConfig } from "../aws-config";
 
 const userPoolId = process.env.REACT_APP_USER_POOL_ID;
@@ -32,24 +32,26 @@ export function login(username, password, newPassword = null) {
 
   const cognitoUser = new CognitoUser(userData);
 
-  console.log("loginHelper called.");
+  /* console.log("loginHelper called.");
   console.log("username: ", username);
   console.log("password: ", password);
-  console.log("newPassword: ", newPassword);
+  console.log("newPassword: ", newPassword); */
 
   return new Promise((resolve, reject) => {
     cognitoUser.authenticateUser(authenticationDetails, {
       onSuccess: (result) => {
+        let tokens = {}
         const accessToken = result.getAccessToken().getJwtToken();
         const idToken = result.getIdToken().getJwtToken();
         const refreshToken = result.getRefreshToken().getToken();
 
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("idToken", idToken);
+        storeTokens(accessToken, idToken, refreshToken);
+        //localStorage.setItem("accessToken", accessToken);
+        //localStorage.setItem("idToken", idToken);
 
-        console.log("Access Token: ", accessToken);
+        /* console.log("Access Token: ", accessToken);
         console.log("ID Token: ", idToken);
-        console.log("Refresh Token: ", refreshToken);
+        console.log("Refresh Token: ", refreshToken); */
 
         resolve({
           accessToken,
@@ -67,8 +69,8 @@ export function login(username, password, newPassword = null) {
       },
 
       newPasswordRequired: (userAttributes, requiredAttributes) => {
-        console.log("new password required");
-        console.log("userAttributes: ", userAttributes);
+        /* console.log("new password required");
+        console.log("userAttributes: ", userAttributes); */
 
         delete userAttributes["email"];
         delete userAttributes["email_verified"];
@@ -82,8 +84,9 @@ export function login(username, password, newPassword = null) {
                 const accessToken = result.getAccessToken().getJwtToken();
                 const idToken = result.getIdToken().getJwtToken();
                 const refreshToken = result.getRefreshToken().getJwtToken();
-                localStorage.setItem("accessToken", accessToken);
-                localStorage.setItem("idToken", idToken);
+                storeTokens(accessToken, idToken, refreshToken);
+                /* localStorage.setItem("accessToken", accessToken);
+                localStorage.setItem("idToken", idToken); */
                 resolve(result);
               },
               onFailure: (err) => {
@@ -117,9 +120,7 @@ export function logout() {
     cognitoUser.signOut();
   }
 
-  localStorage.removeItem("accessToken");
-  localStorage.removeItem("idToken");
-  localStorage.removeItem("refreshToken");
+  deleteTokens();
 }
 
 export function isAuthenticated() {

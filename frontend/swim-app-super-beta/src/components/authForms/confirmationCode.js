@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import { confirmRegistration, login } from "../../common/auth";
+import { confirmRegistration, login } from "../../utils/auth";
 import { useNavigate } from "react-router-dom";
 
 export default function ConfirmationCode( { username, password }) {

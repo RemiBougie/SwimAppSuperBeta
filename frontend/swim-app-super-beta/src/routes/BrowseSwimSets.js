@@ -6,7 +6,7 @@ import "../App.css";
 import SwimSetCard from "../components/swimSets/swimSetCard";
 import SearchBox from "../components/search/searchBox";
 import TagSelection from "../components/search/tagSelection";
-import { FilterSwimSets } from "../common/filter";
+import { FilterSwimSets } from "../utils/filter";
 import * as allTags from "../allTags";
 import Modal from "../components/modal";
 

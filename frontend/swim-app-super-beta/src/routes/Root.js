@@ -6,14 +6,19 @@ import {
   getAllSwimSets,
   getAllSwimPractices,
   getAllSwimSeasons,
-} from "../common/requests";
-import { logout, isAuthenticated } from "../common/auth";
+} from "../utils/requests";
+import { logout, isAuthenticated } from "../utils/auth";
 
 export async function loader() {
-  const allSwimSets = await getAllSwimSets();
-  const allSwimPractices = await getAllSwimPractices();
-  const allSwimSeasons = await getAllSwimSeasons();
-  return [allSwimSets, allSwimPractices, allSwimSeasons];
+  try {
+    const allSwimSets = await getAllSwimSets();
+    const allSwimPractices = await getAllSwimPractices();
+    const allSwimSeasons = await getAllSwimSeasons();
+    return [allSwimSets, allSwimPractices, allSwimSeasons];
+  } catch (err) {
+    console.error(err);
+    return [[], [], []];
+  }
 }
 
 export const DataContext = createContext();
